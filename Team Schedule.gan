@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-08-25" view-index="0" gantt-divider-location="454" resource-divider-location="300" version="2.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-08-25" view-index="0" gantt-divider-location="454" resource-divider-location="300" version="2.0" locale="en_US">
     <description><![CDATA[Transit System]]></description>
-    <view zooming-state="default:7" id="gantt-chart"/>
+    <view zooming-state="default:7" id="gantt-chart">
+        <field id="tpd3" name="Name" width="49" order="0"/>
+        <field id="tpd4" name="Begin date" width="14" order="1"/>
+        <field id="tpd5" name="End date" width="15" order="2"/>
+        <field id="tpd8" name="Coordinator" width="15" order="3"/>
+        <field id="tpc0" name="" width="4" order="4"/>
+    </view>
     <view id="resource-table">
         <field id="0" name="Name" width="50" order="0"/>
         <field id="tpc0" name="Module" width="50" order="1"/>
@@ -18,7 +25,7 @@
             </calendar>
         </day-types>
     </calendars>
-    <tasks color="#8cb6ce">
+    <tasks empty-milestones="true">
         <taskproperties>
             <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
             <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
@@ -32,7 +39,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
             <taskproperty id="tpc0" name="" type="custom" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Work Package 1" color="#8cb6ce" meeting="true" start="2013-10-04" duration="1" complete="0" expand="true"/>
+        <task id="0" name="Work Package 1" color="#8cb6ce" meeting="true" start="2013-10-04" duration="0" complete="0" expand="true"/>
         <task id="18" name="STP Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
         <task id="20" name="DD Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
         <task id="21" name="CM Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
@@ -43,8 +50,25 @@
         <task id="27" name="Review Bid Package" color="#8cb6ce" meeting="false" start="2013-09-12" duration="8" complete="0" expand="true"/>
         <task id="3" name="SRS" color="#8cb6ce" meeting="false" start="2013-09-20" duration="15" complete="0" expand="true"/>
         <task id="25" name="Create Work Schedule" color="#8cb6ce" meeting="false" start="2013-09-20" duration="8" complete="0" expand="true"/>
-        <task id="1" name="Work Package 2" color="#8cb6ce" meeting="true" start="2013-11-07" duration="1" complete="0" expand="true"/>
-        <task id="2" name="Work Package 3" color="#8cb6ce" meeting="true" start="2013-12-12" duration="1" complete="0" expand="true"/>
+        <task id="1" name="Work Package 2" color="#8cb6ce" meeting="true" start="2013-11-07" duration="0" complete="0" expand="true"/>
+        <task id="2" name="Work Package 3" color="#8cb6ce" meeting="true" start="2013-12-12" duration="0" complete="0" expand="true"/>
+        <task id="28" name="Track Model- design main interface" color="#99ff33" meeting="false" start="2013-10-07" duration="5" complete="0" expand="true"/>
+        <task id="33" name="Track Model - design Create New Track interface" color="#99ff33" meeting="false" start="2013-10-09" duration="3" complete="0" expand="true"/>
+        <task id="36" name="Track Model - Status Indicators" color="#99ff33" meeting="false" start="2013-10-14" duration="5" complete="0" expand="true"/>
+        <task id="39" name="Track Model - logic for fixing failure modes" color="#99ff33" meeting="false" start="2013-10-16" duration="3" complete="0" expand="true"/>
+        <task id="40" name="Track Model - logic for inputting track" color="#99ff33" meeting="false" start="2013-10-21" duration="2" complete="0" expand="true"/>
+        <task id="55" name="Track Model - set up MySQL for track" color="#99ff33" meeting="false" start="2013-10-23" duration="3" complete="0" expand="true"/>
+        <task id="59" name="Track Model- work on display of UI" color="#99ff33" meeting="false" start="2013-10-28" duration="2" complete="0" expand="true"/>
+        <task id="62" name="Track Model - logic for train detection circuit" color="#99ff33" meeting="false" start="2013-10-29" duration="5" complete="0" expand="true"/>
+        <task id="66" name="Track Model - logic for track heater" color="#99ff33" meeting="false" start="2013-11-04" duration="5" complete="0" expand="true"/>
+        <task id="69" name="Track Model - logic for broken track" color="#99ff33" meeting="false" start="2013-11-06" duration="3" complete="0" expand="true"/>
+        <task id="70" name="Track Model - logic for power failure" color="#99ff33" meeting="false" start="2013-11-11" duration="3" complete="0" expand="true"/>
+        <task id="71" name="Track Model - logic for broken track detection circuit" color="#99ff33" meeting="false" start="2013-11-12" duration="4" complete="0" expand="true"/>
+        <task id="72" name="Track Model - logic for signals and switch machines" color="#99ff33" meeting="false" start="2013-11-18" duration="3" complete="0" expand="true"/>
+        <task id="73" name="Track Model- make blocks configurable" color="#99ff33" meeting="false" start="2013-11-20" duration="3" complete="0" expand="true"/>
+        <task id="74" name="Track Model - logic for railway crossings" color="#99ff33" meeting="false" start="2013-11-25" duration="4" complete="0" expand="true"/>
+        <task id="75" name="Track Model - logic for power limitations" color="#99ff33" meeting="false" start="2013-11-27" duration="3" complete="0" expand="true"/>
+        <task id="76" name="Track Model - Integrate with Track Controller" color="#99ff33" meeting="false" start="2013-12-02" duration="1" complete="0" expand="true"/>
     </tasks>
     <resources>
         <custom-property-definition id="tpc0" name="Module" type="text"/>
@@ -67,21 +91,41 @@
             <custom-property definition-id="tpc0" value="CTC Office"/>
         </resource>
     </resources>
-    <allocations/>
+    <allocations>
+        <allocation task-id="28" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="33" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="39" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="40" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="55" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="59" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="66" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="69" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="70" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="71" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="72" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="73" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="74" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="75" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="76" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
     <vacations/>
     <taskdisplaycolumns>
         <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="224" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="64" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="70" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="21" visible="true"/>
-        <displaycolumn property-id="tpd8" order="4" width="71" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="216" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="62" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="68" visible="true"/>
+        <displaycolumn property-id="tpd8" order="3" width="68" visible="true"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpc0" order="4" width="21" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
