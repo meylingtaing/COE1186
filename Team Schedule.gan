@@ -141,6 +141,23 @@
             <task id="222" name="Continue System Testing" color="#8cb6ce" meeting="false" start="2013-11-28" duration="8" complete="0" expand="true"/>
             <task id="230" name="Package system for installation" color="#8cb6ce" meeting="false" start="2013-12-06" duration="7" complete="0" expand="true"/>
         </task>
+        <task id="248" name="CTC" color="#8cb6ce" meeting="false" start="2013-10-06" duration="68" complete="0" expand="true">
+            <task id="249" name="Basic Outline of Code" color="#8cb6ce" meeting="false" start="2013-10-06" duration="10" complete="0" expand="true"/>
+            <task id="250" name="Organize interactions w/ other modules" color="#8cb6ce" meeting="false" start="2013-10-06" duration="5" complete="0" expand="true"/>
+            <task id="251" name="Basic GUI Prototype" color="#8cb6ce" meeting="false" start="2013-10-06" duration="5" complete="0" expand="true"/>
+            <task id="252" name="Create use cases" color="#8cb6ce" meeting="false" start="2013-10-11" duration="7" complete="0" expand="true"/>
+            <task id="253" name="Create Test Plan" color="#8cb6ce" meeting="false" start="2013-10-17" duration="8" complete="0" expand="true"/>
+            <task id="254" name="Component Prototypes" color="#8cb6ce" meeting="false" start="2013-10-23" duration="20" complete="0" expand="true"/>
+            <task id="255" name="Test individual components" color="#8cb6ce" meeting="false" start="2013-10-23" duration="20" complete="0" expand="true"/>
+            <task id="256" name="Design GUI" color="#8cb6ce" meeting="false" start="2013-11-01" duration="7" complete="0" expand="true"/>
+            <task id="257" name="Refactor Code Prototypes" color="#8cb6ce" meeting="false" start="2013-11-01" duration="15" complete="0" expand="true"/>
+            <task id="258" name="Integrate and test with other modules" color="#8cb6ce" meeting="false" start="2013-11-11" duration="18" complete="0" expand="true"/>
+            <task id="259" name="Final Code implementation" color="#8cb6ce" meeting="false" start="2013-11-11" duration="18" complete="0" expand="true"/>
+            <task id="260" name="Check edge cases in code" color="#8cb6ce" meeting="false" start="2013-11-15" duration="14" complete="0" expand="true"/>
+            <task id="261" name="System Testing" color="#8cb6ce" meeting="false" start="2013-11-28" duration="8" complete="0" expand="true"/>
+            <task id="262" name="Package system for installation" color="#8cb6ce" meeting="false" start="2013-12-06" duration="4" complete="0" expand="true"/>
+            <task id="263" name="Final Documentation" color="#8cb6ce" meeting="false" start="2013-12-06" duration="7" complete="0" expand="true"/>
+        </task>
     </tasks>
     <resources>
         <custom-property-definition id="tpc0" name="Module" type="text"/>
