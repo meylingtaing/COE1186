@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-07-01" view-index="0" gantt-divider-location="505" resource-divider-location="300" version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-09-29" view-index="0" gantt-divider-location="387" resource-divider-location="300" version="2.0" locale="en_US">
     <description><![CDATA[Transit System]]></description>
-    <view zooming-state="default:11" id="gantt-chart"/>
+    <view zooming-state="default:6" id="gantt-chart">
+        <field id="tpd3" name="Name" width="52" order="0"/>
+        <field id="tpd4" name="Begin date" width="12" order="1"/>
+        <field id="tpd5" name="End date" width="11" order="2"/>
+        <field id="tpd8" name="Coordinator" width="19" order="3"/>
+        <field id="tpc0" name="" width="4" order="4"/>
+    </view>
     <view id="resource-table">
         <field id="0" name="Name" width="50" order="0"/>
         <field id="tpc0" name="Module" width="50" order="1"/>
@@ -18,7 +24,7 @@
             </calendar>
         </day-types>
     </calendars>
-    <tasks>
+    <tasks empty-milestones="false">
         <taskproperties>
             <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
             <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
@@ -64,6 +70,20 @@
             <task id="75" name="Track Model - logic for power limitations" color="#99ff33" meeting="false" start="2013-11-27" duration="3" complete="0" expand="true"/>
             <task id="76" name="Track Model - Integrate with Track Controller" color="#99ff33" meeting="false" start="2013-12-02" duration="1" complete="0" expand="true"/>
         </task>
+        <task id="232" name="Train Controller" color="#8cb6ce" meeting="false" start="2013-10-10" duration="48" complete="0" thirdDate="2013-10-07" thirdDate-constraint="1" expand="true">
+            <task id="233" name="Logic for Speed Control" color="#8cb6ce" meeting="false" start="2013-10-10" duration="1" complete="0" expand="true"/>
+            <task id="234" name="Logic for Receiving varying speed limits" color="#8cb6ce" meeting="false" start="2013-10-13" duration="2" complete="0" expand="true"/>
+            <task id="235" name="Logic for authority" color="#8cb6ce" meeting="false" start="2013-10-16" duration="1" complete="0" expand="true"/>
+            <task id="236" name="Logic for receiving/updating authority" color="#8cb6ce" meeting="false" start="2013-10-20" duration="1" complete="0" expand="true"/>
+            <task id="237" name="Design UI elements" color="#8cb6ce" meeting="false" start="2013-10-23" duration="1" complete="0" expand="true"/>
+            <task id="238" name="Begin coding UI; integrate implemented features" color="#8cb6ce" meeting="false" start="2013-10-27" duration="1" complete="0" expand="true"/>
+            <task id="240" name="Logic for turning lights on/off; auto mode" color="#8cb6ce" meeting="false" start="2013-10-30" duration="1" complete="0" expand="true"/>
+            <task id="241" name="Logic for GPS" color="#8cb6ce" meeting="false" start="2013-11-03" duration="1" complete="0" expand="true"/>
+            <task id="242" name="Logic for monitoring the train for faults" color="#8cb6ce" meeting="false" start="2013-11-06" duration="1" complete="0" expand="true"/>
+            <task id="243" name="Logic for station announcement" color="#8cb6ce" meeting="false" start="2013-11-10" duration="1" complete="0" expand="true"/>
+            <task id="244" name="Test/Debug" color="#8cb6ce" meeting="false" start="2013-11-20" duration="7" complete="0" expand="true"/>
+        </task>
+        <task id="239" name="Logic for opening/closing doors; auto mode" color="#8cb6ce" meeting="false" start="2013-07-21" duration="1" complete="0" expand="true"/>
         <task id="79" name="Track Controller" color="#8cb6ce" meeting="false" start="2013-10-07" duration="64" complete="0" expand="false">
             <task id="80" name="Build Gui Shell" color="#8cb6ce" meeting="false" start="2013-10-07" duration="8" complete="0" expand="true"/>
             <task id="82" name="Create Basic Class Structure" color="#8cb6ce" meeting="false" start="2013-10-07" duration="8" complete="0" expand="false"/>
@@ -186,13 +206,14 @@
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="162" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="76" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="72" visible="true"/>
-        <displaycolumn property-id="tpd8" order="3" width="176" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="194" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="47" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="42" visible="true"/>
+        <displaycolumn property-id="tpd8" order="3" width="70" visible="true"/>
         <displaycolumn property-id="tpc0" order="4" width="15" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
