@@ -1,12 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-09-29" view-index="0" gantt-divider-location="387" resource-divider-location="300" version="2.0" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-09-29" view-index="0" gantt-divider-location="387" resource-divider-location="300" version="2.0">
     <description><![CDATA[Transit System]]></description>
-    <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Name" width="57" order="0"/>
-        <field id="tpd4" name="Begin date" width="8" order="1"/>
-        <field id="tpd5" name="End date" width="11" order="2"/>
-        <field id="tpd8" name="Coordinator" width="19" order="3"/>
-        <field id="tpc0" name="" width="4" order="4"/>
-    </view>
+    <view zooming-state="default:6" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Name" width="50" order="0"/>
         <field id="tpc0" name="Module" width="50" order="1"/>
@@ -24,7 +18,7 @@
             </calendar>
         </day-types>
     </calendars>
-    <tasks empty-milestones="false">
+    <tasks>
         <taskproperties>
             <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
             <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
@@ -51,7 +45,7 @@
         <task id="25" name="Create Work Schedule" color="#8cb6ce" meeting="false" start="2013-09-20" duration="8" complete="0" expand="true"/>
         <task id="1" name="Work Package 2" color="#8cb6ce" meeting="true" start="2013-11-07" duration="1" complete="0" expand="true"/>
         <task id="2" name="Work Package 3" color="#8cb6ce" meeting="true" start="2013-12-12" duration="1" complete="0" expand="true"/>
-        <task id="77" name="Track Model" color="#8cb6ce" meeting="false" start="2013-10-07" duration="57" complete="0" expand="false">
+        <task id="77" name="Track Model" color="#8cb6ce" meeting="false" start="2013-10-07" duration="57" complete="0" expand="true">
             <task id="28" name="Track Model- design main interface" color="#99ff33" meeting="false" start="2013-10-07" duration="5" complete="0" expand="true"/>
             <task id="33" name="Track Model - design Create New Track interface" color="#99ff33" meeting="false" start="2013-10-09" duration="3" complete="0" expand="true"/>
             <task id="36" name="Track Model - Status Indicators" color="#99ff33" meeting="false" start="2013-10-14" duration="5" complete="0" expand="true"/>
@@ -85,7 +79,7 @@
             <task id="243" name="Logic for station announcement" color="#8cb6ce" meeting="false" start="2013-11-10" duration="1" complete="0" expand="true"/>
             <task id="244" name="Test/Debug" color="#8cb6ce" meeting="false" start="2013-11-20" duration="7" complete="0" expand="true"/>
         </task>
-        <task id="79" name="Track Controller" color="#8cb6ce" meeting="false" start="2013-10-07" duration="64" complete="0" expand="false">
+        <task id="79" name="Track Controller" color="#8cb6ce" meeting="false" start="2013-10-07" duration="64" complete="0" expand="true">
             <task id="80" name="Build Gui Shell" color="#8cb6ce" meeting="false" start="2013-10-07" duration="8" complete="0" expand="true"/>
             <task id="82" name="Create Basic Class Structure" color="#8cb6ce" meeting="false" start="2013-10-07" duration="8" complete="0" expand="false"/>
             <task id="83" name="Create Basic Class Structure" color="#8cb6ce" meeting="false" start="2013-10-14" duration="8" complete="0" expand="true"/>
@@ -103,7 +97,7 @@
             <task id="111" name="Test full system" color="#8cb6ce" meeting="false" start="2013-12-02" duration="8" complete="0" expand="false"/>
             <task id="112" name="Package Simulation for Installation" color="#8cb6ce" meeting="false" start="2013-12-02" duration="8" complete="0" expand="false"/>
         </task>
-        <task id="115" name="Train Model" color="#8cb6ce" meeting="false" start="2013-10-07" duration="67" complete="0" expand="false">
+        <task id="115" name="Train Model" color="#8cb6ce" meeting="false" start="2013-10-07" duration="67" complete="0" expand="true">
             <task id="117" name="Create GUI controls" color="#8cb6ce" meeting="false" start="2013-10-07" duration="4" complete="0" expand="true"/>
             <task id="119" name="Plan out necessary Interfacing requirements" color="#8cb6ce" meeting="false" start="2013-10-09" duration="3" complete="0" expand="true"/>
             <task id="130" name="Design train model" color="#8cb6ce" meeting="false" start="2013-10-09" duration="3" complete="0" expand="false"/>
@@ -119,7 +113,7 @@
             <task id="179" name="Integrate with other modules" color="#8cb6ce" meeting="false" start="2013-11-22" duration="8" complete="0" expand="true"/>
             <task id="161" name="Test and debug code" color="#8cb6ce" meeting="false" start="2013-11-25" duration="18" complete="0" expand="false"/>
         </task>
-        <task id="181" name="Moving Block Overlay" color="#8cb6ce" meeting="false" start="2013-09-27" duration="77" complete="0" expand="false">
+        <task id="181" name="Moving Block Overlay" color="#8cb6ce" meeting="false" start="2013-09-27" duration="77" complete="0" expand="true">
             <task id="225" name="Design MBO GUI" color="#8cb6ce" meeting="false" start="2013-09-27" duration="7" complete="0" expand="true"/>
             <task id="227" name="Create individual work schedule" color="#8cb6ce" meeting="false" start="2013-09-27" duration="7" complete="0" expand="true"/>
             <task id="182" name="Create GUI shell" color="#8cb6ce" meeting="false" start="2013-10-07" duration="4" complete="0" expand="true"/>
@@ -181,6 +175,7 @@
         </resource>
     </resources>
     <allocations>
+        <allocation task-id="232" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="28" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="33" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="36" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
@@ -217,6 +212,7 @@
         <allocation task-id="166" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="179" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="79" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="248" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <taskdisplaycolumns>
@@ -224,7 +220,6 @@
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
