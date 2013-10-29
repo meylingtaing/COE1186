@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane fx:id="trackDisplay" fx:controller="CTCController" 
+	xmlns:fx="https://javafx.com/fxml" minWidth="640" minHeight="480" >
+	
+	<bottom>
+		<HBox>
+	    	<Button text="Edit Tracks" onAction="#editTracks" />
+    	</HBox>
+	</bottom>
+	
+</BorderPane>
