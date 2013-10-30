@@ -24,33 +24,6 @@ public class CTCController {
 		blockCoordinates = new ArrayList<Double[]>();
 		blockCount = 0;
 		
-		//*
-		try {
-			Scanner fileScan = new Scanner(new File("greenline.csv"));
-			while (fileScan.hasNextLine()) {
-				String line = fileScan.nextLine();
-				String[] blockInfo = line.split(",");
-				Double[] block = new Double[4];
-				
-				block[0] = Double.parseDouble(blockInfo[1]);
-				block[1] = Double.parseDouble(blockInfo[2]);
-				block[2] = Double.parseDouble(blockInfo[3]);
-				block[3] = Double.parseDouble(blockInfo[4]);
-				
-				blockCoordinates.add(block);
-				blockCount++;
-			}
-			fileScan.close();
-		} 
-		
-		catch (FileNotFoundException e) {
-			System.out.println("Could not find greenline.csv");
-			e.printStackTrace();
-			System.exit(-1);
-		}
-		// */
-		
-		displayTrack();
 		System.out.println("Successful start?");
 	}
 	
@@ -76,23 +49,76 @@ public class CTCController {
 		System.out.println("Clicked Edit tracks");
 		
 		// Automatic, ask user for track stuff if we don't have any yet
-		if (blockCount != 0) {
+		if (blockCount == 0) {
 			// Prompt user for a csv file
 			final Popup trackPopup = new Popup();
-			TextField inputTrack = new TextField();
+			final TextField inputTrack = new TextField();
+			Text newTrackText = new Text("Enter name of csv file");
+			final Text errorText = new Text("Error: file not found");
+			errorText.setVisible(false);
 			
-			Button button = new Button("Submit");
-			button.setOnAction(new EventHandler<ActionEvent>() {
+			Button submitButton = new Button("Submit");
+			submitButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override 
+				public void handle(ActionEvent event) {
+					// Get the user input
+					String trackCsv = inputTrack.getText();
+					
+					//*
+					try {
+						Scanner fileScan = new Scanner(new File(trackCsv));
+						while (fileScan.hasNextLine()) {
+							String line = fileScan.nextLine();
+							String[] blockInfo = line.split(",");
+							Double[] block = new Double[4];
+							
+							block[0] = Double.parseDouble(blockInfo[1]);
+							block[1] = Double.parseDouble(blockInfo[2]);
+							block[2] = Double.parseDouble(blockInfo[3]);
+							block[3] = Double.parseDouble(blockInfo[4]);
+							
+							blockCoordinates.add(block);
+							blockCount++;
+						}
+						fileScan.close();
+						trackPopup.hide();
+					} 
+					
+					catch (FileNotFoundException e) {
+						//System.out.println("Could not find " + trackCsv);
+						errorText.setVisible(true);
+					}
+					// */
+					
+					displayTrack();
+				}
+			});
+			
+			Button cancelButton = new Button("Cancel");
+			cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
 				public void handle(ActionEvent event) {
 					trackPopup.hide();
 				}
 			});
 			
-			HBox trackPopupContent = new HBox();
-			trackPopupContent.getChildren().addAll(inputTrack, button);
+			HBox trackPopupHBox = new HBox();
+			trackPopupHBox.getChildren().addAll(inputTrack, submitButton, cancelButton);
+			VBox trackPopupContent = new VBox();
+			trackPopupContent.getChildren().addAll(newTrackText, trackPopupHBox, errorText);
 			trackPopup.getContent().addAll(trackPopupContent);
-			trackPopup.show(trackDisplay, 100, 100);
+			trackPopupContent.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
+			trackPopup.show(trackDisplay, 600, 500);
 		}
+	}
+	
+	@FXML
+	public void routeTrains() {
+		
+	}
+	
+	@FXML
+	public void simulate() {
+		
 	}
 }

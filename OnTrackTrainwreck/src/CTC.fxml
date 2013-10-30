@@ -9,8 +9,10 @@
 	xmlns:fx="https://javafx.com/fxml" minWidth="640" minHeight="480" >
 	
 	<bottom>
-		<HBox>
+		<HBox spacing="10">
 	    	<Button text="Edit Tracks" onAction="#editTracks" />
+	    	<Button text="Schedule and Route" onAction="#routeTrains" />
+	    	<Button text="Simulate" onAction="#simulate" />
     	</HBox>
 	</bottom>
 	
