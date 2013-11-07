@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-09-29" view-index="0" gantt-divider-location="387" resource-divider-location="300" version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><project name="Train Project" company="On Track Trainwreck" webLink="http://" view-date="2013-11-03" view-index="0" gantt-divider-location="484" resource-divider-location="300" version="2.0" locale="en_US">
     <description><![CDATA[Transit System]]></description>
-    <view zooming-state="default:6" id="gantt-chart"/>
+    <view zooming-state="default:6" id="gantt-chart">
+        <field id="tpd3" name="Name" width="49" order="0"/>
+        <field id="tpd4" name="Begin date" width="12" order="1"/>
+        <field id="tpd5" name="End date" width="17" order="2"/>
+        <field id="tpd8" name="Coordinator" width="12" order="3"/>
+        <field id="tpc0" name="" width="7" order="4"/>
+    </view>
     <view id="resource-table">
         <field id="0" name="Name" width="50" order="0"/>
         <field id="tpc0" name="Module" width="50" order="1"/>
@@ -18,7 +24,7 @@
             </calendar>
         </day-types>
     </calendars>
-    <tasks>
+    <tasks empty-milestones="true">
         <taskproperties>
             <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
             <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
@@ -32,7 +38,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
             <taskproperty id="tpc0" name="" type="custom" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Work Package 1" color="#8cb6ce" meeting="true" start="2013-10-04" duration="1" complete="0" expand="true"/>
+        <task id="0" name="Milestone: Work Package 1" color="#8cb6ce" meeting="true" start="2013-10-04" duration="0" complete="0" expand="true"/>
         <task id="18" name="STP Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
         <task id="20" name="DD Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
         <task id="21" name="CM Template" color="#8cb6ce" meeting="false" start="2013-08-30" duration="8" complete="0" expand="true"/>
@@ -43,8 +49,8 @@
         <task id="27" name="Review Bid Package" color="#8cb6ce" meeting="false" start="2013-09-12" duration="8" complete="0" expand="true"/>
         <task id="3" name="SRS" color="#8cb6ce" meeting="false" start="2013-09-20" duration="15" complete="0" expand="true"/>
         <task id="25" name="Create Work Schedule" color="#8cb6ce" meeting="false" start="2013-09-20" duration="8" complete="0" expand="true"/>
-        <task id="1" name="Work Package 2" color="#8cb6ce" meeting="true" start="2013-11-07" duration="1" complete="0" expand="true"/>
-        <task id="2" name="Work Package 3" color="#8cb6ce" meeting="true" start="2013-12-12" duration="1" complete="0" expand="true"/>
+        <task id="1" name="Milestone: Work Package 2" color="#8cb6ce" meeting="true" start="2013-11-07" duration="0" complete="0" expand="true"/>
+        <task id="2" name="Milestone: Work Package 3" color="#8cb6ce" meeting="true" start="2013-12-12" duration="0" complete="0" expand="true"/>
         <task id="77" name="Track Model" color="#8cb6ce" meeting="false" start="2013-10-07" duration="57" complete="0" expand="true">
             <task id="28" name="Track Model- design main interface" color="#99ff33" meeting="false" start="2013-10-07" duration="5" complete="0" expand="true"/>
             <task id="33" name="Track Model - design Create New Track interface" color="#99ff33" meeting="false" start="2013-10-09" duration="3" complete="0" expand="true"/>
@@ -144,9 +150,19 @@
             <task id="254" name="Component Prototypes" color="#8cb6ce" meeting="false" start="2013-10-23" duration="20" complete="0" expand="true"/>
             <task id="255" name="Test individual components" color="#8cb6ce" meeting="false" start="2013-10-23" duration="20" complete="0" expand="true"/>
             <task id="256" name="Design GUI" color="#8cb6ce" meeting="false" start="2013-11-01" duration="7" complete="0" expand="true"/>
-            <task id="257" name="Refactor Code Prototypes" color="#8cb6ce" meeting="false" start="2013-11-01" duration="15" complete="0" expand="true"/>
-            <task id="258" name="Integrate and test with other modules" color="#8cb6ce" meeting="false" start="2013-11-11" duration="18" complete="0" expand="true"/>
-            <task id="259" name="Final Code implementation" color="#8cb6ce" meeting="false" start="2013-11-11" duration="18" complete="0" expand="true"/>
+            <task id="257" name="Refactor Code Prototypes" color="#8cb6ce" meeting="false" start="2013-11-01" duration="20" complete="0" expand="true"/>
+            <task id="280" name="Keep working on Prototypes" color="#8cb6ce" meeting="false" start="2013-11-07" duration="8" complete="0" expand="true">
+                <task id="267" name="T/D Remove Tracks" color="#8cb6ce" meeting="false" start="2013-11-07" duration="5" complete="0" expand="true"/>
+                <task id="268" name="T/D Close/Open Tracks" color="#8cb6ce" meeting="false" start="2013-11-07" duration="5" complete="0" expand="true"/>
+                <task id="269" name="T/D Schedule/Route" color="#8cb6ce" meeting="false" start="2013-11-07" duration="5" complete="0" expand="true"/>
+                <task id="270" name="T/D Suggest setpt/authority" color="#8cb6ce" meeting="false" start="2013-11-07" duration="5" complete="0" expand="true"/>
+                <task id="271" name="Work on simulation" color="#8cb6ce" meeting="false" start="2013-11-11" duration="4" complete="0" expand="true"/>
+            </task>
+            <task id="275" name="Monitor system - integrate with Track Controller" color="#8cb6ce" meeting="false" start="2013-11-14" duration="8" complete="0" expand="true"/>
+            <task id="277" name="Monitor system - get stuff from MBO" color="#8cb6ce" meeting="false" start="2013-11-14" duration="8" complete="0" expand="true"/>
+            <task id="259" name="Final Code implementation" color="#8cb6ce" meeting="false" start="2013-11-21" duration="8" complete="0" expand="true"/>
+            <task id="279" name="Make GUI nicer" color="#8cb6ce" meeting="false" start="2013-11-21" duration="8" complete="0" expand="true"/>
+            <task id="258" name="Integrate and test with other modules" color="#8cb6ce" meeting="false" start="2013-11-15" duration="14" complete="0" expand="true"/>
             <task id="260" name="Check edge cases in code" color="#8cb6ce" meeting="false" start="2013-11-15" duration="14" complete="0" expand="true"/>
             <task id="261" name="System Testing" color="#8cb6ce" meeting="false" start="2013-11-28" duration="8" complete="0" expand="true"/>
             <task id="262" name="Package system for installation" color="#8cb6ce" meeting="false" start="2013-12-06" duration="4" complete="0" expand="true"/>
@@ -220,14 +236,15 @@
         <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="210" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="31" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="42" visible="true"/>
-        <displaycolumn property-id="tpd8" order="3" width="70" visible="true"/>
-        <displaycolumn property-id="tpc0" order="4" width="15" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="229" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="60" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="82" visible="true"/>
+        <displaycolumn property-id="tpd8" order="3" width="59" visible="true"/>
+        <displaycolumn property-id="tpc0" order="4" width="35" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
