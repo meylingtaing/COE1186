@@ -1,0 +1,16 @@
+/**
+	The stylesheet for CTC stuff
+*/
+
+#displayBox {
+	-fx-background-color: #000000;
+}
+
+Line {
+	-fx-stroke: #FFFFFF;
+}
+
+Popup {
+	-fx-background-color: cornsilk; 
+	-fx-padding: 10;
+}
