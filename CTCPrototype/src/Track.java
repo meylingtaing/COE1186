@@ -17,6 +17,11 @@ public class Track implements Iterable<Double[]> {
 		numBlocks = 0;
 	}
 	
+	public void addBlock(Double[] block) {
+		blocks.add(block);
+		numBlocks++;
+	}
+	
 	public void addBlock(double startX, double startY, double endX, double endY) {
 		Double[] block = new Double[4];
 		block[0] = startX;
@@ -24,9 +29,7 @@ public class Track implements Iterable<Double[]> {
 		block[2] = endX;
 		block[3] = endY;
 		
-		blocks.add(block);
-		
-		numBlocks++;
+		this.addBlock(block);
 	}
 
 	public Iterator<Double[]> iterator() {

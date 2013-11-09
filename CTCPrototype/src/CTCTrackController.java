@@ -24,18 +24,25 @@ public class CTCTrackController extends CTCMainController {
 		System.out.println("Initializing the CTC Track Controller");
 		HBox buttonBox = new HBox();
 		buttonBox.setSpacing(20);
-		Button newTrackButton = new Button("Add track");
+		Button addTrackButton = new Button("Add track");
 		Button removeTrackButton = new Button("Remove track");
 		if (!CTC.currUser.isTrackCreator()) {
-			newTrackButton.setDisable(true);
+			addTrackButton.setDisable(true);
 			removeTrackButton.setDisable(true);
 		}
-		buttonBox.getChildren().addAll(newTrackButton, removeTrackButton);
+		buttonBox.getChildren().addAll(addTrackButton, removeTrackButton);
 		this.getChildren().add(buttonBox);
 		
-		if (CTC.blockCount == 0) {
+		if (CTC.numTracks == 0) {
 			addTrack();
 		}
+		
+		addTrackButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				addTrack();
+			}
+		});
 	}
 	
 	public void addTrack() {
@@ -52,7 +59,7 @@ public class CTCTrackController extends CTCMainController {
 			public void handle(ActionEvent event) {
 				// Get the user input
 				String trackCsv = inputTrack.getText();
-				
+				Track newTrack = new Track();
 				//*
 				try {
 					Scanner fileScan = new Scanner(new File(trackCsv));
@@ -66,8 +73,7 @@ public class CTCTrackController extends CTCMainController {
 						block[2] = Double.parseDouble(blockInfo[3]);
 						block[3] = Double.parseDouble(blockInfo[4]);
 						
-						CTC.blockCoordinates.add(block);
-						CTC.blockCount++;
+						newTrack.addBlock(block);
 					}
 					fileScan.close();
 					trackPopup.hide();
@@ -79,8 +85,9 @@ public class CTCTrackController extends CTCMainController {
 				}
 				// */
 				
+				CTC.tracks[CTC.numTracks] = newTrack;
+				CTC.numTracks++;
 				displayTrack();
-				System.out.println("New block count: " + CTC.blockCount);
 			}
 		});
 		

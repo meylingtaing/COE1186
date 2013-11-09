@@ -14,13 +14,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
 public class CTCMainController extends VBox {
-	FXMLLoader fxmlLoader;
+	private FXMLLoader fxmlLoader;
+	private final String view = "CTCView.fxml";
 	
 	@FXML
 	Pane displayBox;
 	
 	public CTCMainController() {
-        fxmlLoader = new FXMLLoader(getClass().getResource("CTCView.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource(view));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -57,17 +58,18 @@ public class CTCMainController extends VBox {
 	 * Creates the track display
 	 */
 	protected void displayTrack() {
+		for (int i = 0; i < CTC.numTracks; i++) {
 		
-		for (int i = 0; i < CTC.blockCount; i++) {
-			double startX = CTC.blockCoordinates.get(i)[0]/10+10;
-			double startY = CTC.blockCoordinates.get(i)[1]/10+10;
-			double endX = CTC.blockCoordinates.get(i)[2]/10+10;
-			double endY = CTC.blockCoordinates.get(i)[3]/10+10;
-			
-			Line line = new Line(startX, startY, endX, endY);
-			line.setStyle("-fx-fill: #FFFFFF;");
-			displayBox.getChildren().add(line);
-			//System.out.println(line.getStyleClass());
+			for (Double[] block: CTC.tracks[i]) {
+				double startX = block[0]/10+10;
+				double startY = block[1]/10+10;
+				double endX = block[2]/10+10;
+				double endY = block[3]/10+10;
+				
+				Line line = new Line(startX, startY, endX, endY);
+				//line.setStyle("-fx-fill: #FFFFFF;");
+				displayBox.getChildren().add(line);
+			}
 		}
 		
 	}
