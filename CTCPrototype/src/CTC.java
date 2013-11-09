@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 public class CTC extends Application {
 	protected static ArrayList<Double[]> blockCoordinates;
 	protected static int blockCount;
+	protected static Track[] tracks;
 	protected static Stage ctcStage;
 	protected static User currUser;
 	
