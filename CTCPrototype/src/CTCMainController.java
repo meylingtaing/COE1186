@@ -17,8 +17,11 @@ public class CTCMainController extends VBox {
 	private FXMLLoader fxmlLoader;
 	private final String view = "CTCView.fxml";
 	
-	@FXML
-	Pane displayBox;
+	@FXML Pane displayBox;
+	
+	@FXML HBox buttonContainer;
+	
+	@FXML VBox infoContainer;
 	
 	public CTCMainController() {
         fxmlLoader = new FXMLLoader(getClass().getResource(view));
@@ -36,22 +39,24 @@ public class CTCMainController extends VBox {
 	 * Initializes this controller
 	 */
 	public void initialize() {
-		System.out.println("Initializing the main CTC view");
-		HBox buttonBox = new HBox();
-		buttonBox.setSpacing(20);
+
+		// Add all of the buttons
 		Button trackButton = new Button("Edit Tracks");
-		if (CTC.currUser == null)
+		Button routeButton = new Button("Edit Routes");
+		
+		if (CTC.currUser == null) {
 			trackButton.setDisable(true);
+			routeButton.setDisable(true);
+		}
+		
+		buttonContainer.getChildren().addAll(trackButton, routeButton);
+		
 		trackButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				navigateTrack();
 			}
 		});
-		Button routeButton = new Button("Edit Routes");
-		buttonBox.getChildren().addAll(trackButton, routeButton);
-		//this.getChildren().clear();
-		this.getChildren().add(buttonBox);
 	}
 	
 	/**
