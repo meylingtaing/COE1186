@@ -1,0 +1,9 @@
+package TrainController
+
+import javafx.scene.layout.AnchorPane
+
+component TrainControllerUI {
+	AnchorPane {
+		//TODO Add Nodes
+	}
+}
