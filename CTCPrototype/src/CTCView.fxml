@@ -2,15 +2,25 @@
 
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 <?import java.net.*?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="https://javafx.com/fxml" minWidth="640" minHeight="480" spacing="10" >
+<fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" minWidth="640" minHeight="480" spacing="10" >
 
 <stylesheets>
-		<URL value="@CTCStyle.css" />
+		<URL value="@../CTCStyle.css" />
 </stylesheets>
 
-	<Pane fx:id="displayBox" styleClass="displayStyle" minHeight="400" minWidth="640" />
+	<BorderPane styleClass="displayStyle" minHeight="400" minWidth="640" >
+		<center>
+			<Pane fx:id="displayBox" snapToPixel="true" />
+		</center>
+		<right>
+			<VBox fx:id="legendBox" spacing="10" >
+				<padding><Insets top="10" right="5" bottom="0" left="0"/></padding>
+			</VBox>
+		</right>
+	</BorderPane>
 	<VBox fx:id="infoContainer" spacing="10" />
 	<HBox fx:id="buttonContainer" spacing="10" />
 

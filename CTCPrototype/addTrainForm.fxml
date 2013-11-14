@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.stage.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="CTCRouteController" >
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="Train Name: " textAlignment="RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<TextField fx:id="trainNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+	<HBox GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2" >
+		<Text fx:id="errorMessage" text="Error in creating train" visible="false" />
+		<Button text="Submit" onAction="#submitNewTrain" />
+		<Button text="Cancel" onAction="#cancel" />
+	</HBox>
+</GridPane>

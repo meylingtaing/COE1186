@@ -1,18 +1,42 @@
+/**
+ * The functionality of the Track Manager in CTC
+ * 
+ * @author meyling
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 
 public class CTCTrackController extends CTCMainController {
+	
+	private String addTrackFile = "addTrackForm.fxml";
+	private HBox selectedTrackLegend;
+	
+	@FXML private TextField trackCsvInput, trackNameInput;
+	@FXML private Text errorMessage;
+	@FXML private ToggleGroup toggleColors;
+	
+	private Button removeTrackButton;
+	
 	public CTCTrackController() {
 		super();
 	}
@@ -21,29 +45,68 @@ public class CTCTrackController extends CTCMainController {
 	 * Initializes controller
 	 */
 	public void initialize() {
-		System.out.println("Initializing the CTC Track Controller");
+		selectedTrackLegend = null;
 		Button addTrackButton = new Button("Add track");
-		Button removeTrackButton = new Button("Remove track");
+		removeTrackButton = new Button("Remove track");
+		removeTrackButton.setDisable(true);
+		Button navigateMainButton = new Button("Back to Main");
 		if (!CTC.currUser.isTrackCreator()) {
 			addTrackButton.setDisable(true);
-			removeTrackButton.setDisable(true);
 		}
-		buttonContainer.getChildren().addAll(addTrackButton, removeTrackButton);
+		buttonContainer.getChildren().addAll(addTrackButton, removeTrackButton, navigateMainButton);
 		
 		//*
 		if (CTC.numTracks == 0) {
-			displayAddTrack();
+			//displayAddTrack();
 		}
 		//*/
 		
-		displayInfo();
+		displayTrack();
+		displayTrains();
+		//displayInfo();
 		
 		addTrackButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				displayAddTrack();
+				displayPopup(addTrackFile, "Add new track");
 			}
 		});
+		
+		removeTrackButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				removeTrack();
+			}
+		});
+		
+		navigateMainButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				navigateMain();
+			}
+		});
+	}
+	
+	protected void displayTrack() {
+		super.displayTrack();
+		
+		// This will allow the user to select tracks for deleting
+		ObservableList<Node> trackLegends = legendBox.getChildren();
+		for (final Node trackLegend : trackLegends) {
+			// Make the legend click-able
+			trackLegend.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent event) {
+					trackLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
+					
+					if (CTC.currUser.isTrackCreator())
+						removeTrackButton.setDisable(false);
+					
+					if (selectedTrackLegend != null)
+						selectedTrackLegend.setStyle("-fx-border-width: 0px;");
+					selectedTrackLegend = (HBox) trackLegend;
+				}
+			});
+		}
 	}
 	
 	public void displayInfo() {
@@ -57,8 +120,9 @@ public class CTCTrackController extends CTCMainController {
 		CTC.ctcStage.sizeToScene();
 	}
 	
-	private boolean addTrack(String trackName, String trackCsv) {
+	private boolean addTrack(String trackName, String trackCsv, String color) {
 		Track newTrack = new Track(trackName);
+		newTrack.color = color;
 
 		try {
 			Scanner fileScan = new Scanner(new File(trackCsv));
@@ -72,7 +136,15 @@ public class CTCTrackController extends CTCMainController {
 				block[2] = Double.parseDouble(blockInfo[3]);
 				block[3] = Double.parseDouble(blockInfo[4]);
 				
-				newTrack.addBlock(block);
+				String station;
+				if (blockInfo[5].equals("none")) {
+					station = null;
+				}
+				else {
+					station = blockInfo[5];
+				}
+				
+				newTrack.addBlock(block, station);
 			}
 			fileScan.close();
 		} 
@@ -83,56 +155,60 @@ public class CTCTrackController extends CTCMainController {
 		
 		CTC.tracks[CTC.numTracks] = newTrack;
 		CTC.numTracks++;
-		displayTrack();
-		displayInfo();
 		return true;
 	}
 	
-	public void displayAddTrack() {
-		// Prompt user for a csv file
-		final Popup trackPopup = new Popup();
-		final TextField trackCsvInput = new TextField();
-		final TextField trackNameInput = new TextField();
-		Text trackNamePrompt = new Text("Track name");
-		Text trackCsvPrompt = new Text("Csv file");
-		final Text errorText = new Text("Error: file not found");
-		errorText.setVisible(false);
+	@FXML private void submitNewTrack() {
+		String trackCsv = trackCsvInput.getText();
+		String trackName = trackNameInput.getText();
 		
-		Button submitButton = new Button("Submit");
-		Button cancelButton = new Button("Cancel");
+		RadioButton selectedButton = (RadioButton) toggleColors.getSelectedToggle();
+		String color = selectedButton.getText().toUpperCase();
 		
-		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(submitButton, cancelButton);
+		if (addTrack(trackName, trackCsv, color)) {
+			Stage currStage = (Stage) trackCsvInput.getScene().getWindow();
+			currStage.close();
+			navigateTrack();
+		}
+		else
+			errorMessage.setVisible(true);
+	}
+	
+	@FXML private void enter(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			submitNewTrack();
+		}
+	}
+	
+	@FXML protected void cancel(ActionEvent event) {
+		Node currNode = (Node) event.getSource();
+		Stage currStage = (Stage) currNode.getScene().getWindow();
+		currStage.close();
+		navigateTrack();
+	}
+	
+	private void removeTrack() {
+		if (selectedTrackLegend == null)
+			return;
 		
-		GridPane popupPane = new GridPane();
-		popupPane.add(trackNamePrompt, 0, 0);
-		popupPane.add(trackNameInput, 1, 0);
-		popupPane.add(trackCsvPrompt, 0, 1);
-		popupPane.add(trackCsvInput, 1, 1);
-		popupPane.add(buttonBox, 1, 2);
-		
-		trackPopup.getContent().addAll(popupPane);
-		popupPane.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
-		trackPopup.show(CTC.ctcStage, 500, 300);
-		
-		submitButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override 
-			public void handle(ActionEvent event) {
-				String trackCsv = trackCsvInput.getText();
-				String trackName = trackNameInput.getText();
-				if (addTrack(trackName, trackCsv))
-					trackPopup.hide();
-				else
-					errorText.setVisible(true);
+		for (int i = 0; i < CTC.numTracks; i++) {
+			Label selectedLabel = (Label) selectedTrackLegend.getChildren().get(0);
+			String selectedTrackName = selectedLabel.getText();
+			if (selectedTrackName.equals(CTC.tracks[i].toString())) {
+				selectedTrackLegend = null;
+				CTC.tracks[i] = null;
+				
+				for (; i < CTC.numTracks - 1; i++) {
+					CTC.tracks[i] = CTC.tracks[i+1];
+				}
+				
+				CTC.numTracks--;
+				break;
 			}
-		});
+		}
 		
+		displayTrack();
+		displayInfo();
 		
-		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				trackPopup.hide();
-			}
-		});
 	}
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.*?>
+
+<fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" minWidth="640" minHeight="480" spacing="10" >
+
+<stylesheets>
+		<URL value="@CTCStyle.css" />
+</stylesheets>
+
+	<Pane fx:id="displayBox" styleClass="displayStyle" minHeight="400" minWidth="640" />
+	<VBox fx:id="infoContainer" spacing="10" />
+	<HBox fx:id="buttonContainer" spacing="10" />
+
+</fx:root>
