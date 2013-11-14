@@ -39,6 +39,7 @@ public class TrainController implements Runnable {
 			fps++;
 			
 			cruiseControl();
+			maintainAuthority();
 			
 			//System.out.println(iteration++ + ":\t\t" + fpsOut + "\t" + delta + "\t" + lastLoopTime + "\t" + optimalTime);
 			System.out.println(iteration++ + ":\t\t" + speedSetpoint + "\t" + speed);
@@ -75,8 +76,7 @@ public class TrainController implements Runnable {
 		lightsOn = false;
 		passengerCount = 0;
 		position = new Vector();
-		temperatureSetpoint = 68;		
-		
+		temperatureSetpoint = 68;
 	}
 	
 	public Boolean closeDoors() {
@@ -142,9 +142,20 @@ public class TrainController implements Runnable {
 			speed = model.setPower(powerSetpoint);
 		}
 		if(guic != null) {
-			//if(guic.text_currentSpeed != null)
+			if(guic.text_currentSpeed != null)
 				guic.text_currentSpeed.setText(Double.toString(speed));
+				guic.setPowerText(powerSetpoint.intValue());
 		}
+	}
+	
+	private void maintainAuthority() {
+		Double speed2 = speed * 5.0 / 18.0; // conversion rate from km/h to m/s
+		Double distanceTraveled = speed2 * delta * optimalTime * .000000001; // convert to seconds
+		authoritySetpointMoving = authoritySetpointMoving - distanceTraveled;
+		int output = authoritySetpointMoving.intValue();
+		System.out.println("Authority:" + output + "\t" + distanceTraveled);
+		if(guic != null)
+			guic.setAuthorityText(output);
 	}
 	
 	public Boolean isTrainStopped() {
@@ -164,7 +175,9 @@ public class TrainController implements Runnable {
 	}
 	
 	public Boolean setAuthorityMoving(Double distance) {
-		return false;
+		authoritySetpointMoving = distance;
+		guic.setAuthorityText(authoritySetpointMoving.intValue());
+		return true;
 	}
 	
 	public Boolean setAuthorityFixed(Block distance) {

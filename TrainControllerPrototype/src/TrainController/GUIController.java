@@ -19,8 +19,12 @@ public class GUIController implements Initializable {
 	@FXML private Button button_doorsClose;
 	@FXML private Button button_speedUp;
 	@FXML private Button button_speedDown;
+	@FXML private Button button_newAuthority;
 	@FXML public TextField text_speed;
 	@FXML public TextField text_currentSpeed;
+	@FXML public TextField text_currentPower;
+	@FXML public TextField text_newAuthority;
+	@FXML public TextField text_currentAuthority;
 	
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
@@ -28,8 +32,12 @@ public class GUIController implements Initializable {
     	assert button_doorsClose != null : "fx:id=\"button_doorsClose\" was not injected: check your FXML file 'TrainControllerUI.fxml'.";
     	assert button_speedUp != null : "fx:id=\"button_speedUp\" was not injected: check your FXML file 'TrainControllerUI.fxml'.";
     	assert button_speedDown != null : "fx:id=\"button_speedDown\" was not injected: check your FXML file 'TrainControllerUI.fxml'.";
+    	assert button_newAuthority != null : "fx:id=\"button_newAuthority\" was not injected: check your FXML file 'TrainControllerUI.fxml'.";
     	assert text_speed != null : "null";
     	assert text_currentSpeed != null : "null";
+    	assert text_currentPower != null : "null";
+    	assert text_newAuthority != null : "null";
+    	assert text_currentAuthority != null : "null";
     	
     	// initialize your logic here: all @FXML variables will have been injected
     	
@@ -76,17 +84,25 @@ public class GUIController implements Initializable {
     		}
     	});
     	
-    	text_speed.setOnAction(new EventHandler<ActionEvent>() {
+    	button_newAuthority.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent event) {
-    			System.out.println("Close Doors Command Sent");
+    			System.out.println("New Authority Command Set");
     			if (TC != null) {
-    				TC.closeDoors();
+    				TC.setAuthorityMoving(Double.parseDouble(text_newAuthority.getText()));
     			}
     		}
     	});
     	
     	
+    }
+    
+    public void setAuthorityText(int authority) {
+    	text_currentAuthority.setText(authority + "");
+	}
+    
+    public void setPowerText(int power) {
+    	text_currentPower.setText(power + "");
     }
     
     
