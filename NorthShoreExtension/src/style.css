@@ -1,0 +1,55 @@
+/**
+ * The stylesheet for the North Shore Extension program
+ * 
+ * 		. styleClass
+ *		# fx:id
+ *		You can place the style class property in the fxml file
+ *		or in your .java file use getStyleClass().add("styleClass")
+ *		This file is read from top to bottom so anything on the bottom 
+ *		can overwrite anything above
+ */
+
+.header 
+{
+ 	-fx-font-size: 32px;
+}
+ 
+.largeButton
+{
+ 	-fx-font-size: 24px;
+ 	-fx-alignment: center;
+ 	-fx-fill-width: true;
+}
+ 
+#displayBox 
+{
+ 	-fx-background-color: #000000;
+}
+
+#legendBox
+{
+	-fx-background-color: #000000;
+}
+
+.ctcLegend
+{
+	-fx-text-fill: #FFFFFF;
+}
+ 
+.green 
+{
+	-fx-fill: #00FF00;
+	-fx-stroke: #00FF00;
+}
+
+.red 
+{
+	-fx-fill: #FF0000;
+	-fx-stroke: #FF0000;
+}
+
+.blue 
+{
+	-fx-fill: #0000FF;
+	-fx-stroke: #0000FF;
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.stage.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.Login" >
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="Username: " textAlignment="RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<Text text="Password: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
+	<TextField fx:id="usernameInput" onKeyReleased="#enter" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+	<PasswordField fx:id="passwordInput" onKeyReleased="#enter" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+	<HBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2">
+		<Text fx:id="errorMessage" text="Invalid username/pw combination" visible="false" />
+		<Button onAction="#submit" text="Submit" GridPane.rowIndex="3" />
+	</HBox>
+</GridPane>
