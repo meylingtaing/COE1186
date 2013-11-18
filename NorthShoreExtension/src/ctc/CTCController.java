@@ -5,6 +5,7 @@
 package ctc;
 
 import java.io.IOException;
+
 import trackModel.Block;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -25,7 +27,8 @@ import javafx.stage.Stage;
 
 public class CTCController 
 {
-	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, navigateMainButton;
+	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, 
+							navigateMainButton, addTrainButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox;
 	
@@ -50,11 +53,9 @@ public class CTCController
 	{
 		// Clear display first
 		displayBox.getChildren().clear();
-		trackLegendBox.getChildren().clear();
-		trainLegendBox.getChildren().clear();
 		
 		for (int i = 0; i < CTC.tracks.size(); i++) {
-			int j = 1;
+			int j = 0;
 			for (final Double[] block: CTC.tracks.get(i)) 
 			{
 				double startX = block[0]/10+10;
@@ -118,6 +119,9 @@ public class CTCController
 	 */
 	protected void displayLegend()
 	{
+		trackLegendBox.getChildren().clear();
+		trainLegendBox.getChildren().clear();
+		
 		for (int i = 0; i < CTC.tracks.size(); i++) {
 			// Display legend at the right of the track
 			Rectangle trackSymbol = new Rectangle(20, 3);
@@ -127,6 +131,17 @@ public class CTCController
 			trackSymbol.setStyle(symbolStyle);
 			
 			trackLegendBox.getChildren().add(trackLabel);
+		}
+		
+		for (int i = 0; i < CTC.transitSystem.trains.size(); i++)
+		{
+			// Display trains in the legend
+			Circle trainSymbol = new Circle(3);
+			Label trainLabel = new Label(CTC.transitSystem.trains.get(i).getName(), trainSymbol);
+			trainLabel.getStyleClass().add("ctcLegend");
+			trainSymbol.setStyle("-fx-fill: #FFFFFF;");
+			
+			trainLegendBox.getChildren().add(trainLabel);
 		}
 	}
 	
@@ -151,6 +166,11 @@ public class CTCController
 		{
 			fxmlFile = "CTCView.fxml";
 			title = "CTC";
+		}
+		else if (buttonClicked == editRoutesButton)
+		{
+			fxmlFile = "CTCRouteView.fxml";
+			title = "CTC -- Train and Route Manager";
 		}
 		else
 		{
@@ -188,6 +208,11 @@ public class CTCController
 		{
 			viewFile = "addTrackForm.fxml";
 			title = "Add New Track";
+		}
+		else if (clickedButton == addTrainButton)
+		{
+			viewFile = "addTrainForm.fxml";
+			title = "Add New Train";
 		}
 		else
 		{

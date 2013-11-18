@@ -10,10 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public abstract class FormController 
 {
+	@FXML protected Text errorMessage;
+	
 	/**
 	 * Closes the popup window when cancel button is pressed
 	 * 

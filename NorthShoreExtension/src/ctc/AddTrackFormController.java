@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddTrackFormController extends FormController 
@@ -22,7 +21,6 @@ public class AddTrackFormController extends FormController
 	
 	@FXML private TextField trackCsvInput, trackNameInput;
 	@FXML private ToggleGroup toggleColors;
-	@FXML private Text errorMessage;
 	
 	/**
 	 * Grabs the user inputs from add track form

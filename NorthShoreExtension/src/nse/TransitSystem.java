@@ -9,7 +9,10 @@
  */
 package nse;
 
+import java.util.ArrayList;
+
 import trackModel.Track;
+import trainModel.TrainModel;
 import ctc.CTC;
 
 public class TransitSystem 
@@ -17,6 +20,7 @@ public class TransitSystem
 	// Instances of all of the modules
 	public CTC ctc = new CTC(this);
 	public Track track = new Track();
+	public ArrayList<TrainModel> trains = new ArrayList<TrainModel>();
 	
 	public TransitSystem()
 	{
