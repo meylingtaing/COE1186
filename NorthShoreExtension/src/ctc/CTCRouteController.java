@@ -11,4 +11,6 @@ public class CTCRouteController extends CTCController {
 		if (!CTC.currUser.isDispatcher())
 			addTrainButton.setDisable(true);
 	}
+	
+	
 }

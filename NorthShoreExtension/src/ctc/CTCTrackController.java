@@ -30,6 +30,34 @@ public class CTCTrackController extends CTCController
 		}
 		
 		displayTrack();
+		
+		// Make the event handler for selecting a legend
+		selectLegendHandler = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event)
+			{
+				Node trackLegend = (Node) event.getSource();
+				trackLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
+				
+				if (CTC.currUser.isTrackCreator())
+					removeTrackButton.setDisable(false);
+				
+				if (selectedTrackLegend == trackLegend)
+				{
+					selectedTrackLegend.setStyle("-fx-border-width: 0px;");
+					selectedTrackLegend = null;
+					removeTrackButton.setDisable(true);
+				}
+				
+				else 
+				{
+					if (selectedTrackLegend != null)
+						selectedTrackLegend.setStyle("-fx-border-width: 0px;");
+					
+					selectedTrackLegend = (Label) trackLegend;
+				}
+			}
+		};
+		// END selectLegendHandler ********************************************
 	}
 	
 	/**
@@ -43,29 +71,7 @@ public class CTCTrackController extends CTCController
 		for (final Node trackLegend : trackLegends)
 		{
 			// Make the legend click-able
-			trackLegend.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent event) {
-					trackLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
-					
-					if (CTC.currUser.isTrackCreator())
-						removeTrackButton.setDisable(false);
-					
-					if (selectedTrackLegend == trackLegend)
-					{
-						selectedTrackLegend.setStyle("-fx-border-width: 0px;");
-						selectedTrackLegend = null;
-						removeTrackButton.setDisable(true);
-					}
-					
-					else 
-					{
-						if (selectedTrackLegend != null)
-							selectedTrackLegend.setStyle("-fx-border-width: 0px;");
-						
-						selectedTrackLegend = (Label) trackLegend;
-					}
-				}
-			});
+			trackLegend.setOnMouseClicked(selectLegendHandler);
 		}
 	}
 	

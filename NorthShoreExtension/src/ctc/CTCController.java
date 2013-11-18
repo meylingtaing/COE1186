@@ -33,7 +33,9 @@ public class CTCController
 	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox;
 	
 	private String trackGui = "CTCTrackView.fxml";
-	//private String routeGui = "CTCRouteView.fxml";
+	private String routeGui = "CTCRouteView.fxml";
+	
+	protected EventHandler<MouseEvent> selectLegendHandler;
 	
 	public void initialize() 
 	{
@@ -44,6 +46,14 @@ public class CTCController
 			editTracksButton.setDisable(true);
 		
 		displayTrack();
+		
+		// Make the event handler for selecting a legend
+		selectLegendHandler = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event)
+			{
+				
+			}
+		};
 	}
 	
 	/**
@@ -114,6 +124,11 @@ public class CTCController
 		displayLegend();
 	}
 	
+	protected void makeObjectsSelectable()
+	{
+		
+	}
+	
 	/**
 	 * Display the legend
 	 */
@@ -169,7 +184,7 @@ public class CTCController
 		}
 		else if (buttonClicked == editRoutesButton)
 		{
-			fxmlFile = "CTCRouteView.fxml";
+			fxmlFile = routeGui;
 			title = "CTC -- Train and Route Manager";
 		}
 		else
