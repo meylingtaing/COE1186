@@ -1,7 +1,5 @@
 package trainmodule;
 
-import java.util.*;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,18 +8,9 @@ import javafx.stage.Stage;
 
 public class TrainView extends Application
 {	
+	
 	public static void main(String[] args)
-	{
-		ArrayList<TrainModel> list = new ArrayList<TrainModel>();
-		Stack<String> temp = new Stack<String>();
-		temp.push("Hazelwood");
-		temp.push("Oakland");
-		temp.push("Downtown");
-		
-		list.add(new TrainModel(1, new Route(temp), 70.2, "SUPERUSER"));
-		list.add(new TrainModel(1, new Route(temp), 69.2, "ENGINEER"));
-		list.add(new TrainModel(1, new Route(temp), 67.4, "?????????"));
-		
+	{	
 		launch(args);
 	}
 	

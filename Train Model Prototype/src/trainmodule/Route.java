@@ -12,7 +12,9 @@ public class Route
 	{
 		route = list;
 		currentStop = "Yard";
-		nextStop = list.pop();
+		
+		if (!list.isEmpty())
+			nextStop = list.pop();
 	}
 	
 	public String getNextStop()
