@@ -19,8 +19,11 @@ public class DoorController
 		doors = false;
 	}
 	
-	public boolean getDoors()
+	public String getDoors()
 	{
-		return doors;
+		if (doors)
+			return "Open";
+		else
+			return "Closed";
 	}
 }

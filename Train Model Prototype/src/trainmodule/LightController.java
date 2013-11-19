@@ -19,8 +19,11 @@ public class LightController
 		lights = false;
 	}
 	
-	public boolean getLights()
+	public String getLights()
 	{
-		return lights;
+		if (lights)
+			return "On";
+		else
+			return "Off";
 	}
 }
