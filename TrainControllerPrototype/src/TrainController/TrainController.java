@@ -15,7 +15,7 @@ public class TrainController implements Runnable {
 	private Vector position;
 	private int temperatureSetpoint;
 	public long loopsPS = 5;
-	public long optimalTime = 1000000000 / loopsPS; // One second divided my loops per second.
+	public long optimalTime = 1000000000 / loopsPS; // One second divided by loops per second.
 	public double delta;
 	
 	private GUI UI;
@@ -132,6 +132,7 @@ public class TrainController implements Runnable {
 	}
 	
 	private void cruiseControl() {
+		// To-Do: Implement Control Laws
 		if(speed < speedSetpoint) {
 			powerSetpoint += .5;
 			speed = model.setPower(powerSetpoint);
