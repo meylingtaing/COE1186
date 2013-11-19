@@ -10,10 +10,12 @@
 package nse;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import trackModel.Track;
 import trainModel.TrainModel;
 import ctc.CTC;
+import ctc.Route;
 
 public class TransitSystem 
 {
@@ -21,6 +23,7 @@ public class TransitSystem
 	public CTC ctc = new CTC(this);
 	public Track track = new Track();
 	public ArrayList<TrainModel> trains = new ArrayList<TrainModel>();
+	public Hashtable<TrainModel, Route> routeList = new Hashtable<TrainModel, Route>();
 	
 	public TransitSystem()
 	{

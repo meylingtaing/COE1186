@@ -38,6 +38,7 @@ public class AddTrackFormController extends FormController
 			Stage currStage = (Stage) trackCsvInput.getScene().getWindow();
 			currStage.close();
 			CTC.ctcController.displayTrack();
+			CTC.ctcController.displayLegend();
 		}
 		else
 			errorMessage.setVisible(true);
@@ -53,7 +54,7 @@ public class AddTrackFormController extends FormController
 	public boolean addTrack(String trackName, String trackCsv, String color) 
 	{
 		TrackLayout newTrackLayout = new TrackLayout(trackName, color);
-		TrackObject newTrackObject = new TrackObject();
+		TrackObject newTrackObject = new TrackObject(trackName);
 		
 		// Load coordinates from csv file
 		try

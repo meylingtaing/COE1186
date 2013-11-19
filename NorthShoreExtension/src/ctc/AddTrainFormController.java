@@ -11,6 +11,7 @@ public class AddTrainFormController extends FormController {
 	
 	private boolean addTrain(String trainName)
 	{
+		
 		TrainModel newTrain = new TrainModel(trainName, CTC.transitSystem.trains.size());
 		CTC.transitSystem.trains.add(newTrain);
 		return true;
@@ -20,11 +21,11 @@ public class AddTrainFormController extends FormController {
 	@FXML protected void submit() 
 	{
 		String trainName = trainNameInput.getText();
-		
 		if (addTrain(trainName)) 
 		{
 			Stage currStage = (Stage) trainNameInput.getScene().getWindow();
 			currStage.close();
+			CTC.ctcController.displayTrack();
 			CTC.ctcController.displayLegend();
 		}
 		else

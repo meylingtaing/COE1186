@@ -29,9 +29,8 @@ public class CTCTrackController extends CTCController
 			removeTrackButton.setDisable(true);
 		}
 		
-		displayTrack();
 		
-		// Make the event handler for selecting a legend
+		// Make the event handler for selecting a legend **********************
 		selectLegendHandler = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event)
 			{
@@ -58,14 +57,16 @@ public class CTCTrackController extends CTCController
 			}
 		};
 		// END selectLegendHandler ********************************************
+		displayTrack();
+		displayLegend();
 	}
 	
 	/**
 	 * Displays the track layout and makes track items selectable
 	 */
-	protected void displayTrack()
+	protected void displayLegend()
 	{
-		super.displayTrack();
+		super.displayLegend();
 		
 		ObservableList<Node> trackLegends = trackLegendBox.getChildren();
 		for (final Node trackLegend : trackLegends)

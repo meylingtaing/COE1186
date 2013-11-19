@@ -7,15 +7,15 @@
 <?import javafx.geometry.*?>
 <?import java.net.*?>
 
-<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.AddTrainFormController" >
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.RouteTrainFormController" vgap="10" >
 <stylesheets>
 		<URL value="@../style.css" />
 </stylesheets>
 	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
-	<Text text="Train Name: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
-	<TextField fx:id="trainNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" onKeyReleased="#enter" />
+	<Text text="Track: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<ComboBox fx:id="trackListBox" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200" />
 	<HBox GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2" >
-		<Text fx:id="errorMessage" text="Error in creating train" visible="false" />
+		<Text fx:id="errorMessage" text="Error in choosing track" visible="false" />
 		<Button text="Submit" onAction="#submit" />
 		<Button text="Cancel" onAction="#cancel" />
 	</HBox>

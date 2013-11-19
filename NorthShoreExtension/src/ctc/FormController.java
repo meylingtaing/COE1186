@@ -29,9 +29,15 @@ public abstract class FormController
 		currStage.close();
 	}
 	
+	/**
+	 * Submits when enter is pressed
+	 * 
+	 * @param event
+	 */
 	@FXML protected void enter(KeyEvent event)
 	{
-		if (event.getCode() == KeyCode.ENTER) {
+		if (event.getCode() == KeyCode.ENTER) 
+		{
 			submit();
 		}
 	}

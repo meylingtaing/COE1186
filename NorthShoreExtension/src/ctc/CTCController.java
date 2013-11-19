@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class CTCController 
 {
 	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, 
-							navigateMainButton, addTrainButton;
+							navigateMainButton, addTrainButton, routeTrainButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox;
 	
@@ -46,14 +46,16 @@ public class CTCController
 			editTracksButton.setDisable(true);
 		
 		displayTrack();
+		displayLegend();
 		
-		// Make the event handler for selecting a legend
+		/*
 		selectLegendHandler = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event)
 			{
 				
 			}
 		};
+		//*/
 	}
 	
 	/**
@@ -120,8 +122,6 @@ public class CTCController
 				j++;
 			}
 		}
-		
-		displayLegend();
 	}
 	
 	protected void makeObjectsSelectable()
@@ -137,7 +137,8 @@ public class CTCController
 		trackLegendBox.getChildren().clear();
 		trainLegendBox.getChildren().clear();
 		
-		for (int i = 0; i < CTC.tracks.size(); i++) {
+		for (int i = 0; i < CTC.tracks.size(); i++) 
+		{
 			// Display legend at the right of the track
 			Rectangle trackSymbol = new Rectangle(20, 3);
 			Label trackLabel = new Label(CTC.tracks.get(i).toString(), trackSymbol);
@@ -228,6 +229,11 @@ public class CTCController
 		{
 			viewFile = "addTrainForm.fxml";
 			title = "Add New Train";
+		}
+		else if (clickedButton == routeTrainButton)
+		{
+			viewFile = "routeTrainForm.fxml";
+			title = "Choose Track";
 		}
 		else
 		{

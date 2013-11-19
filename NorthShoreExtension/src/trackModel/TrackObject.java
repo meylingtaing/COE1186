@@ -13,9 +13,10 @@ public class TrackObject
 	/**
 	 * Constructor 
 	 */
-	public TrackObject()
+	public TrackObject(String name)
 	{
 		blockDB = new Hashtable<Integer, Block>();
+		line = name;
 	}
 	
 	public String getLine()
