@@ -11,8 +11,10 @@ public class EngineModel
 	private double maxBrakeDeceleration = 1.8;
 	private double emergencyDeceleration = 4.095;
 	private double gravity = 9.8067;
-	private double frictionCoefficient = 0.0015;
-	private double staticFrictionCoefficient = 0.01;
+	private double frictionCoefficient = 0.1;
+	private double staticFrictionCoefficient = 0.5;
+	private double setpoint;
+	private boolean eBrake = false;
 		
 	private double currentVelocity;
 	private double currentGradient;
@@ -22,6 +24,7 @@ public class EngineModel
 	
 	public EngineModel(/*double time*/)
 	{
+		setpoint = 0;
 		currentVelocity = 0;
 		currentGradient = 0;
 		engineFailure = false;
@@ -38,9 +41,13 @@ public class EngineModel
 	}
 	
 	public double pullBrake(double load, double mass)
-	{
+	{		
 		if (brakeFailure)
 			load = 0;
+		else
+		{
+			setpoint = 0;
+		}
 		
 		if (mass * gravity * Math.sin(Math.atan(currentGradient / 100)) <= mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * staticFrictionCoefficient + maxBrakeDeceleration * load * mass)
 			currentVelocity = 0;
@@ -52,6 +59,8 @@ public class EngineModel
 	
 	public double pullEmergencyBrake(double mass)
 	{		
+		setpoint = 0;
+		
 		if (mass * gravity * Math.sin(Math.atan(currentGradient / 100)) <= mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * staticFrictionCoefficient + emergencyDeceleration * mass)
 			currentVelocity = 0;
 		else
@@ -63,7 +72,10 @@ public class EngineModel
 	public double calculateSetpoint(double power, double mass)
 	{
 		if (engineFailure)
+		{
 			power = 0;
+			setpoint = 0;
+		}
 		
 		if (power > 120)
 			power = 120;
@@ -123,25 +135,33 @@ public class EngineModel
 		return currentVelocity;
 	}
 	
-	private boolean getBrakeFailure()
+	public boolean getBrakeFailure()
 	{
 		return brakeFailure;
 	}
 	
-	private void setBrakeFailure(boolean fail)
+	public void setBrakeFailure(boolean fail)
 	{
 		brakeFailure = fail;
 	}
 	
-	private boolean getEngineFailure()
+	public boolean getEngineFailure()
 	{
 		return engineFailure;
 	}
 	
-	private void setEngineFailure(boolean fail)
+	public void setEngineFailure(boolean fail)
 	{
 		engineFailure = fail;
 	}
 	
+	public double getSetpoint()
+	{
+		return setpoint;
+	}
 	
+	public double getSpeed()
+	{
+		return currentVelocity;
+	}
 }

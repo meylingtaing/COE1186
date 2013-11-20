@@ -1,26 +1,30 @@
 package TrainController;
 
+import java.util.Stack;
+
+import trainmodule.Route;
+
 public class TrainController implements Runnable {
 	
-	private TrainModel model;
-	private GPS gps;
-	private Double powerSetpoint;
-	private Double speedSetpoint;
-	private Double speed;
-	private Double authoritySetpointMoving;
-	private Block authoritySetpointFixed;
-	private Boolean doorsOpen;
-	private Boolean lightsOn;
-	private int passengerCount;
-	private Vector position;
-	private int temperatureSetpoint;
+	public trainmodule.TrainModel model;
+	public GPS gps;
+	public Double powerSetpoint;
+	public Double speedSetpoint;
+	public Double speed;
+	public Double authoritySetpointMoving;
+	public Block authoritySetpointFixed;
+	public Boolean doorsOpen;
+	public Boolean lightsOn;
+	public int passengerCount;
+	public Vector position;
+	public int temperatureSetpoint;
 	public long loopsPS = 5;
-	public long optimalTime = 1000000000 / loopsPS; // One second divided my loops per second.
+	public long optimalTime = 1000000000 / loopsPS; // One second divided by loops per second.
 	public double delta;
 	
-	private GUI UI;
-	public GUIController guic = null;
-	public Thread UIThread;
+	//private GUI UI;
+	//public GUIController guic = null;
+	//public Thread UIThread;
 	
 	public void run() {
 		long lastLoopTime = System.nanoTime();
@@ -38,8 +42,8 @@ public class TrainController implements Runnable {
 			lastFpsTime += updateLength;
 			fps++;
 			
-			cruiseControl();
-			maintainAuthority();
+			//cruiseControl();
+			//maintainAuthority();
 			
 			//System.out.println(iteration++ + ":\t\t" + fpsOut + "\t" + delta + "\t" + lastLoopTime + "\t" + optimalTime);
 			System.out.println(iteration++ + ":\t\t" + speedSetpoint + "\t" + speed);
@@ -65,7 +69,7 @@ public class TrainController implements Runnable {
 	}
 
 	public TrainController() {
-		model = new TrainModel(this);
+		model = new trainmodule.TrainModel(new trainmodule.Route(new Stack<String>()), 70.2, "???");
 		gps = new GPS();
 		powerSetpoint = 0.0;
 		speedSetpoint = 0.0;
@@ -80,11 +84,11 @@ public class TrainController implements Runnable {
 	}
 	
 	public Boolean closeDoors() {
-		return model.closeDoors();
+		return false;
 	}
 	
 	public Boolean openDoors() {
-		return model.openDoors();
+		return false;
 	}
 	
 	public Boolean turnOnLights() {
@@ -131,31 +135,32 @@ public class TrainController implements Runnable {
 		return speedSetpoint;
 	}
 	
-	private void cruiseControl() {
+	public void cruiseControl() {
+		// To-Do: Implement Control Laws
 		if(speed < speedSetpoint) {
 			powerSetpoint += .5;
-			speed = model.setPower(powerSetpoint);
+			speed = model.setSetpoint(powerSetpoint);
 		} else if (speed > speedSetpoint) {
 			powerSetpoint -= .5;
-			speed = model.setPower(powerSetpoint);
+			speed = model.setSetpoint(powerSetpoint);
 		} else {
-			speed = model.setPower(powerSetpoint);
+			speed = model.setSetpoint(powerSetpoint);
 		}
-		if(guic != null) {
-			if(guic.text_currentSpeed != null)
-				guic.text_currentSpeed.setText(Double.toString(speed));
-				guic.setPowerText(powerSetpoint.intValue());
-		}
+//		if(guic != null) {
+//			if(guic.text_currentSpeed != null)
+//				guic.text_currentSpeed.setText(Double.toString(speed));
+//				guic.setPowerText(powerSetpoint.intValue());
+//		}
 	}
 	
-	private void maintainAuthority() {
+	public void maintainAuthority(double delta) {
 		Double speed2 = speed * 5.0 / 18.0; // conversion rate from km/h to m/s
 		Double distanceTraveled = speed2 * delta * optimalTime * .000000001; // convert to seconds
 		authoritySetpointMoving = authoritySetpointMoving - distanceTraveled;
-		int output = authoritySetpointMoving.intValue();
-		System.out.println("Authority:" + output + "\t" + distanceTraveled);
-		if(guic != null)
-			guic.setAuthorityText(output);
+		//int output = authoritySetpointMoving.intValue();
+//		System.out.println("Authority:" + output + "\t" + distanceTraveled);
+//		if(guic != null)
+//			guic.setAuthorityText(output);
 	}
 	
 	public Boolean isTrainStopped() {
@@ -176,7 +181,7 @@ public class TrainController implements Runnable {
 	
 	public Boolean setAuthorityMoving(Double distance) {
 		authoritySetpointMoving = distance;
-		guic.setAuthorityText(authoritySetpointMoving.intValue());
+//		guic.setAuthorityText(authoritySetpointMoving.intValue());
 		return true;
 	}
 	

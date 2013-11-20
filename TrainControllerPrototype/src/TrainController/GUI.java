@@ -32,7 +32,7 @@ public class GUI extends Application  {
 		guicontroller = (GUIController) fxmlLoader.getController();
 		guicontroller.parentGUI = this;
 		guicontroller.TC = this.TC;
-		TC.guic = guicontroller;
+		//TC.guic = guicontroller;
 		Scene myScene = new Scene(myPane);
 		stage.setScene(myScene);
 		stage.setTitle("Train Controller Prototype");

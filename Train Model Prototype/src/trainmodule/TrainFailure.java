@@ -17,9 +17,27 @@ public class TrainFailure
 		engine = new Integer(2);
 	}
 	
-	public ArrayList<Integer> getFailures()
+	public ArrayList<String> getFailures()
 	{
-		return failures;
+		ArrayList<String> fail = new ArrayList<String>();
+		
+		for (Integer i : failures)
+		{
+			switch (i)
+			{
+				case 0:
+					fail.add("Signal");
+					break;
+				case 1:
+					fail.add("Brake");
+					break;
+				case 2:
+					fail.add("Engine");
+					break;
+			}
+		}
+		
+		return fail;
 	}
 	
 	public void fixAllFailures()
@@ -55,5 +73,20 @@ public class TrainFailure
 	public void fixBrakeFailure()
 	{
 		failures.remove(brake);
+	}
+	
+	public boolean isBrakeBroken()
+	{
+		return failures.contains(brake);
+	}
+	
+	public boolean isSignalBroken()
+	{
+		return failures.contains(signal);
+	}
+	
+	public boolean isEngineBroken()
+	{
+		return failures.contains(engine);
 	}
 }
