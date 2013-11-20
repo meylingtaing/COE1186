@@ -13,7 +13,8 @@ public class AddTrainFormController extends FormController {
 	{
 		
 		TrainModel newTrain = new TrainModel(trainName, CTC.transitSystem.trains.size());
-		CTC.transitSystem.trains.add(newTrain);
+		CTC.transitSystem.trains.put(trainName, newTrain);
+		CTC.trains.add(trainName);
 		return true;
 	}
 	

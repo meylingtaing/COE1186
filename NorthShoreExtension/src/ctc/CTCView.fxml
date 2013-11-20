@@ -7,6 +7,7 @@
 <?import java.net.*?>
 
 <fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.CTCController" minWidth="640" minHeight="480" spacing="10" >
+	<padding><Insets top="0" right="0" bottom="10" left="0"/></padding>
 
 <stylesheets>
 		<URL value="@../style.css" />

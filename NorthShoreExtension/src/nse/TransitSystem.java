@@ -9,10 +9,9 @@
  */
 package nse;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
-import trackModel.Track;
+import trackModel.TrackObject;
 import trainModel.TrainModel;
 import ctc.CTC;
 import ctc.Route;
@@ -21,9 +20,9 @@ public class TransitSystem
 {
 	// Instances of all of the modules
 	public CTC ctc = new CTC(this);
-	public Track track = new Track();
-	public ArrayList<TrainModel> trains = new ArrayList<TrainModel>();
-	public Hashtable<TrainModel, Route> routeList = new Hashtable<TrainModel, Route>();
+	public Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
+	public Hashtable<String, TrainModel> trains = new Hashtable<String, TrainModel>();
+	public Hashtable<String, Route> routeList = new Hashtable<String, Route>();
 	
 	public TransitSystem()
 	{

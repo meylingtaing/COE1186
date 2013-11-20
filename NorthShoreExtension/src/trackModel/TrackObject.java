@@ -4,8 +4,9 @@
 package trackModel;
 
 import java.util.Hashtable;
+import java.util.Iterator;
 
-public class TrackObject 
+public class TrackObject implements Iterable<Block>
 {
 	private String line;
 	private Hashtable<Integer, Block> blockDB;
@@ -33,5 +34,11 @@ public class TrackObject
 	public Block getBlock(int id)
 	{
 		return blockDB.get(id);
+	}
+
+	@Override
+	public Iterator<Block> iterator() 
+	{
+		return blockDB.values().iterator();
 	}
 }

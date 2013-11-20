@@ -27,6 +27,16 @@ public class CTCRouteController extends CTCController {
 		if (!CTC.currUser.isDispatcher())
 			addTrainButton.setDisable(true);
 		
+		setEventHandlers();
+		displayTrack();
+		displayLegend();
+	}
+	
+	/**
+	 * Creates the event handlers needed for this controller
+	 */
+	private void setEventHandlers()
+	{
 		selectLegendHandler = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event)
 			{
@@ -57,9 +67,6 @@ public class CTCRouteController extends CTCController {
 				}
 			}
 		};
-		
-		displayTrack();
-		displayLegend();
 	}
 	
 	protected void displayLegend()
@@ -81,18 +88,23 @@ public class CTCRouteController extends CTCController {
 			return;
 		
 		// Remove from transit system
-		for (TrainModel train : CTC.transitSystem.trains)
-		{
-			if (train.getName().equals(selectedTrainLegend.getText()))
-			{
-				CTC.transitSystem.trains.remove(train);
-				break;
-			}
-		}
+		CTC.transitSystem.trains.remove(selectedTrainLegend.getText());
 		
 		selectedTrainLegend = null;
 		removeTrainButton.setDisable(true);
 		displayLegend();
 		displayTrack();
+	}
+	/**
+	 * Gets the selected train
+	 * 
+	 * @return		selected Train
+	 */
+	public TrainModel getSelectedTrain()
+	{
+		if (selectedTrainLegend == null)
+			return null;
+		
+		return CTC.transitSystem.trains.get(selectedTrainLegend.getText());
 	}
 }

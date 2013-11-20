@@ -14,6 +14,7 @@ public class Block
 	private int[] possibleNextBlocks;
 	private int[] possiblePrevBlocks;
 	private double[] coordinates;
+	private String switchBlock;
 	
 	public Block(String[] blockInfo)
 	{
@@ -38,6 +39,9 @@ public class Block
 		// Reversed direction
 		possiblePrevBlocks = new int[] {Integer.parseInt(blockInfo[8]), 
 										Integer.parseInt(blockInfo[9])};
+		
+		// Switch
+		switchBlock = blockInfo[10];
 	}
 	
 	public int getBlockID()
@@ -78,6 +82,15 @@ public class Block
 		if (possiblePrevBlocks[0] != -1)
 			return true;
 		
+		return false;
+	}
+	
+	public boolean isToYard()
+	{
+		if (switchBlock.contains("YARD"))
+		{
+			return true;
+		}
 		return false;
 	}
 }

@@ -97,7 +97,7 @@ public class AddTrackFormController extends FormController
 		CTC.tracks.add(newTrackLayout);
 		
 		// TODO: figure out a better way to make a new track object.
-		CTC.transitSystem.track.trackArray.put(trackName, newTrackObject);
+		CTC.transitSystem.trackArray.put(trackName, newTrackObject);
 		
 		return true;
 	}

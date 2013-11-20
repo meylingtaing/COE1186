@@ -23,6 +23,7 @@ public class CTC extends Application
 	protected static TransitSystem transitSystem;
 	protected static User currUser;
 	protected static ArrayList<TrackLayout> tracks;
+	protected static ArrayList<String> trains;
 	
 	private String loginGui = "loginForm.fxml";
 	
@@ -35,6 +36,7 @@ public class CTC extends Application
 	{
 		CTC.transitSystem = transitSystem;
 		tracks = new ArrayList<TrackLayout>();
+		trains = new ArrayList<String>();
 		ctcStage = new Stage();
 		currUser = null;
 	}

@@ -95,7 +95,7 @@ public class CTCTrackController extends CTCController
 		}
 		
 		// Remove from TrackModel
-		CTC.transitSystem.track.trackArray.remove(selectedTrackLegend.getText());
+		CTC.transitSystem.trackArray.remove(selectedTrackLegend.getText());
 		
 		selectedTrackLegend = null;
 		removeTrackButton.setDisable(true);

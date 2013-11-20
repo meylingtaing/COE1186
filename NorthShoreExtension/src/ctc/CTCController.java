@@ -7,6 +7,7 @@ package ctc;
 import java.io.IOException;
 
 import trackModel.Block;
+import trainModel.TrainModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -30,12 +32,14 @@ public class CTCController
 	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, 
 							navigateMainButton, addTrainButton, routeTrainButton;
 	@FXML protected Pane displayBox;
-	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox;
+	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox, infoContainer;
 	
 	private String trackGui = "CTCTrackView.fxml";
 	private String routeGui = "CTCRouteView.fxml";
 	
-	protected EventHandler<MouseEvent> selectLegendHandler;
+	protected EventHandler<MouseEvent> selectLegendHandler, selectStationHandler;
+	
+	protected Block selectedStation;
 	
 	public void initialize() 
 	{
@@ -47,15 +51,6 @@ public class CTCController
 		
 		displayTrack();
 		displayLegend();
-		
-		/*
-		selectLegendHandler = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event)
-			{
-				
-			}
-		};
-		//*/
 	}
 	
 	/**
@@ -85,7 +80,7 @@ public class CTCController
 				
 				String strokeStyle;
 				// TODO: better integration stuff
-				final Block currBlock = CTC.transitSystem.track.trackArray.get(CTC.tracks.get(i).toString()).getBlock(j);
+				final Block currBlock = CTC.transitSystem.trackArray.get(CTC.tracks.get(i).toString()).getBlock(j);
 				//System.out.println("Display: " + CTC.transitSystem.track.trackArray.get(CTC.tracks.get(i).toString()));
 				if (currBlock.isStation()) 
 				{
@@ -108,6 +103,14 @@ public class CTCController
 					line.setOnMouseExited(new EventHandler<MouseEvent>() {
 						public void handle (MouseEvent event) {
 							stationPopup.hide();
+						}
+					});
+					
+					line.setOnMouseClicked(new EventHandler<MouseEvent>() {
+						public void handle(MouseEvent event)
+						{
+							selectedStation = currBlock;
+							
 						}
 					});
 					
@@ -149,16 +152,29 @@ public class CTCController
 			trackLegendBox.getChildren().add(trackLabel);
 		}
 		
-		for (int i = 0; i < CTC.transitSystem.trains.size(); i++)
+		for (int i = 0; i < CTC.trains.size(); i++)
 		{
 			// Display trains in the legend
 			Circle trainSymbol = new Circle(3);
-			Label trainLabel = new Label(CTC.transitSystem.trains.get(i).getName(), trainSymbol);
+			Label trainLabel = new Label(CTC.trains.get(i), trainSymbol);
 			trainLabel.getStyleClass().add("ctcLegend");
 			trainSymbol.setStyle("-fx-fill: #FFFFFF;");
 			
 			trainLegendBox.getChildren().add(trainLabel);
 		}
+	}
+	
+	/**
+	 * Display route information for selected train
+	 * @param route
+	 */
+	public void displayRouteInfo(Route route)
+	{
+		Text train = new Text(route.getTrain().getName() + ": ");
+		Text routeInfo = new Text(route.toString());
+		infoContainer.getChildren().clear();
+		infoContainer.getChildren().addAll(train, routeInfo);
+		CTC.ctcStage.sizeToScene();
 	}
 	
 	/**
@@ -253,5 +269,14 @@ public class CTCController
 		{
 			System.out.println("Can't load " + title);
 		}
+	}
+	
+	/**
+	 * TODO: implement this method
+	 * @return
+	 */
+	public TrainModel getSelectedTrain()
+	{
+		return null;
 	}
 }

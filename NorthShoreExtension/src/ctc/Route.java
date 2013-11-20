@@ -4,6 +4,7 @@
 package ctc;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 import trackModel.Block;
 import trackModel.TrackObject;
@@ -27,6 +28,30 @@ public class Route
 		addBlock(track.getBlock(0));
 		lastBlockForward = true;
 	}
+	
+	/**
+	 * Present the route in readable string form
+	 * 
+	 */
+	public String toString() 
+	{
+		StringBuffer routeString = new StringBuffer();
+		int i = 0;
+		for (Block block : blockList)
+		{
+			routeString.append(block.getBlockID() + " ");
+			if (i == 20)
+			{
+				routeString.append("\n");
+				i = 0;
+			}
+			
+			i++;
+		}
+		
+		return routeString.toString();
+	}
+	
 	
 	private void addBlock(Block block)
 	{
@@ -80,46 +105,79 @@ public class Route
 		Block lastBlock = blockList.getLast();
 		
 		// Add blocks to the list until we hit the station
-		while (!lastBlock.getStationName().equals(station))
+		while (!lastBlock.isStation() || !lastBlock.getStationName().equals(station))
 		{
+			//System.out.println("Block " + lastBlock.getBlockID());
 			// Direction
 			int[] possibleNextBlocks;
 			double[] coordinates = lastBlock.getCoordinates();
 			double[] endCoordinates = new double[2];
 			
-			if (lastBlockForward)
+			if (lastBlockForward || !lastBlock.isBidirectional())
 			{
 				possibleNextBlocks = lastBlock.getPossibleNextBlocks();
-				endCoordinates[0] = coordinates[0];
-				endCoordinates[1] = coordinates[1];
+				endCoordinates[0] = coordinates[2];
+				endCoordinates[1] = coordinates[3];
 				
 			}
 			else
 			{
 				possibleNextBlocks = lastBlock.getPossiblePrevBlocks();
-				endCoordinates[0] = coordinates[2];
-				endCoordinates[1] = coordinates[3];
+				endCoordinates[0] = coordinates[0];
+				endCoordinates[1] = coordinates[1];
 			}
+			
+			//System.out.println("Possble next block: " + possibleNextBlocks[0]);
+			int nextBlockId;
 			
 			// No switch, only one next block possible
 			if (possibleNextBlocks[1] == -1)
 			{
-				Block nextBlock = track.getBlock(possibleNextBlocks[0]);
-				addBlock(nextBlock);
-				
-				// Figure out direction of next block
-				coordinates = nextBlock.getCoordinates();
-				if (coordinates[0] == endCoordinates[0] && coordinates[1] == endCoordinates[1])
-					lastBlockForward = true;
-				else
-					lastBlockForward = false;
+				nextBlockId = possibleNextBlocks[0];
 			}
 			
-			// Two possible next blocks, let user decide
+			// Two possible next blocks, randomly pick one
+			// Really terrible logic and flow here...
 			else
 			{
-				return lastBlock.getBlockID();
+				if (station.equals("YARD"))
+				{
+					if (track.getBlock(possibleNextBlocks[0]).isToYard())
+					{
+						nextBlockId = possibleNextBlocks[0];
+					}
+					else
+						nextBlockId = possibleNextBlocks[1];
+				}
+				else
+				{
+					if (track.getBlock(possibleNextBlocks[0]).isToYard())
+						nextBlockId = possibleNextBlocks[1];
+					else if (track.getBlock(possibleNextBlocks[1]).isToYard())
+						nextBlockId = possibleNextBlocks[0];
+					else
+					{
+						// Randomly pick one
+						Random rand = new Random();
+						int randomIndex = rand.nextInt(2);
+						nextBlockId = possibleNextBlocks[randomIndex];
+					}
+				}
 			}
+			
+			Block nextBlock = track.getBlock(nextBlockId);
+			//System.out.println("Next block: " + nextBlock);
+			addBlock(nextBlock);
+			
+			// Figure out direction of next block
+			coordinates = nextBlock.getCoordinates();
+			if (coordinates[0] == endCoordinates[0] && coordinates[1] == endCoordinates[1])
+				lastBlockForward = true;
+			else
+				lastBlockForward = false;
+			
+			lastBlock = blockList.getLast();
+			//System.out.println("Last block " + lastBlock);
 		}
 		
 		return blockList.getLast().getBlockID();
@@ -128,5 +186,10 @@ public class Route
 	public TrainModel getTrain()
 	{
 		return train;
+	}
+	
+	public TrackObject getTrack()
+	{
+		return track;
 	}
 }
