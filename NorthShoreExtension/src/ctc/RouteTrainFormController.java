@@ -52,11 +52,10 @@ public class RouteTrainFormController extends FormController
 		TrainModel selectedTrain = CTC.ctcController.getSelectedTrain();
 		Route newRoute;
 		
-		if (CTC.transitSystem.routeList.contains(selectedTrain.getName()) && 
+		if (CTC.transitSystem.routeList.containsKey(selectedTrain.getName()) && 
 				CTC.transitSystem.routeList.get(selectedTrain.getName()).getTrack().getLine().equals(selectedTrack.getLine()))
 		{
-			System.out.println("Existing route found");
-			newRoute = CTC.transitSystem.routeList.get(selectedTrain);
+			newRoute = CTC.transitSystem.routeList.get(selectedTrain.getName());
 		}
 		else	
 			newRoute = new Route(selectedTrain, selectedTrack);
