@@ -7,6 +7,7 @@ public class TrainModel
 {
 	private String name;
 	private int id;
+	private double velocity = 10.0;
 	
 	public TrainModel(String name, int id)
 	{
@@ -22,5 +23,10 @@ public class TrainModel
 	public int getId()
 	{
 		return id;
+	}
+	
+	public double getVelocity()
+	{
+		return velocity;
 	}
 }

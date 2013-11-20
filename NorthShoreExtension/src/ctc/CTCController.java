@@ -30,7 +30,8 @@ import javafx.stage.Stage;
 public class CTCController 
 {
 	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, 
-							navigateMainButton, addTrainButton, routeTrainButton;
+							navigateMainButton, addTrainButton, routeTrainButton,
+							suggestSetptButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox, infoContainer;
 	
@@ -250,6 +251,11 @@ public class CTCController
 		{
 			viewFile = "routeTrainForm.fxml";
 			title = "Choose Track";
+		}
+		else if (clickedButton == suggestSetptButton)
+		{
+			viewFile = "suggestSetptForm.fxml";
+			title = "Suggest Setpoint";
 		}
 		else
 		{

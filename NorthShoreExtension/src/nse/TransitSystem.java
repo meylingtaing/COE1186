@@ -24,7 +24,14 @@ public class TransitSystem
 	public Hashtable<String, TrainModel> trains = new Hashtable<String, TrainModel>();
 	public Hashtable<String, Route> routeList = new Hashtable<String, Route>();
 	
+	
+	
 	public TransitSystem()
+	{
+		
+	}
+	
+	public void startSimulation()
 	{
 		
 	}

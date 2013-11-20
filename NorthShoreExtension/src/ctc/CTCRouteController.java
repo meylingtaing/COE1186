@@ -43,10 +43,11 @@ public class CTCRouteController extends CTCController {
 				Node trainLegend = (Node) event.getSource();
 				trainLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
 				
-				if (CTC.currUser.isTrackCreator())
+				if (CTC.currUser.isDispatcher())
 				{
 					removeTrainButton.setDisable(false);
 					routeTrainButton.setDisable(false);
+					suggestSetptButton.setDisable(false);
 				}
 					
 				
@@ -56,6 +57,7 @@ public class CTCRouteController extends CTCController {
 					selectedTrainLegend = null;
 					removeTrainButton.setDisable(true);
 					routeTrainButton.setDisable(true);
+					suggestSetptButton.setDisable(true);
 				}
 				
 				else 

@@ -7,7 +7,7 @@
 <?import java.net.*?>
 
 <fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.CTCRouteController" minWidth="640" minHeight="480" spacing="10" >
-
+	<padding><Insets top="0" right="0" bottom="10" left="0"/></padding>
 <stylesheets>
 		<URL value="@../style.css" />
 </stylesheets>
@@ -30,6 +30,8 @@
 		<Button fx:id="addTrainButton" text="Add train" onAction="#displayPopup" />
 		<Button fx:id="removeTrainButton" text="Remove train" onAction="#removeTrain" disable="true" />
 		<Button fx:id="routeTrainButton" text="Route train" disable="true" onAction="#displayPopup" />
+		<Button fx:id="suggestSetptButton" text="Suggest Setpoint" disable="true" onAction="#displayPopup" />
+		<Button fx:id="suggestAuthButton" text="Suggest Authority" disable="true" />
 		<Button fx:id="navigateMainButton" text="Back to main" onAction="#navigate" />
 	</HBox>
 
