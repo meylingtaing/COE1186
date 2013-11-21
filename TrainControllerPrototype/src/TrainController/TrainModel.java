@@ -9,6 +9,7 @@ public class TrainModel {
 	public Double currentPower = 0.0;
 	public Double maxSpeed = 70.0; // km/h
 	public Double angle = 0.0;
+	public Double maxAcc = 5.0;
 	public TrainController parent;
 	
 	public TrainModel(TrainController parent) {
@@ -29,9 +30,13 @@ public class TrainModel {
 		
 	}
 	
-	public Double setPower(Double power) {
+	public Double setPower(Double power, Double currentSpeed, Double dt) {
+		Double maxIncrease = dt * maxAcc;
 		Double speed = power * (maxSpeed / maxPower); 
-		Double t = parent.delta * parent.optimalTime; // time in seconds elapsed since last cycle
+		if(currentSpeed + maxIncrease < speed) {
+			speed = currentSpeed + maxIncrease;
+		}
+		//Double t = parent.delta * parent.optimalTime; // time in seconds elapsed since last cycle
 		//speed = speed * Math.sin(angle);
 		//angle += 0.01;
 		return speed;

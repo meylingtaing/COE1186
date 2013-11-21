@@ -7,6 +7,7 @@ import trainmodule.Route;
 public class TrainController implements Runnable {
 	
 	public trainmodule.TrainModel model;
+	public PIDController pidc;
 	public GPS gps;
 	public Double powerSetpoint;
 	public Double speedSetpoint;
@@ -60,7 +61,7 @@ public class TrainController implements Runnable {
 			long delay = lastLoopTime - System.nanoTime() + optimalTime;
 			if( delay > 0 ) {
 				try {
-					Thread.sleep( delay / 1000000);
+					Thread.sleep( delay / 1000000 );
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -70,6 +71,7 @@ public class TrainController implements Runnable {
 
 	public TrainController() {
 		model = new trainmodule.TrainModel(new trainmodule.Route(new Stack<String>()), 70.2, "???");
+		pidc = new PIDController(37103.9);
 		gps = new GPS();
 		powerSetpoint = 0.0;
 		speedSetpoint = 0.0;
@@ -136,16 +138,19 @@ public class TrainController implements Runnable {
 	}
 	
 	public void cruiseControl() {
-		// To-Do: Implement Control Laws
-		if(speed < speedSetpoint) {
-			powerSetpoint += .5;
-			speed = model.setSetpoint(powerSetpoint);
-		} else if (speed > speedSetpoint) {
-			powerSetpoint -= .5;
-			speed = model.setSetpoint(powerSetpoint);
-		} else {
-			speed = model.setSetpoint(powerSetpoint);
-		}
+		
+		speed = model.setSetpoint(powerSetpoint);
+		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta*optimalTime/1000000000);
+
+//		if(speed < speedSetpoint) {
+//			powerSetpoint += .5;
+//			speed = model.setSetpoint(powerSetpoint);
+//		} else if (speed > speedSetpoint) {
+//			powerSetpoint -= .5;
+//			speed = model.setSetpoint(powerSetpoint);
+//		} else {
+//			speed = model.setSetpoint(powerSetpoint);
+//		}
 //		if(guic != null) {
 //			if(guic.text_currentSpeed != null)
 //				guic.text_currentSpeed.setText(Double.toString(speed));
