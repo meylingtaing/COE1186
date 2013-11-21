@@ -54,7 +54,8 @@ public class AddTrackFormController extends FormController
 	public boolean addTrack(String trackName, String trackCsv, String color) 
 	{
 		TrackLayout newTrackLayout = new TrackLayout(trackName, color);
-		TrackObject newTrackObject = new TrackObject(trackName);
+		TrackObject newTrackObject = new TrackObject();
+		newTrackObject.setLine(trackName);
 		
 		// Load coordinates from csv file
 		try

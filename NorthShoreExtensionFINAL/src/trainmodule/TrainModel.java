@@ -80,6 +80,11 @@ public class TrainModel
 		//ViewController.updateGUI();
 	}
 	
+	public TrainModel(int id)
+	{
+		this.trainID = new SimpleIntegerProperty(id);
+	}
+	
 	public TrainModel(double tick, Route trip, double t, String engineer)
 	{
 		doors = new DoorController();

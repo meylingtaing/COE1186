@@ -1,6 +1,6 @@
 package ctc;
 
-import trainModel.TrainModel;
+import trainmodule.TrainModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -11,9 +11,10 @@ public class AddTrainFormController extends FormController {
 	
 	private boolean addTrain(String trainName)
 	{
-		
-		TrainModel newTrain = new TrainModel(trainName, CTC.transitSystem.trains.size());
-		CTC.transitSystem.trains.put(trainName, newTrain);
+		int id = CTC.transitSystem.trains.size();
+		trainName = id + " " + trainName;
+		TrainModel newTrain = new TrainModel(CTC.transitSystem.trains.size());
+		CTC.transitSystem.trains.put(id, newTrain);
 		CTC.trains.add(trainName);
 		return true;
 	}
