@@ -8,8 +8,9 @@ package ctc;
 
 import nse.TrainPosition;
 import trackModel.Block;
+import trackModel.Track;
 import trackModel.TrackObject;
-import trainModel.TrainModel;
+import trainmodule.TrainModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class RouteTrainFormController extends FormController
 		trackListBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> selected, String oldTrack, String newTrack) {
 				stationListBox.getItems().clear();
-				for (Block block : CTC.transitSystem.trackArray.get(newTrack))
+				for (Block block : Track.trackArray.get(newTrack))
 				{
 					if (block.isStation())
 					{
@@ -53,21 +54,21 @@ public class RouteTrainFormController extends FormController
 		TrainModel selectedTrain = CTC.ctcController.getSelectedTrain();
 		Route newRoute;
 		
-		if (CTC.transitSystem.routeList.containsKey(selectedTrain.getName()) && 
-				CTC.transitSystem.routeList.get(selectedTrain.getName()).getTrack().getLine().equals(selectedTrack.getLine()))
+		if (CTC.transitSystem.routeList.containsKey(selectedTrain.getTrainID()) && 
+				CTC.transitSystem.routeList.get(selectedTrain.getTrainID()).getTrack().getLine().equals(selectedTrack.getLine()))
 		{
-			newRoute = CTC.transitSystem.routeList.get(selectedTrain.getName());
+			newRoute = CTC.transitSystem.routeList.get(selectedTrain.getTrainID());
 		}
 		else
 		{
 			newRoute = new Route(selectedTrain, selectedTrack);
 			TrainPosition position = new TrainPosition(selectedTrack);
-			CTC.transitSystem.trainPositions.put(selectedTrain.getName(), position);
+			CTC.transitSystem.trainPositions.put(selectedTrain.getTrainID(), position);
 		}
 		
 		newRoute.addStation(stationListBox.getValue());
 		
-		CTC.transitSystem.routeList.put(selectedTrain.getName(), newRoute);
+		CTC.transitSystem.routeList.put(selectedTrain.getTrainID(), newRoute);
 		
 		Stage currStage = (Stage) trackListBox.getScene().getWindow();
 		currStage.close();

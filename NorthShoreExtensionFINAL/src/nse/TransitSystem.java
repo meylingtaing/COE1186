@@ -22,8 +22,8 @@ public class TransitSystem implements Runnable
 	public CTC ctc = new CTC(this);
 	public Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
 	public Hashtable<Integer, TrainModel> trains = new Hashtable<Integer, TrainModel>();
-	public Hashtable<String, Route> routeList = new Hashtable<String, Route>();
-	public Hashtable<String, TrainPosition> trainPositions = new Hashtable<String, TrainPosition>();
+	public Hashtable<Integer, Route> routeList = new Hashtable<Integer, Route>();
+	public Hashtable<Integer, TrainPosition> trainPositions = new Hashtable<Integer, TrainPosition>();
 	private int tickRate;
 	
 	
@@ -45,7 +45,7 @@ public class TransitSystem implements Runnable
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		/*
 		while (true)
 		{
 			try
@@ -71,7 +71,8 @@ public class TransitSystem implements Runnable
 				System.err.println("Something screwy happened");
 			}
 		}
-		
+	//*/	
 	}
+	
 	
 }
