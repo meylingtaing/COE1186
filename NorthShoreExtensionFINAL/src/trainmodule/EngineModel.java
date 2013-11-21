@@ -51,6 +51,7 @@ public class EngineModel
 			currentVelocity = 0;
 		
 		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		
 		return currentVelocity;
 	}
 	
@@ -65,6 +66,7 @@ public class EngineModel
 			currentVelocity = 0;
 		
 		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		
 		return currentVelocity;
 	}
 	
@@ -97,8 +99,10 @@ public class EngineModel
 		else if (currentVelocity > maxSpeed)
 			return maxSpeed;
 		
-		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
-		
+		// TODO fix integrating this deltaT stuff
+		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * .2);
+		System.out.println("Current velocity: " + currentVelocity);
+		System.out.println("Current deltaT: " + deltaT);
 		return currentVelocity;
 	}
 

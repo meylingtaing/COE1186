@@ -27,7 +27,7 @@ public class TrainModel
 	private boolean eBrake = false;
 	
 	//DEBUG VARIABLES
-	private static int trainIDGenerator = 2476;
+	private static int trainIDGenerator = 0;
 	/*private static double powerGenerator = 100.0;
 	private static double speedGenerator = 75;
 	private static double accelerationGenerator = 23.21;
@@ -76,6 +76,7 @@ public class TrainModel
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
+		trainID = new SimpleIntegerProperty(trainIDGenerator);
 		engine = new EngineModel(tick, trainID.getValue());
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
@@ -84,7 +85,7 @@ public class TrainModel
 		//route = trip;
 		
 		//INITIALIZE TABLE VARIABLES
-		trainID = new SimpleIntegerProperty(trainIDGenerator);
+		
 		trainIDGenerator += 121;
 		//setpoint = new SimpleStringProperty(powerGenerator + " KW");
 		//powerGenerator -= 3.12;

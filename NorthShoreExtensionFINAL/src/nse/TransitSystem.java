@@ -51,11 +51,13 @@ public class TransitSystem implements Runnable
 		{
 			try
 			{
+				Thread.sleep(500);
 				for (TrainController train : trains.values())
 				{
-					train.cruiseControl();
-					System.out.println(train.model.getTrainID() + " ");
-					System.out.println(trainPositions.get(train.model.getTrainID()));
+					train.cruiseControl(.2);
+					System.out.println("Train " + train.model.getTrainID() + " position: ");
+					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
+					System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
 				}
 			}
 			catch (Exception e)
