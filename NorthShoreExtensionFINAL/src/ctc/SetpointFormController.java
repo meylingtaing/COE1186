@@ -13,6 +13,8 @@ public class SetpointFormController extends FormController {
 		Double setpoint = Double.parseDouble(setpointInput.getText());
 		// TODO: GIVE SETPOINT TO TRACK CONTROLLER!!!
 		
+		CTC.ctcController.getSelectedTrain().setSpeedSetpoint(setpoint);
+		
 		Stage currStage = (Stage) setpointInput.getScene().getWindow();
 		currStage.close();
 	}

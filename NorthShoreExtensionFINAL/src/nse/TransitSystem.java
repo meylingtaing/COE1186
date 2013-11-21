@@ -46,6 +46,23 @@ public class TransitSystem implements Runnable
 	@Override
 	public void run() 
 	{
+		
+		while (true)
+		{
+			try
+			{
+				for (TrainController train : trains.values())
+				{
+					train.cruiseControl();
+					System.out.println(train.model.getTrainID() + " ");
+					System.out.println(trainPositions.get(train.model.getTrainID()));
+				}
+			}
+			catch (Exception e)
+			{
+				
+			}
+		}
 		// TODO Auto-generated method stub
 		/*
 		while (true)

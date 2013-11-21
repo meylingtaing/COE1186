@@ -16,6 +16,7 @@ public class AddTrainFormController extends FormController {
 		
 		TrainController newTrain = new TrainController();
 		int id = newTrain.model.getTrainID();
+		System.out.println("Train ID is: " + id);
 		trainName = id + " " + trainName;
 		CTC.transitSystem.trains.put(id, newTrain);
 		
