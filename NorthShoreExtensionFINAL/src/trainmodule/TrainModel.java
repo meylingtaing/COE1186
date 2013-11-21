@@ -62,6 +62,13 @@ public class TrainModel
 	public TrainModel(int id)
 	{
 		this.trainID = new SimpleIntegerProperty(id);
+		doors = new DoorController();
+		lights= new LightController();
+		passengers = new PassengerManager();
+		engine = new EngineModel(0.1);
+		temperature = new TemperatureController(72);
+		failure = new TrainFailure();
+		conductor = "engineer";
 	}
 	
 	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer)

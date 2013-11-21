@@ -62,12 +62,6 @@ public class PIDController {
 
 	public static void main(String[] args) {
 		
-		TrainModel model = new TrainModel(null);
-		PIDController controller = new PIDController(37103.9);
-		Double speed = 0.0;
-		Double speedSetpoint = 50.0;
-		Double powerSetpoint = 0.0;
-		
 		long loopsPS = 100;
 		long optimalTime = 1000000000 / loopsPS; // One second divided by loops per second.
 		double delta;
@@ -76,6 +70,12 @@ public class PIDController {
 		int fps = 0;
 		int fpsOut = 0;
 		int iteration = 0;
+		
+		trainmodule.TrainModel model = new trainmodule.TrainModel(1 / loopsPS, 72, "engineer");
+		PIDController controller = new PIDController(37103.9);
+		Double speed = 0.0;
+		Double speedSetpoint = 50.0;
+		Double powerSetpoint = 0.0;		
 
 		while(true) {
 			
@@ -90,7 +90,7 @@ public class PIDController {
 			fps++;
 
 			
-			speed = model.setPower(powerSetpoint, speed, delta*optimalTime/1000000000);
+			speed = model.setSetpoint(powerSetpoint);
 			powerSetpoint = controller.getPower(speedSetpoint, speed, delta*optimalTime/1000000000);
 			
 			System.out.format("%d \t SpeedSet: %.3f \t Speed: %.3f \t Power %.3f \t dt: %.3f \t FPS: %d\n", iteration++, speedSetpoint, speed, powerSetpoint, delta*optimalTime/1000000000, fpsOut);
