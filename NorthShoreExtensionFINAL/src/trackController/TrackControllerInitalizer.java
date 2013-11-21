@@ -1,12 +1,17 @@
+package trackController;
+
 import java.util.ArrayList;
+
+import trackModel.Block;
+import trackModel.TrackObject;
 
 
 public class TrackControllerInitalizer {
 
 	ArrayList<TrackController> plcs = new ArrayList<TrackController>();
-	TrackModel model;
+	TrackObject model;
 	
-	public TrackControllerInitalizer(TrackModel track)
+	public TrackControllerInitalizer(TrackObject track)
 	{
 		model = track;
 	}
