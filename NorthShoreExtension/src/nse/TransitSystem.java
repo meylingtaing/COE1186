@@ -57,6 +57,7 @@ public class TransitSystem implements Runnable
 					// Move train
 					double distance = train.getVelocity() * 1;
 					System.out.println(train.getName() + " " + distance);
+					System.out.println(trainPositions.get(train.getName()));
 					trainPositions.get(train.getName()).moveTrain(distance);
 				}
 				

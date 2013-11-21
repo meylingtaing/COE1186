@@ -6,6 +6,7 @@
 
 package ctc;
 
+import nse.TrainPosition;
 import trackModel.Block;
 import trackModel.TrackObject;
 import trainModel.TrainModel;
@@ -57,8 +58,12 @@ public class RouteTrainFormController extends FormController
 		{
 			newRoute = CTC.transitSystem.routeList.get(selectedTrain.getName());
 		}
-		else	
+		else
+		{
 			newRoute = new Route(selectedTrain, selectedTrack);
+			TrainPosition position = new TrainPosition(selectedTrack);
+			CTC.transitSystem.trainPositions.put(selectedTrain.getName(), position);
+		}
 		
 		newRoute.addStation(stationListBox.getValue());
 		

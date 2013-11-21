@@ -1,10 +1,12 @@
 package nse;
 
+import ctc.Route;
 import trackModel.Block;
 import trackModel.TrackObject;
 
 public class TrainPosition {
 	private TrackObject currTrack;
+	private Route route;
 	private Block currBlock;
 	private boolean forward;
 	private double distanceTraveled;
@@ -26,6 +28,7 @@ public class TrainPosition {
 	
 	public void moveTrain(double distance)
 	{
+		System.out.println("Trying to move train...");
 		//*
 		while (distance > 0)
 		{	
@@ -36,6 +39,7 @@ public class TrainPosition {
 				
 				// Go to the next block
 				currBlock = currTrack.getBlock(currBlock.getNextBlockId());
+				distanceTraveled = 0;
 			}
 			else
 			{

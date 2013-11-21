@@ -1,10 +1,12 @@
 package nse;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class MainController {
 	protected static TransitSystem transitSystem = new TransitSystem();
-	
+	protected Thread myThread = new Thread(transitSystem);
 	
 	public void initialize()
 	{
@@ -17,10 +19,19 @@ public class MainController {
 		transitSystem.ctc.start(newStage);
 	}
 	
-	@FXML private void simulate()
+	@FXML private void simulate(ActionEvent event)
 	{
-		Thread myThread = new Thread(transitSystem);
-		myThread.start();
-		
+		Button buttonClicked = (Button) event.getSource();
+		if (buttonClicked.getText().equals("Simulate"))
+		{
+			myThread.start();
+			buttonClicked.setText("Stop Simulation");
+		}
+		else
+		{
+			myThread.interrupt();
+			buttonClicked.setText("Simulate");
+			
+		}
 	}
 }
