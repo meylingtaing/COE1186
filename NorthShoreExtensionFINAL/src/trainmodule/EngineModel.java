@@ -31,34 +31,34 @@ public class EngineModel
 		engineFailure = false;
 		brakeFailure = false;
 		deltaT = time;
-		deltaT = 0.05;
+		//deltaT = 0.05;
 	}
 	
 	public double pullBrake(double load, double mass)
 	{		
 		if (brakeFailure)
 			load = 0;
-		else
-		{
-			setpoint = 0;
-		}
 		
-		if (mass * gravity * Math.sin(Math.atan(currentGradient / 100)) <= mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * staticFrictionCoefficient + maxBrakeDeceleration * load * mass)
+		double angle = Math.atan(currentGradient / 100);
+		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
+		
+		currentVelocity = currentVelocity - (staticFriction / mass) * deltaT - load * maxBrakeDeceleration * deltaT;
+		
+		if (currentVelocity < 0)
 			currentVelocity = 0;
-		else
-			currentVelocity = mass * gravity * Math.sin(Math.atan(currentGradient / 100)) - (mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * frictionCoefficient + maxBrakeDeceleration * load * mass);
 		
 		return currentVelocity;
 	}
 	
 	public double pullEmergencyBrake(double mass)
 	{		
-		setpoint = 0;
+		double angle = Math.atan(currentGradient / 100);
+		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
 		
-		if (mass * gravity * Math.sin(Math.atan(currentGradient / 100)) <= mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * staticFrictionCoefficient + emergencyDeceleration * mass)
+		currentVelocity = currentVelocity - (staticFriction / mass) * deltaT - emergencyDeceleration * deltaT;
+		
+		if (currentVelocity < 0)
 			currentVelocity = 0;
-		else
-			currentVelocity = mass * gravity * Math.sin(Math.atan(currentGradient / 100)) - (mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * frictionCoefficient + emergencyDeceleration * mass);
 		
 		return currentVelocity;
 	}
