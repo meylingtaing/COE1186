@@ -1,5 +1,4 @@
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,18 +33,17 @@ public class Track extends Application {
 	protected static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();;
 	protected static ObservableList<String> trackListData;
 
+	//main program
 	public static void main(String[] args){
 		trackListData = FXCollections.observableArrayList();
 		Application.launch(Track.class, args);
 	}
 	
+	//Start function to open main GUI
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
-
-			// This line to resolve keys against Bundle_fr_FR.properties
-			//        ResourceBundle i18nBundle = ResourceBundle.getBundle("helloi18n.Bundle", new Locale("fr", "FR"));
 			AnchorPane page = (AnchorPane) FXMLLoader.load(Track.class.getResource("GUI.fxml"));
 			Scene scene = new Scene(page);
 			primaryStage.setScene(scene);

@@ -117,6 +117,17 @@ public class TrackMainController {
 
     @FXML
     void DeleteTrackFunction(MouseEvent event) {
+    	int trackToDeleteLine= trackLineList.getSelectionModel().getSelectedIndex();
+    	String lineName = trackLineList.getSelectionModel().getSelectedItem();
+    	
+    	Track.trackListData.remove(trackToDeleteLine);
+    	TrackMainController.trackLineList.setItems(Track.trackListData);
+    	Track.trackArray.remove(lineName);
+    	if(Track.trackListData.isEmpty()){
+    		DeleteTrackButton.setDisable(true);
+    		queryBlockIDButton.setDisable(true);
+    	}
+    	
     }
 
     @FXML
@@ -157,6 +168,8 @@ public class TrackMainController {
     		} catch (Exception ex) {
     			System.out.println(ex);
     		}
+    		DeleteTrackButton.setDisable(false);
+    		queryBlockIDButton.setDisable(false);
     }
 
     @FXML

@@ -10,77 +10,86 @@ import javafx.scene.layout.AnchorPane;
 
 public class ChildQueryController {
 
-    @FXML
-    private ResourceBundle resources;
+	@FXML
+	private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+	@FXML
+	private URL location;
 
-    @FXML
-    private AnchorPane BlockInfoPane;
+	@FXML
+	private AnchorPane BlockInfoPane;
 
-    @FXML
-    private TextField BlockNumberField;
+	@FXML
+	private TextField BlockNumberField;
 
-    @FXML
-    private Label BlockNumberInfoField;
+	@FXML
+	private Label BlockNumberInfoField;
 
-    @FXML
-    private Label SpeedLimitInfoField;
+	@FXML
+	private Label SpeedLimitInfoField;
 
-    @FXML
-    private Label StationInfoField;
+	@FXML
+	private Label StationInfoField;
 
-    @FXML
-    private Button childQueryButton;
+	@FXML
+	private Button childQueryButton;
 
-    @FXML
-    private Label gradeInfofield;
-    
-    @FXML
-    private Label lengthInfoField;
+	@FXML
+	private Label gradeInfofield;
 
-    @FXML
-    private Label railwayCrossingField;
-    
-    @FXML
-    private Label sectionInfoField;
+	@FXML
+	private Label lengthInfoField;
 
-    @FXML
-    private Label siwtchInfoField;
+	@FXML
+	private Label railwayCrossingField;
 
-    @FXML
-    private TextField trackLineField;
+	@FXML
+	private Label sectionInfoField;
 
-    @FXML
-    private Label undergroundInfoField;
+	@FXML
+	private Label siwtchInfoField;
+
+	@FXML
+    private Label trackDNELabel;
+	
+	@FXML
+	private TextField trackLineField;
+
+	@FXML
+	private Label undergroundInfoField;
 
 
-    @FXML
-    void getBlockInfo(MouseEvent event) {
-    	String trackLine = trackLineField.getText();
-    	int blockNum = Integer.parseInt(BlockNumberField.getText());
-    	
-    	TrackObject currTrack = Track.trackArray.get(trackLine);
-    	Block desiredBlock = currTrack.getBlock(blockNum);
-    	
-    	BlockNumberInfoField.setText(Integer.toString(blockNum));
-    	SpeedLimitInfoField.setText(Integer.toString(desiredBlock.getSpeedLimit()));
-    	gradeInfofield.setText(Double.toString(desiredBlock.getGrade()));
-    	StationInfoField.setText(Boolean.toString(desiredBlock.isStation()));
-    	railwayCrossingField.setText(Boolean.toString(desiredBlock.isCrossing()));
-    	siwtchInfoField.setText(Boolean.toString(desiredBlock.isSwitchBoo()));
-    	undergroundInfoField.setText(Boolean.toString(desiredBlock.isUnderground()));
-    	lengthInfoField.setText(Double.toString(desiredBlock.getLength()));
-    	sectionInfoField.setText(desiredBlock.getSection());
-    	
-    	
-    	BlockInfoPane.setVisible(true);
-    	
-    	
-    }
+	@FXML
+	void getBlockInfo(MouseEvent event) {
+		String trackLine = trackLineField.getText();
+		int blockNum = Integer.parseInt(BlockNumberField.getText());
 
-    @FXML
+		if(!Track.trackListData.contains(trackLine)){
+			trackDNELabel.setVisible(true);
+
+		}
+		else{
+			trackDNELabel.setVisible(false);
+			TrackObject currTrack = Track.trackArray.get(trackLine);
+			Block desiredBlock = currTrack.getBlock(blockNum);
+
+			BlockNumberInfoField.setText(Integer.toString(blockNum));
+			SpeedLimitInfoField.setText(Integer.toString(desiredBlock.getSpeedLimit()));
+			gradeInfofield.setText(Double.toString(desiredBlock.getGrade()));
+			StationInfoField.setText(Boolean.toString(desiredBlock.isStation()));
+			railwayCrossingField.setText(Boolean.toString(desiredBlock.isCrossing()));
+			siwtchInfoField.setText(Boolean.toString(desiredBlock.isSwitchBoo()));
+			undergroundInfoField.setText(Boolean.toString(desiredBlock.isUnderground()));
+			lengthInfoField.setText(Double.toString(desiredBlock.getLength()));
+			sectionInfoField.setText(desiredBlock.getSection());
+
+
+			BlockInfoPane.setVisible(true);
+		}
+
+	}
+
+	@FXML
     void initialize() {
         assert BlockInfoPane != null : "fx:id=\"BlockInfoPane\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert BlockNumberField != null : "fx:id=\"BlockNumberField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
@@ -93,6 +102,7 @@ public class ChildQueryController {
         assert railwayCrossingField != null : "fx:id=\"railwayCrossingField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert sectionInfoField != null : "fx:id=\"sectionInfoField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert siwtchInfoField != null : "fx:id=\"siwtchInfoField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
+        assert trackDNELabel != null : "fx:id=\"trackDNELabel\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert trackLineField != null : "fx:id=\"trackLineField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert undergroundInfoField != null : "fx:id=\"undergroundInfoField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
 
