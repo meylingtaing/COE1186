@@ -29,6 +29,11 @@ public class Route
 		lastBlockForward = true;
 	}
 	
+	public LinkedList<Block> getBlockList()
+	{
+		return blockList;
+	}
+	
 	/**
 	 * Present the route in readable string form
 	 * 
