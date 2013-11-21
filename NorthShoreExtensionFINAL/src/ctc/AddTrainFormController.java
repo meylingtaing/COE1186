@@ -15,6 +15,13 @@ public class AddTrainFormController extends FormController {
 		trainName = id + " " + trainName;
 		TrainModel newTrain = new TrainModel(CTC.transitSystem.trains.size());
 		CTC.transitSystem.trains.put(id, newTrain);
+		
+		System.out.println("All of the trains:");
+		for (TrainModel train : CTC.transitSystem.trains.values())
+		{
+			System.out.println("Train " + train.getTrainID());
+		}
+		
 		CTC.trains.add(trainName);
 		return true;
 	}

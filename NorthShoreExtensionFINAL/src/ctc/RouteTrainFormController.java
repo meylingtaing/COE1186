@@ -33,6 +33,7 @@ public class RouteTrainFormController extends FormController
 		trackListBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> selected, String oldTrack, String newTrack) {
 				stationListBox.getItems().clear();
+				System.out.println("In track list box: " + Track.trackArray.get(newTrack));
 				for (Block block : Track.trackArray.get(newTrack))
 				{
 					if (block.isStation())
@@ -54,6 +55,7 @@ public class RouteTrainFormController extends FormController
 		TrainModel selectedTrain = CTC.ctcController.getSelectedTrain();
 		Route newRoute;
 		
+		System.out.println("Selected train: " + selectedTrain);
 		if (CTC.transitSystem.routeList.containsKey(selectedTrain.getTrainID()) && 
 				CTC.transitSystem.routeList.get(selectedTrain.getTrainID()).getTrack().getLine().equals(selectedTrack.getLine()))
 		{

@@ -92,17 +92,18 @@ public class CTCRouteController extends CTCController {
 		// Remove from transit system
 		String legend = selectedTrainLegend.getText();
 		String[] legendParts = legend.split(" ");
-		System.out.println("Removing train " + legendParts[0]);
-		CTC.transitSystem.trains.remove((Integer)Integer.parseInt(legendParts[0]));
 		
-		for (TrainModel train : CTC.transitSystem.trains.values())
-			System.out.println("Check train " + train.getTrainID());
+		CTC.transitSystem.trains.remove((Integer)Integer.parseInt(legendParts[0]));
+		CTC.trains.remove(Integer.parseInt(legendParts[0]));
 		
 		selectedTrainLegend = null;
 		removeTrainButton.setDisable(true);
+		routeTrainButton.setDisable(true);
+		suggestSetptButton.setDisable(true);
 		displayLegend();
 		displayTrack();
 	}
+	
 	/**
 	 * Gets the selected train
 	 * 
@@ -113,6 +114,10 @@ public class CTCRouteController extends CTCController {
 		if (selectedTrainLegend == null)
 			return null;
 		
-		return CTC.transitSystem.trains.get(selectedTrainLegend.getText());
+		String legendText = selectedTrainLegend.getText();
+		String[] legendInfo = legendText.split(" ");
+		int trainId = Integer.parseInt(legendInfo[0]);
+		
+		return CTC.transitSystem.trains.get(trainId);
 	}
 }

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class Track extends Application {
 	protected static Stage trackStage;
-	public static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();;
+	public static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
 	protected static ObservableList<String> trackListData;
 
 	//main program

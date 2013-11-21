@@ -153,11 +153,12 @@ public class CTCController
 			trackLegendBox.getChildren().add(trackLabel);
 		}
 		
-		for (int i = 0; i < CTC.trains.size(); i++)
+		for (TrainModel train : CTC.transitSystem.trains.values())
 		{
 			// Display trains in the legend
 			Circle trainSymbol = new Circle(3);
-			Label trainLabel = new Label(CTC.trains.get(i), trainSymbol);
+			String trainString = CTC.trains.get(train.getTrainID());
+			Label trainLabel = new Label(trainString, trainSymbol);
 			trainLabel.getStyleClass().add("ctcLegend");
 			trainSymbol.setStyle("-fx-fill: #FFFFFF;");
 			

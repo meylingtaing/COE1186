@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import trackModel.Block;
+import trackModel.Track;
 import trackModel.TrackObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -87,6 +88,9 @@ public class AddTrackFormController extends FormController
 					System.err.println("Bad file");
 					return false;
 				}
+				
+				// Add to track
+				Track.trackArray.put(trackName, newTrackObject);
 				
 			}
 			fileScan.close();
