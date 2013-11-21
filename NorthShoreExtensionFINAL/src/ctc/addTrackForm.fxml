@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.stage.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.AddTrackFormController">
+<stylesheets>
+		<URL value="@../style.css" />
+</stylesheets>
+
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="Track Name: " textAlignment="RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<Text text="CSV File: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
+	<TextField fx:id="trackNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" onKeyReleased="#enter" />
+	<TextField fx:id="trackCsvInput" GridPane.rowIndex="1" GridPane.columnIndex="1" onKeyReleased="#enter" />
+	<Text text="Color: " GridPane.rowIndex="3" GridPane.columnIndex="0" />
+	<HBox GridPane.rowIndex="3" GridPane.columnIndex="1" spacing="10">
+		<fx:define><ToggleGroup fx:id="toggleColors" /></fx:define>
+		<RadioButton toggleGroup="$toggleColors" text="Lime" selected="true">
+			<graphic><Rectangle styleClass="green" width="10" height="10" /></graphic>
+		</RadioButton>
+		<RadioButton toggleGroup="$toggleColors" text="Red">
+			<graphic><Rectangle styleClass="red" width="10" height="10" /></graphic>
+		</RadioButton>
+		<RadioButton toggleGroup="$toggleColors" text="Blue">
+			<graphic><Rectangle styleClass="blue" width="10" height="10" /></graphic>
+		</RadioButton>
+	</HBox>
+	<HBox GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" spacing="10">
+		<Text fx:id="errorMessage" text="Error in loading track info" visible="false" />
+		<Button text="Submit" onAction="#submit" />
+		<Button text="Cancel" onAction="#cancel" />
+	</HBox>
+</GridPane>

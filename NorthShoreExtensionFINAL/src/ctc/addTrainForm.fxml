@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.stage.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.AddTrainFormController" >
+<stylesheets>
+		<URL value="@../style.css" />
+</stylesheets>
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="Train Name: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<TextField fx:id="trainNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" onKeyReleased="#enter" />
+	<HBox GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2" >
+		<Text fx:id="errorMessage" text="Error in creating train" visible="false" />
+		<Button text="Submit" onAction="#submit" />
+		<Button text="Cancel" onAction="#cancel" />
+	</HBox>
+</GridPane>
