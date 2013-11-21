@@ -29,6 +29,16 @@ public class Route
 		lastBlockForward = true;
 	}
 	
+	public void removeBlock()
+	{
+		blockList.removeFirst();
+	}
+	
+	public Block getFirstBlock()
+	{
+		return blockList.getFirst();
+	}
+	
 	public LinkedList<Block> getBlockList()
 	{
 		return blockList;

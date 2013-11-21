@@ -71,6 +71,7 @@ public class RouteTrainFormController extends FormController
 		newRoute.addStation(stationListBox.getValue());
 		
 		CTC.transitSystem.routeList.put(selectedTrain.getTrainID(), newRoute);
+		CTC.transitSystem.trainPositions.get(selectedTrain.getTrainID()).setRoute(newRoute);
 		
 		Stage currStage = (Stage) trackListBox.getScene().getWindow();
 		currStage.close();

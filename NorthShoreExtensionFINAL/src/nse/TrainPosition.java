@@ -1,3 +1,9 @@
+
+/**
+ * This holds the position for a train -- there is a lot of redundancy in this
+ * @author meyling
+ */
+
 package nse;
 
 import ctc.Route;
@@ -19,6 +25,11 @@ public class TrainPosition {
 		distanceTraveled = 0;
 	}
 	
+	public void setRoute(Route route)
+	{
+		this.route = route;
+	}
+	
 	public void setPosition(Block block, boolean direction, double distance)
 	{
 		currBlock = block;
@@ -37,8 +48,12 @@ public class TrainPosition {
 			{
 				distance = distance - (currBlock.getLength() - distanceTraveled);
 				
+				// Remove block from route
+				route.removeBlock();
+				
 				// Go to the next block
-				currBlock = currTrack.getBlock(currBlock.getNextBlockId());
+				currBlock = route.getFirstBlock();
+				
 				distanceTraveled = 0;
 			}
 			else
