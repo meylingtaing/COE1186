@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+<?import java.lang.*?>
+
+<GridPane xmlns:fx="https://javafx.com/fxml" fx:controller="nse.MainController" hgap="25" vgap="25">
+
+	<stylesheets>
+		<URL value="@../style.css" />
+	</stylesheets>
+
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="North Shore Extension" GridPane.rowIndex="0" GridPane.columnIndex="0"
+	styleClass="header" />
+	<HBox GridPane.rowIndex="1" GridPane.columnIndex="0" spacing="25">
+		<VBox spacing="10">
+			<Button text="CTC Office" onAction="#navigateCTC" prefWidth="300" styleClass="largeButton" />
+			<Button text="Track Model" prefWidth="300" styleClass="largeButton" />
+			<Button text="Train Model" prefWidth="300" styleClass="largeButton" />
+		</VBox>
+		<VBox spacing="10">
+			<Button text="Moving Block Overlay" prefWidth="300" styleClass="largeButton" />
+			<Button text="Track Controller" prefWidth="300" styleClass="largeButton" />
+			<Button text="Train Controller" prefWidth="300" styleClass="largeButton" />
+		</VBox>
+	</HBox>
+	<Button text="Simulate" prefWidth="625" styleClass="largeButton" GridPane.rowIndex="2" GridPane.columnIndex="0"
+	GridPane.columnSpan="2"/>
+</GridPane>
