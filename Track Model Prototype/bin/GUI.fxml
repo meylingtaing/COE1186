@@ -32,8 +32,8 @@
             <Button fx:id="breakTrackCircuitButton" layoutX="5.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#BreakTrackCircuitFunction" text="Break Track Circuit" textAlignment="CENTER" />
             <Button fx:id="CutPowerButton" layoutX="5.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#CutPowerFunction" prefWidth="118.0" text="Cut Power" textAlignment="CENTER" />
             <Button id="" fx:id="inputTrackButton" layoutX="6.0" layoutY="305.0" mnemonicParsing="false" onMouseClicked="#inputTrackFunction" prefWidth="98.99990000000253" text="Input Track" />
-            <Button fx:id="DeleteTrackButton" layoutX="7.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#DeleteTrackFunction" prefWidth="98.99990844726562" text="Delete Track" />
-            <Button fx:id="queryBlockIDButton" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#QueryBlockIdFunction" text="Query Block ID" />
+            <Button fx:id="DeleteTrackButton" disable="true" layoutX="7.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#DeleteTrackFunction" prefWidth="98.99990844726562" text="Delete Track" />
+            <Button fx:id="queryBlockIDButton" disable="true" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#QueryBlockIdFunction" text="Query Block ID" />
             <ListView fx:id="trackLineList" layoutX="12.0" layoutY="236.0" prefHeight="51.0" prefWidth="60.0" />
             <Label layoutX="13.0" layoutY="206.0" text="Available Track Lines:" />
             <Rectangle id="brokenRailSquare" fx:id="BrokenPowerRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="86.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
