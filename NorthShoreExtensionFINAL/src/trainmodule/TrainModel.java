@@ -17,14 +17,13 @@ public class TrainModel
 	private LightController lights;
 	private PassengerManager passengers;
 	private EngineModel engine;
-	private Route route;
+	//private ctc.Route route;
 	private TemperatureController temperature;
 	private double trainMass = 37103.9;
 	private double length = 32.2;
 	private String conductor;
 	//private static int clockSpeed;
 	private TrainFailure failure;
-	//public static ViewController view;
 	private boolean eBrake = false;
 	
 	//DEBUG VARIABLES
@@ -51,33 +50,13 @@ public class TrainModel
 		//TrainView.createGUI();
 		//TrainView tView = new TrainView();
 		ViewController.data = FXCollections.observableArrayList();
-		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 100, "SUPERUSER"));
-		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 69.2, "ENGINEER"));
-		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 67.4, "?????????"));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 100, "SUPERUSER"));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 69.2, "ENGINEER"));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 67.4, "?????????"));
 		//System.out.println("here!!");
 		
 		TrainView.createGUI();
-		//ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 100, "SUPERUSER"));
-		//view.data.add(new TrainModel(new Route(new Stack<String>()), 70.2, "lala"));
-		/*while (view == null)
-		{
-			try
-			{
-				Thread.sleep(100);
-			}
-			catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
-		}*/
 		
-		//System.out.println("here!!");
-		
-		//ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 70.2, "SUPERUSER"));
-		//view.data.add(new TrainModel(new Route(new Stack<String>()), 69.2, "ENGINEER"));
-		//view.data.add(new TrainModel(new Route(new Stack<String>()), 67.4, "?????????"));
-		
-		//ViewController.updateGUI();
 	}
 	
 	public TrainModel(int id)
@@ -85,7 +64,7 @@ public class TrainModel
 		this.trainID = new SimpleIntegerProperty(id);
 	}
 	
-	public TrainModel(double tick, Route trip, double t, String engineer)
+	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer)
 	{
 		doors = new DoorController();
 		lights= new LightController();
@@ -95,7 +74,7 @@ public class TrainModel
 		failure = new TrainFailure();
 		conductor = engineer;
 		//clockSpeed = clock;
-		route = trip;
+		//route = trip;
 		
 		//INITIALIZE TABLE VARIABLES
 		trainID = new SimpleIntegerProperty(trainIDGenerator);
@@ -115,29 +94,7 @@ public class TrainModel
 		//lightValue = new SimpleStringProperty(lights.getLights() + "");
 		//ViewController.data.add(this);
 	}
-	
-	/*public static void refreshGUI()
-	{
-		if (view != null)
-			view.updateGUI();
-		else
-			System.out.println("No VC");
-	}*/
-	
-	/*public static void setViewController(ViewController vc)
-	{
-		//System.out.println("hello");
-		view = vc;
-	}*/
-	
-	/*public static void addActiveTrains()
-	{
-		if (view != null)
-			view.addTrain(new Route(new Stack<String>()), 70.2, "yolo");
-		else
-			System.out.println("view is uninitialized");
-	}*/
-	
+		
 	public int getTrainID()
 	{
         return trainID.get();

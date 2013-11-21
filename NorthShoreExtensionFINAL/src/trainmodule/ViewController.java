@@ -142,9 +142,9 @@ public class ViewController
     	//updateGUI();
     }
     
-    public void addTrain(Route r, double t, String c)
+    public void addTrain(/*ctc.Route r,*/ double t, String c)
     {
-    	data.add(new TrainModel(0.001, r, t, c));
+    	data.add(new TrainModel(0.001, /*r,*/ t, c));
     	//updateGUI();
     }
     
