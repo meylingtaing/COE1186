@@ -90,7 +90,13 @@ public class CTCRouteController extends CTCController {
 			return;
 		
 		// Remove from transit system
-		CTC.transitSystem.trains.remove(selectedTrainLegend.getText());
+		String legend = selectedTrainLegend.getText();
+		String[] legendParts = legend.split(" ");
+		System.out.println("Removing train " + legendParts[0]);
+		CTC.transitSystem.trains.remove((Integer)Integer.parseInt(legendParts[0]));
+		
+		for (TrainModel train : CTC.transitSystem.trains.values())
+			System.out.println("Check train " + train.getTrainID());
 		
 		selectedTrainLegend = null;
 		removeTrainButton.setDisable(true);

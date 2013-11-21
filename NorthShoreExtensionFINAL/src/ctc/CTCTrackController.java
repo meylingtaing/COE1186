@@ -100,5 +100,6 @@ public class CTCTrackController extends CTCController
 		selectedTrackLegend = null;
 		removeTrackButton.setDisable(true);
 		displayTrack();
+		displayLegend();
 	}
 }
