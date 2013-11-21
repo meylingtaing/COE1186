@@ -26,8 +26,7 @@ public class TrainPosition {
 	
 	public void moveTrain(double distance)
 	{
-		// Need to implement a block.getLength() and block.getNextBlock() method
-		/*
+		//*
 		while (distance > 0)
 		{	
 			// Move towards end of block
@@ -36,7 +35,7 @@ public class TrainPosition {
 				distance = distance - (currBlock.getLength() - distanceTraveled);
 				
 				// Go to the next block
-				currBlock = currBlock.getNextBlock();
+				currBlock = currTrack.getBlock(currBlock.getNextBlockId());
 			}
 			else
 			{

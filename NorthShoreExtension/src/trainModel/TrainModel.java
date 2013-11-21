@@ -29,4 +29,9 @@ public class TrainModel
 	{
 		return velocity;
 	}
+	
+	public void setVelocity(double velocity)
+	{
+		this.velocity = velocity;
+	}
 }

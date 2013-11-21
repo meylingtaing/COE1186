@@ -15,6 +15,7 @@ public class Block
 	private int[] possiblePrevBlocks;
 	private double[] coordinates;
 	private String switchBlock;
+	private double length;
 	
 	public Block(String[] blockInfo)
 	{
@@ -42,11 +43,28 @@ public class Block
 		
 		// Switch
 		switchBlock = blockInfo[10];
+		
+		// Length
+		length = Double.parseDouble(blockInfo[11]);
 	}
 	
 	public int getBlockID()
 	{
 		return blockId;
+	}
+	
+	public double getLength()
+	{
+		return length;
+	}
+	
+	/**
+	 * Placeholder method...
+	 * @return
+	 */
+	public int getNextBlockId()
+	{
+		return possibleNextBlocks[0];
 	}
 	
 	public double[] getCoordinates()
