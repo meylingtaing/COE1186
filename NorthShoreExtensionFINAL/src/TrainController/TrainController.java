@@ -214,6 +214,10 @@ public class TrainController implements Runnable {
 		return 0.0;
 	}
 
+	public trainmodule.TrainModel getModel() {
+		return model;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Test1");
 		TrainController controller = new TrainController();
