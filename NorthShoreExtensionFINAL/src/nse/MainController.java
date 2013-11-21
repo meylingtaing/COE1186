@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class MainController {
-	protected static TransitSystem transitSystem = new TransitSystem();
+	public static TransitSystem transitSystem = new TransitSystem();
 	protected Thread myThread = new Thread(transitSystem);
 	
 	public void initialize()

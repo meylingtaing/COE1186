@@ -2,8 +2,10 @@ package trackController;
 
 import java.util.ArrayList;
 
+import TrainController.TrainController;
 import trackModel.Block;
 import trackModel.TrackObject;
+import trainmodule.TrainModel;
 
 
 public class TrackController {
@@ -21,7 +23,7 @@ public class TrackController {
 	public Block switchBlock2;
 	public Block terminalBlock;
 	public boolean stalled = false;
-	public TrainModule trainModule;
+	public TrainModel trainModule;
 	public TrackObject trackModel;
 	
 	

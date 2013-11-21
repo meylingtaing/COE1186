@@ -1,6 +1,7 @@
 package trainmodule;
 
 import java.lang.*;
+import nse.MainController;
 
 public class EngineModel
 {	
@@ -16,6 +17,7 @@ public class EngineModel
 	private double setpoint;
 	private boolean eBrake = false;
 	private double deltaT;
+	private int trainNum;
 		
 	private double currentVelocity;
 	private double currentGradient;
@@ -23,7 +25,7 @@ public class EngineModel
 	private boolean brakeFailure;
 	//private double tickTime;
 	
-	public EngineModel(double time)
+	public EngineModel(double time, int id)
 	{
 		setpoint = 0;
 		currentVelocity = 0;
@@ -31,6 +33,7 @@ public class EngineModel
 		engineFailure = false;
 		brakeFailure = false;
 		deltaT = time;
+		trainNum = id;
 		//deltaT = 0.05;
 	}
 	
@@ -47,6 +50,7 @@ public class EngineModel
 		if (currentVelocity < 0)
 			currentVelocity = 0;
 		
+		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		return currentVelocity;
 	}
 	
@@ -60,6 +64,7 @@ public class EngineModel
 		if (currentVelocity < 0)
 			currentVelocity = 0;
 		
+		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		return currentVelocity;
 	}
 	
@@ -91,6 +96,8 @@ public class EngineModel
 			currentVelocity = 0;
 		else if (currentVelocity > maxSpeed)
 			return maxSpeed;
+		
+		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		
 		return currentVelocity;
 	}

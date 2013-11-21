@@ -6,18 +6,19 @@ package ctc;
 import java.util.LinkedList;
 import java.util.Random;
 
+import TrainController.TrainController;
 import trackModel.Block;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
 
 public class Route 
 {
-	private TrainModel train;
+	private TrainController train;
 	private TrackObject track;
 	private LinkedList<Block> blockList;
 	private boolean lastBlockForward;
 	
-	public Route(TrainModel train, TrackObject track)
+	public Route(TrainController train, TrackObject track)
 	{
 		this.train = train;
 		this.track = track;
@@ -198,7 +199,7 @@ public class Route
 		return blockList.getLast().getBlockID();
 	}
 	
-	public TrainModel getTrain()
+	public TrainController getTrain()
 	{
 		return train;
 	}

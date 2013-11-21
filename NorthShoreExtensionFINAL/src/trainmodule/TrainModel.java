@@ -65,7 +65,7 @@ public class TrainModel
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
-		engine = new EngineModel(0.1);
+		engine = new EngineModel(0.1, trainID.getValue());
 		temperature = new TemperatureController(72);
 		failure = new TrainFailure();
 		conductor = "engineer";
@@ -76,7 +76,7 @@ public class TrainModel
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
-		engine = new EngineModel(tick);
+		engine = new EngineModel(tick, trainID.getValue());
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
 		conductor = engineer;
@@ -119,6 +119,7 @@ public class TrainModel
 	
     public Double setSetpoint(double d)
     {
+    	
     	if (!eBrake)
     		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else

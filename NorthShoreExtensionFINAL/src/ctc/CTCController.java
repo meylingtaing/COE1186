@@ -6,6 +6,8 @@ package ctc;
 
 import java.io.IOException;
 
+import TrainController.TrainController;
+import nse.TrainPosition;
 import trackModel.Block;
 import trainmodule.TrainModel;
 import javafx.event.ActionEvent;
@@ -128,6 +130,19 @@ public class CTCController
 		}
 	}
 	
+	/**
+	 * Displays the position of the trains on the track
+	 */
+	protected void displayTrains()
+	{
+		for (TrainController train : CTC.transitSystem.trains.values())
+		{
+			// We should probably actually talk to each other but for now just using global
+			TrainPosition trainPosition = CTC.transitSystem.trainPositions.get(train.model.getTrainID());
+			
+		}
+	}
+	
 	protected void makeObjectsSelectable()
 	{
 		
@@ -153,11 +168,11 @@ public class CTCController
 			trackLegendBox.getChildren().add(trackLabel);
 		}
 		
-		for (TrainModel train : CTC.transitSystem.trains.values())
+		for (TrainController train : CTC.transitSystem.trains.values())
 		{
 			// Display trains in the legend
 			Circle trainSymbol = new Circle(3);
-			String trainString = CTC.trains.get(train.getTrainID());
+			String trainString = CTC.trains.get(train.model.getTrainID());
 			Label trainLabel = new Label(trainString, trainSymbol);
 			trainLabel.getStyleClass().add("ctcLegend");
 			trainSymbol.setStyle("-fx-fill: #FFFFFF;");
@@ -172,7 +187,7 @@ public class CTCController
 	 */
 	public void displayRouteInfo(Route route)
 	{
-		Text train = new Text("Train " + route.getTrain().getTrainID() + ": ");
+		Text train = new Text("Train " + route.getTrain().model.getTrainID() + ": ");
 		Text routeInfo = new Text(route.toString());
 		infoContainer.getChildren().clear();
 		infoContainer.getChildren().addAll(train, routeInfo);
@@ -282,7 +297,7 @@ public class CTCController
 	 * TODO: implement this method
 	 * @return
 	 */
-	public TrainModel getSelectedTrain()
+	public TrainController getSelectedTrain()
 	{
 		return null;
 	}

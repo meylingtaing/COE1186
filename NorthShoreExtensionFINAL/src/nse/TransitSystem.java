@@ -11,6 +11,7 @@ package nse;
 
 import java.util.Hashtable;
 
+import TrainController.TrainController;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
 import ctc.CTC;
@@ -21,7 +22,7 @@ public class TransitSystem implements Runnable
 	// Instances of all of the modules
 	public CTC ctc = new CTC(this);
 	public Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
-	public Hashtable<Integer, TrainModel> trains = new Hashtable<Integer, TrainModel>();
+	public Hashtable<Integer, TrainController> trains = new Hashtable<Integer, TrainController>();
 	public Hashtable<Integer, Route> routeList = new Hashtable<Integer, Route>();
 	public Hashtable<Integer, TrainPosition> trainPositions = new Hashtable<Integer, TrainPosition>();
 	private int tickRate;

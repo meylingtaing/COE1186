@@ -6,6 +6,7 @@
 
 package ctc;
 
+import TrainController.TrainController;
 import nse.TrainPosition;
 import trackModel.Block;
 import trackModel.Track;
@@ -52,26 +53,26 @@ public class RouteTrainFormController extends FormController
 	{
 		//*
 		TrackObject selectedTrack = CTC.transitSystem.trackArray.get(trackListBox.getValue());
-		TrainModel selectedTrain = CTC.ctcController.getSelectedTrain();
+		TrainController selectedTrain = CTC.ctcController.getSelectedTrain();
 		Route newRoute;
 		
 		System.out.println("Selected train: " + selectedTrain);
-		if (CTC.transitSystem.routeList.containsKey(selectedTrain.getTrainID()) && 
-				CTC.transitSystem.routeList.get(selectedTrain.getTrainID()).getTrack().getLine().equals(selectedTrack.getLine()))
+		if (CTC.transitSystem.routeList.containsKey(selectedTrain.model.getTrainID()) && 
+				CTC.transitSystem.routeList.get(selectedTrain.model.getTrainID()).getTrack().getLine().equals(selectedTrack.getLine()))
 		{
-			newRoute = CTC.transitSystem.routeList.get(selectedTrain.getTrainID());
+			newRoute = CTC.transitSystem.routeList.get(selectedTrain.model.getTrainID());
 		}
 		else
 		{
 			newRoute = new Route(selectedTrain, selectedTrack);
 			TrainPosition position = new TrainPosition(selectedTrack);
-			CTC.transitSystem.trainPositions.put(selectedTrain.getTrainID(), position);
+			CTC.transitSystem.trainPositions.put(selectedTrain.model.getTrainID(), position);
 		}
 		
 		newRoute.addStation(stationListBox.getValue());
 		
-		CTC.transitSystem.routeList.put(selectedTrain.getTrainID(), newRoute);
-		CTC.transitSystem.trainPositions.get(selectedTrain.getTrainID()).setRoute(newRoute);
+		CTC.transitSystem.routeList.put(selectedTrain.model.getTrainID(), newRoute);
+		CTC.transitSystem.trainPositions.get(selectedTrain.model.getTrainID()).setRoute(newRoute);
 		
 		Stage currStage = (Stage) trackListBox.getScene().getWindow();
 		currStage.close();

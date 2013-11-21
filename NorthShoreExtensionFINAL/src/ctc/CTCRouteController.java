@@ -5,6 +5,7 @@
  */
 package ctc;
 
+import TrainController.TrainController;
 import trainmodule.TrainModel;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -109,7 +110,7 @@ public class CTCRouteController extends CTCController {
 	 * 
 	 * @return		selected Train
 	 */
-	public TrainModel getSelectedTrain()
+	public TrainController getSelectedTrain()
 	{
 		if (selectedTrainLegend == null)
 			return null;
