@@ -8,6 +8,7 @@ public class TrainController implements Runnable {
 	
 	public trainmodule.TrainModel model;
 	public PIDController pidc;
+	public ctc.Route route;
 	public GPS gps;
 	public Double powerSetpoint;
 	public Double speedSetpoint;
@@ -72,6 +73,7 @@ public class TrainController implements Runnable {
 	public TrainController() {
 		model = new trainmodule.TrainModel(1 / loopsPS, /*null,*/ 70.2, "???");
 		pidc = new PIDController(37103.9);
+		route = new ctc.Route();
 		gps = new GPS();
 		powerSetpoint = 0.0;
 		speedSetpoint = 0.0;
@@ -137,10 +139,10 @@ public class TrainController implements Runnable {
 		return speedSetpoint;
 	}
 	
-	public void cruiseControl() {
+	public void cruiseControl(Double delta) {
 		
 		speed = model.setSetpoint(powerSetpoint);
-		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta*optimalTime/1000000000);
+		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta);
 
 //		if(speed < speedSetpoint) {
 //			powerSetpoint += .5;
