@@ -15,6 +15,7 @@ public class EngineModel
 	private double staticFrictionCoefficient = 0.5;
 	private double setpoint;
 	private boolean eBrake = false;
+	private double deltaT;
 		
 	private double currentVelocity;
 	private double currentGradient;
@@ -22,14 +23,14 @@ public class EngineModel
 	private boolean brakeFailure;
 	//private double tickTime;
 	
-	public EngineModel(/*double time*/)
+	public EngineModel(double time)
 	{
 		setpoint = 0;
 		currentVelocity = 0;
 		currentGradient = 0;
 		engineFailure = false;
 		brakeFailure = false;
-		//tickTime = time;
+		deltaT = time;
 	}
 	
 	public double calculateLoad(double power)
@@ -37,7 +38,7 @@ public class EngineModel
 		if (power == 0)
 			return 0;
 		else
-			return maxPower / power;
+			return power / maxPower;
 	}
 	
 	public double pullBrake(double load, double mass)
@@ -71,70 +72,30 @@ public class EngineModel
 	
 	public double calculateSetpoint(double power, double mass)
 	{
+		power = power * 1000;	//Convert kilowatts to watts
+		double angle = Math.atan(currentGradient / 100);
+		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; //* staticFrictionCoefficient;
+		double trainForce = mass * gravity * Math.sin(angle);
+		//mass = mass * 1000;
+		
 		if (engineFailure)
 		{
 			power = 0;
 			setpoint = 0;
 		}
 		
-		if (power > 120)
-			power = 120;
-		else
-		{
-			if (power < 0)
-				power = 0;
-			
-			double load = calculateLoad(power);
-			double partialForce = (load * maxAcceleration) * mass;
-			
-			if (partialForce + mass * gravity * Math.sin(Math.atan(currentGradient / 100)) <= mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * staticFrictionCoefficient)
-				currentVelocity = 0;
-			else
-				currentVelocity = (power / partialForce) + (mass * gravity * Math.sin(Math.atan(currentGradient / 100)) - mass * gravity * Math.cos(Math.atan(currentGradient / 100)) * frictionCoefficient);
-		}
-		
-		/*double force;
-		double partialForce = 0;
-		
-		if (currentVelocity != 0)
-			force = mass * gravity * Math.sin(Math.atan(currentGradient / 100)) - (mass * gravity * frictionCoefficient);
-		else
-		{
-			if (mass * gravity * staticFrictionCoefficient >= mass * gravity * Math.sin(Math.atan(currentGradient / 100)))
-			{
-				partialForce = mass * gravity * Math.sin(Math.atan(currentGradient / 100)) - mass * gravity * staticFrictionCoefficient;
-				force = partialForce;
-			}
-			else
-			{
-				partialForce = 0;
-				force = 0;
-			}
-		}
-		
-		double acceleration = force / mass;
-		instantaneousVelocity = currentVelocity + (acceleration * tickTime);
-		
-		if (power == 0 && currentGradient >= 0)
-			return instantaneousVelocity;
-		if (power == 0 && currentGradient < 0)
-			return -1 * instantaneousVelocity;
-		
-		if (power > 120)
-			power = 120;
-		
-		if (mass * acceleration > mass * gravity * staticFrictionCoefficient)
-			currentVelocity = power / (mass * acceleration);
+		if (power > maxPower)
+			power = maxPower;
+		if (power < 0)
+			power = 0;
 		
 		
-		currentVelocity += instantaneousVelocity;
-		
-		if (currentVelocity > maxSpeed)
-			return maxSpeed;*/
+		//currentVelocity = (power / (staticFriction - trainForce)) + currentVelocity;
+		currentVelocity = (power / (staticFriction)) - (gravity * Math.sin(angle) * deltaT) + currentVelocity;
 		
 		return currentVelocity;
 	}
-	
+
 	public boolean getBrakeFailure()
 	{
 		return brakeFailure;

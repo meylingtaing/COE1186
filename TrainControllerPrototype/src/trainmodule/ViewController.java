@@ -144,7 +144,7 @@ public class ViewController
     
     public void addTrain(Route r, double t, String c)
     {
-    	data.add(new TrainModel(r, t, c));
+    	data.add(new TrainModel(0.001, r, t, c));
     	//updateGUI();
     }
     

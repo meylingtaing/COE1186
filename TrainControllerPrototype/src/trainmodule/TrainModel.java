@@ -51,9 +51,9 @@ public class TrainModel
 		//TrainView.createGUI();
 		//TrainView tView = new TrainView();
 		ViewController.data = FXCollections.observableArrayList();
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 100, "SUPERUSER"));
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 69.2, "ENGINEER"));
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 67.4, "?????????"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 100, "SUPERUSER"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 69.2, "ENGINEER"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 67.4, "?????????"));
 		//System.out.println("here!!");
 		
 		TrainView.createGUI();
@@ -80,12 +80,12 @@ public class TrainModel
 		//ViewController.updateGUI();
 	}
 	
-	public TrainModel(/*int clock,*/ Route trip, double t, String engineer)
+	public TrainModel(double tick, Route trip, double t, String engineer)
 	{
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
-		engine = new EngineModel();
+		engine = new EngineModel(tick);
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
 		conductor = engineer;
@@ -151,7 +151,7 @@ public class TrainModel
     public Double setSetpoint(double d)
     {
     	if (!eBrake)
-    		return engine.calculateSetpoint(d, trainMass + passengers.getTotalPassengerMass());
+    		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else
     		return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
     	
