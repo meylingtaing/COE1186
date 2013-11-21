@@ -51,9 +51,9 @@ public class TrainModel
 		//TrainView.createGUI();
 		//TrainView tView = new TrainView();
 		ViewController.data = FXCollections.observableArrayList();
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 100, "SUPERUSER"));
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 69.2, "ENGINEER"));
-		ViewController.data.add(new TrainModel(new Route(new Stack<String>()), 67.4, "?????????"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 100, "SUPERUSER"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 69.2, "ENGINEER"));
+		ViewController.data.add(new TrainModel(0.001, new Route(new Stack<String>()), 67.4, "?????????"));
 		//System.out.println("here!!");
 		
 		TrainView.createGUI();
@@ -80,18 +80,12 @@ public class TrainModel
 		//ViewController.updateGUI();
 	}
 	
-	public TrainModel(String id)
-	{		
-		//INITIALIZE TABLE VARIABLES
-		trainID = new SimpleIntegerProperty(Integer.parseInt(id));
-	}
-	
-	public TrainModel(/*int clock,*/ Route trip, double t, String engineer)
+	public TrainModel(double tick, Route trip, double t, String engineer)
 	{
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
-		engine = new EngineModel();
+		engine = new EngineModel(tick);
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
 		conductor = engineer;
@@ -117,6 +111,28 @@ public class TrainModel
 		//ViewController.data.add(this);
 	}
 	
+	/*public static void refreshGUI()
+	{
+		if (view != null)
+			view.updateGUI();
+		else
+			System.out.println("No VC");
+	}*/
+	
+	/*public static void setViewController(ViewController vc)
+	{
+		//System.out.println("hello");
+		view = vc;
+	}*/
+	
+	/*public static void addActiveTrains()
+	{
+		if (view != null)
+			view.addTrain(new Route(new Stack<String>()), 70.2, "yolo");
+		else
+			System.out.println("view is uninitialized");
+	}*/
+	
 	public int getTrainID()
 	{
         return trainID.get();
@@ -132,12 +148,14 @@ public class TrainModel
         return engine.getSetpoint() + " watts";
     }
 	
-    public void setSetpoint(double d)
+    public Double setSetpoint(double d)
     {
     	if (!eBrake)
-    		engine.calculateSetpoint(d, trainMass + passengers.getTotalPassengerMass());
+    		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else
-    		engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    		return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    	
+    	//return engine.getSetpoint();
     }
     
     public String getSpeed()
