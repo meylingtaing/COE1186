@@ -43,6 +43,7 @@ public class Block {
 		grade = Double.parseDouble(blockInfo[4]);
 		speedLimit = Integer.parseInt(blockInfo[5]);
 		infrastructure = blockInfo[6];
+		stationName = blockInfo[7];
 		elevation = Double.parseDouble(blockInfo[8]);
 		cumElevation = Double.parseDouble(blockInfo[9]);
 		BiDirectional = Boolean.parseBoolean(blockInfo[10]);
