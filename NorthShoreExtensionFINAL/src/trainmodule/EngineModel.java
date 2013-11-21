@@ -31,14 +31,7 @@ public class EngineModel
 		engineFailure = false;
 		brakeFailure = false;
 		deltaT = time;
-	}
-	
-	public double calculateLoad(double power)
-	{		
-		if (power == 0)
-			return 0;
-		else
-			return power / maxPower;
+		deltaT = 0.05;
 	}
 	
 	public double pullBrake(double load, double mass)
@@ -75,13 +68,16 @@ public class EngineModel
 		power = power * 1000;	//Convert kilowatts to watts
 		double angle = Math.atan(currentGradient / 100);
 		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; //* staticFrictionCoefficient;
-		double trainForce = mass * gravity * Math.sin(angle);
-		//mass = mass * 1000;
 		
 		if (engineFailure)
 		{
 			power = 0;
-			setpoint = 0;
+			currentVelocity = currentVelocity - (staticFriction / mass) * deltaT;
+			
+			if (currentVelocity < 0)
+				currentVelocity = 0;
+			
+			return currentVelocity;
 		}
 		
 		if (power > maxPower)
@@ -89,9 +85,12 @@ public class EngineModel
 		if (power < 0)
 			power = 0;
 		
+		currentVelocity = (power / (staticFriction)) + currentVelocity - (staticFriction / mass) * deltaT;
 		
-		//currentVelocity = (power / (staticFriction - trainForce)) + currentVelocity;
-		currentVelocity = (power / (staticFriction)) - (gravity * Math.sin(angle) * deltaT) + currentVelocity;
+		if (currentVelocity < 0)
+			currentVelocity = 0;
+		else if (currentVelocity > maxSpeed)
+			return maxSpeed;
 		
 		return currentVelocity;
 	}
