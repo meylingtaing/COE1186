@@ -80,6 +80,12 @@ public class TrainModel
 		//ViewController.updateGUI();
 	}
 	
+	public TrainModel(String id)
+	{		
+		//INITIALIZE TABLE VARIABLES
+		trainID = new SimpleIntegerProperty(Integer.parseInt(id));
+	}
+	
 	public TrainModel(/*int clock,*/ Route trip, double t, String engineer)
 	{
 		doors = new DoorController();
@@ -110,28 +116,6 @@ public class TrainModel
 		//lightValue = new SimpleStringProperty(lights.getLights() + "");
 		//ViewController.data.add(this);
 	}
-	
-	/*public static void refreshGUI()
-	{
-		if (view != null)
-			view.updateGUI();
-		else
-			System.out.println("No VC");
-	}*/
-	
-	/*public static void setViewController(ViewController vc)
-	{
-		//System.out.println("hello");
-		view = vc;
-	}*/
-	
-	/*public static void addActiveTrains()
-	{
-		if (view != null)
-			view.addTrain(new Route(new Stack<String>()), 70.2, "yolo");
-		else
-			System.out.println("view is uninitialized");
-	}*/
 	
 	public int getTrainID()
 	{
