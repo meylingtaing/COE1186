@@ -61,18 +61,25 @@ public class AddTrackFormController extends FormController
 		try
 		{
 			Scanner fileScan = new Scanner(new File(trackCsv));
+			// Ignore first line
+			fileScan.nextLine();
 			while (fileScan.hasNextLine())
 			{
 				String line = fileScan.nextLine();
 				String[] blockInfo = line.split(",");
 				
+				// Everything else in TrackObject Block
+				Block newBlock = new Block(blockInfo);
+				
+				newTrackObject.addBlock(newBlock);
+				
 				// Need coordinates for track layout
 				Double[] block = new Double[4];
 				
-				block[0] = Double.parseDouble(blockInfo[1]);
-				block[1] = Double.parseDouble(blockInfo[2]);
-				block[2] = Double.parseDouble(blockInfo[3]);
-				block[3] = Double.parseDouble(blockInfo[4]);
+				block[0] = newBlock.getStartX();
+				block[1] = newBlock.getStartY();
+				block[2] = newBlock.getEndX();
+				block[3] = newBlock.getEndY();
 				
 				if (!newTrackLayout.addBlock(block))
 				{
@@ -80,11 +87,6 @@ public class AddTrackFormController extends FormController
 					System.err.println("Bad file");
 					return false;
 				}
-				
-				// Everything else in TrackObject Block
-				Block newBlock = new Block(blockInfo);
-				
-				newTrackObject.addBlock(newBlock);
 				
 			}
 			fileScan.close();
