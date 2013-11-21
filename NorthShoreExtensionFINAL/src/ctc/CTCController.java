@@ -7,7 +7,7 @@ package ctc;
 import java.io.IOException;
 
 import trackModel.Block;
-import trainModel.TrainModel;
+import trainmodule.TrainModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -171,7 +171,7 @@ public class CTCController
 	 */
 	public void displayRouteInfo(Route route)
 	{
-		Text train = new Text(route.getTrain().getName() + ": ");
+		Text train = new Text("Train " + route.getTrain().getTrainID() + ": ");
 		Text routeInfo = new Text(route.toString());
 		infoContainer.getChildren().clear();
 		infoContainer.getChildren().addAll(train, routeInfo);

@@ -5,7 +5,7 @@
  */
 package ctc;
 
-import trainModel.TrainModel;
+import trainmodule.TrainModel;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

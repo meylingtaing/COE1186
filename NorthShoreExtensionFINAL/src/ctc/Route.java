@@ -8,7 +8,7 @@ import java.util.Random;
 
 import trackModel.Block;
 import trackModel.TrackObject;
-import trainModel.TrainModel;
+import trainmodule.TrainModel;
 
 public class Route 
 {
@@ -118,7 +118,7 @@ public class Route
 			double[] coordinates = lastBlock.getCoordinates();
 			double[] endCoordinates = new double[2];
 			
-			if (lastBlockForward || !lastBlock.isBidirectional())
+			if (lastBlockForward || !lastBlock.isBiDirectional())
 			{
 				possibleNextBlocks = lastBlock.getPossibleNextBlocks();
 				endCoordinates[0] = coordinates[2];
@@ -147,7 +147,7 @@ public class Route
 			{
 				if (station.equals("YARD"))
 				{
-					if (track.getBlock(possibleNextBlocks[0]).isToYard())
+					if (track.getBlock(possibleNextBlocks[0]).isYard())
 					{
 						nextBlockId = possibleNextBlocks[0];
 					}
@@ -156,9 +156,9 @@ public class Route
 				}
 				else
 				{
-					if (track.getBlock(possibleNextBlocks[0]).isToYard())
+					if (track.getBlock(possibleNextBlocks[0]).isYard())
 						nextBlockId = possibleNextBlocks[1];
-					else if (track.getBlock(possibleNextBlocks[1]).isToYard())
+					else if (track.getBlock(possibleNextBlocks[1]).isYard())
 						nextBlockId = possibleNextBlocks[0];
 					else
 					{

@@ -320,6 +320,23 @@ public class Block {
 		return this.blockId;
 	}
 	
+	public double[] getCoordinates()
+	{
+		double[] coordinates = {startX, startY, endX, endY};
+		return coordinates;
+	}
 	
+	public int[] getPossibleNextBlocks()
+	{
+		int[] next = {NextBlockId, thirdNextBlockId};
+		return next;
+	}
+	
+	public int[] getPossiblePrevBlocks()
+	{
+		// change this for redline
+		int[] prev = {SecondNextBlockId, -1};
+		return prev;
+	}
 
 }
