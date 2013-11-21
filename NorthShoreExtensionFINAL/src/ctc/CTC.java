@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class CTC extends Application 
 {
 	protected static Stage ctcStage;
-	protected static CTCController ctcController;
+	public static CTCController ctcController;
 	
 	protected static TransitSystem transitSystem;
 	protected static User currUser;

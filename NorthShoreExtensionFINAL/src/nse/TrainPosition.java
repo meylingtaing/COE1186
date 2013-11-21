@@ -46,7 +46,7 @@ public class TrainPosition {
 			// Move towards end of block
 			if (distance >= (currBlock.getLength() - distanceTraveled))
 			{
-				System.out.println("Need to move to next block");
+				//System.out.println("Need to move to next block");
 				distance = distance - (currBlock.getLength() - distanceTraveled);
 				
 				// Remove block from route
@@ -59,7 +59,7 @@ public class TrainPosition {
 			}
 			else
 			{
-				System.out.println("Don't need to move to next block");
+				//System.out.println("Don't need to move to next block");
 				distanceTraveled = distance + distanceTraveled;
 				distance = 0;
 			}

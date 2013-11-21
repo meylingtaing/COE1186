@@ -26,7 +26,7 @@ public class TransitSystem implements Runnable
 	public Hashtable<Integer, Route> routeList = new Hashtable<Integer, Route>();
 	public Hashtable<Integer, TrainPosition> trainPositions = new Hashtable<Integer, TrainPosition>();
 	private int tickRate;
-	
+	public boolean simulated = false;
 	
 	public TransitSystem()
 	{
@@ -42,11 +42,22 @@ public class TransitSystem implements Runnable
 	{
 		this.tickRate = tickRate;
 	}
+	
+	public boolean isTrainDetected(String track, int blockId)
+	{
+		for (TrainController train : trains.values())
+		{
+			if (trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() == blockId && 
+					trainPositions.get(train.model.getTrainID()).getCurrTrack().getClass().equals(track))
+				return true;
+		}
+		return false;
+	}
 
 	@Override
 	public void run() 
 	{
-		
+		simulated = true;
 		while (true)
 		{
 			try
@@ -58,6 +69,7 @@ public class TransitSystem implements Runnable
 					System.out.println("Train " + train.model.getTrainID() + " position: ");
 					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
 					System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
+					//ctc.ctcController.displayTrains();
 				}
 			}
 			catch (Exception e)

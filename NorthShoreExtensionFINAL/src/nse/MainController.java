@@ -26,6 +26,7 @@ public class MainController {
 		{
 			myThread.start();
 			buttonClicked.setText("Stop Simulation");
+			buttonClicked.setDisable(true);
 		}
 		else
 		{

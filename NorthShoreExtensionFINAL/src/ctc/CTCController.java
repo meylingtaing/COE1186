@@ -59,15 +59,19 @@ public class CTCController
 	/**
 	 * Creates the track display
 	 */
-	protected void displayTrack() 
+	public void displayTrack() 
 	{
+		//System.out.println("Refreshing track, number of tracks " + CTC.tracks.size());
 		// Clear display first
 		displayBox.getChildren().clear();
 		
+		
 		for (int i = 0; i < CTC.tracks.size(); i++) {
 			int j = 0;
+			
 			for (final Double[] block: CTC.tracks.get(i)) 
 			{
+				
 				double startX = block[0]/10+10;
 				double startY = block[1]/10+10;
 				double endX = block[2]/10+10;
@@ -85,6 +89,8 @@ public class CTCController
 				// TODO: better integration stuff
 				final Block currBlock = CTC.transitSystem.trackArray.get(CTC.tracks.get(i).toString()).getBlock(j);
 				//System.out.println("Display: " + CTC.transitSystem.track.trackArray.get(CTC.tracks.get(i).toString()));
+				
+				
 				if (currBlock.isStation()) 
 				{
 					strokeStyle = "-fx-stroke: #FFFFFF; -fx-stroke-width: 1px;";
@@ -119,7 +125,19 @@ public class CTCController
 					
 				}
 				else
+				{
 					strokeStyle = "-fx-stroke: " + CTC.tracks.get(i).getColor() + ";";
+				}
+				
+				// Trying to display line differently if train is present
+				// System.out.println("Simulated? " + CTC.transitSystem.simulated);
+				// System.out.println("Checking track " + CTC.tracks.get(i).toString());
+				// System.out.println("Checking block " + currBlock.getBlockId());
+				if (CTC.transitSystem.simulated && CTC.transitSystem.isTrainDetected(CTC.tracks.get(i).toString(), currBlock.getBlockId()))
+				{
+					strokeStyle = "-fx-stroke: #9933FF; -fx-stroke-width: 2px;";
+					System.out.println("Showing the train on the track");
+				}
 				
 				line.setStyle(strokeStyle);
 				line.setVisible(true);
@@ -133,14 +151,21 @@ public class CTCController
 	/**
 	 * Displays the position of the trains on the track
 	 */
-	protected void displayTrains()
+	public void displayTrains()
 	{
-		for (TrainController train : CTC.transitSystem.trains.values())
-		{
+		System.out.println("Called displayTrains()");
+		System.out.println(CTC.transitSystem.trains.get(0));
+		//for (TrainController train : CTC.transitSystem.trains.values())
+		//{
+			TrainController train = CTC.transitSystem.trains.get(0);
 			// We should probably actually talk to each other but for now just using global
 			TrainPosition trainPosition = CTC.transitSystem.trainPositions.get(train.model.getTrainID());
-			
-		}
+			Block currBlock = trainPosition.getCurrBlock();
+			Line line = new Line(currBlock.getStartX()/10+10, currBlock.getStartY()/10+10, currBlock.getEndX()/10+10, currBlock.getEndY()/10+10);
+			line.setStyle("-fx-stroke: #9933FF; -fx-stroke-width: 2px;");
+			displayBox.getChildren().add(line);
+			System.out.println("Displaying the train");
+		//}
 	}
 	
 	protected void makeObjectsSelectable()
