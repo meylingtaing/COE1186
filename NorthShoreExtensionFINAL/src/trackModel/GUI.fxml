@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="TrackMainController">
+  <children>
+    <SplitPane dividerPositions="0.24664429530201343" focusTraversable="true" layoutX="2.0" layoutY="2.0" prefHeight="398.0" prefWidth="598.0">
+      <items>
+        <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="144.0">
+          <children>
+            <Rectangle id="brokenRailSquare" fx:id="BrokenRailBlock" arcHeight="5.0" arcWidth="5.0" height="23.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="22.0">
+              <fill>
+                <Color blue="0.160" green="1.000" red="0.000" fx:id="x1" />
+              </fill>
+            </Rectangle>
+            <Rectangle id="brokenTrackSquare" fx:id="BrokenCircuitBlock" arcHeight="5.0" arcWidth="5.0" fill="$x1" height="23.0" layoutX="51.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+            <Rectangle id="brokenPowerSquare" fx:id="powerFailureBlock" arcHeight="5.0" arcWidth="5.0" fill="$x1" height="23.0" layoutX="86.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+            <Label fx:id="label" layoutX="1.0" layoutY="48.0" prefWidth="50.0" text="Broken Rail">
+              <font>
+                <Font size="8.0" fx:id="x2" />
+              </font>
+            </Label>
+            <Label ellipsisString="..." font="$x2" layoutX="51.0" layoutY="37.0" prefHeight="43.0" prefWidth="26.0" text="Track &#10;Circuit &#10;Failure" textAlignment="CENTER" textOverrun="ELLIPSIS" />
+            <Label font="$x2" layoutX="84.0" layoutY="48.0" text="Power Failure" />
+            <Button id="BreakRailButton" fx:id="breakRailButton" layoutX="5.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#BreakRailFunction" prefWidth="118.0" text="Break Rail" textAlignment="CENTER" />
+            <Button fx:id="breakTrackCircuitButton" layoutX="5.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#BreakTrackCircuitFunction" text="Break Track Circuit" textAlignment="CENTER" />
+            <Button fx:id="CutPowerButton" layoutX="5.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#CutPowerFunction" prefWidth="118.0" text="Cut Power" textAlignment="CENTER" />
+            <Button id="" fx:id="inputTrackButton" layoutX="6.0" layoutY="305.0" mnemonicParsing="false" onMouseClicked="#inputTrackFunction" prefWidth="98.99990000000253" text="Input Track" />
+            <Button fx:id="DeleteTrackButton" disable="true" layoutX="7.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#DeleteTrackFunction" prefWidth="98.99990844726562" text="Delete Track" />
+            <Button fx:id="queryBlockIDButton" disable="true" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#QueryBlockIdFunction" text="Query Block ID" />
+            <ListView fx:id="trackLineList" layoutX="12.0" layoutY="236.0" prefHeight="51.0" prefWidth="60.0" />
+            <Label layoutX="13.0" layoutY="206.0" text="Available Track Lines:" />
+            <Rectangle id="brokenRailSquare" fx:id="BrokenPowerRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="86.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
+            <Rectangle id="brokenRailSquare" fx:id="BrokenCircuitRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="51.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
+            <Rectangle id="brokenRailSquare" fx:id="BrokenRailRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
+          </children>
+        </AnchorPane>
+        <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="364.0" />
+      </items>
+    </SplitPane>
+  </children>
+</AnchorPane>
