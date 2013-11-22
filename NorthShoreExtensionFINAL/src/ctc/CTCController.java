@@ -166,7 +166,7 @@ public class CTCController
 			TrainPosition trainPosition = CTC.transitSystem.trainPositions.get(train.model.getTrainID());
 			Block currBlock = trainPosition.getCurrBlock();
 			Line line = new Line(currBlock.getStartX()/9+10, currBlock.getStartY()/9+10, currBlock.getEndX()/9+10, currBlock.getEndY()/9+10);
-			line.setStyle("-fx-stroke: #9966FF; -fx-stroke-width: 3px;");
+			line.setStyle("-fx-stroke: #CC33FF; -fx-stroke-width: 3px;");
 			System.out.println("Displaying the train");
 				displayBox.getChildren().add(line);
 			
