@@ -32,7 +32,9 @@ public class PIDController {
 	}
 	
 	private Double getIntegral() {
-		return integral + getError()*dt;
+		integral = integral + 0.5*getError()*dt;
+		System.out.println("Integral: " + integral);
+		return integral;
 	}
 	
 	private Double getDerivative() {
@@ -44,8 +46,11 @@ public class PIDController {
 	}
 	
 	public Double getOutput() {
-		Ki = power1 - power2;
-		Double output = Kp*getError() + Ki*getIntegral() + Kd*getDerivative();
+		Ki = Kp / 10; //power1 - power2;
+		Double output = Kp*getError() + Ki*getIntegral(); // + Kd*getDerivative();
+		if (output >= 120000.0) {
+			output = 120000.0;
+		} else if (output < 0)
 		previousError = getError();
 		power2 = power1;
 		power1 = output;
