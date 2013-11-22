@@ -18,7 +18,7 @@ public class EngineModel
 	private boolean eBrake = false;
 	private double deltaT;
 	private int trainNum;
-	private double friction = -0.4;
+	private double friction = 2.6667 * Math.pow(10, -2);
 	private double maxPowerChange = 5;
 	
 	private double lastPower;	
@@ -95,11 +95,11 @@ public class EngineModel
 			power = 0;
 		
 		maxPower = mass * mediumAcceleration * currentVelocity;
-		if (power > maxPower)
+		if (power > maxPower && currentVelocity != 0)
 			power = maxPower;
 			
 		double veloc = Math.sqrt((2 * power * deltaT) / (mass));
-		currentVelocity = currentVelocity + veloc - friction * deltaT;
+		currentVelocity = currentVelocity + veloc - 0.00433 * deltaT;
 		
 		if (currentVelocity < 0)
 			currentVelocity = 0;
