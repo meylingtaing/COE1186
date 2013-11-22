@@ -28,32 +28,16 @@ public class TrainModel
 	
 	//DEBUG VARIABLES
 	private static int trainIDGenerator = 0;
-	/*private static double powerGenerator = 100.0;
-	private static double speedGenerator = 75;
-	private static double accelerationGenerator = 23.21;
-	private static int passengerGenerator = 34;
-	private static double temperatureGenerator = 72.4;*/
 	
 	//TABLE COLUMN VARIABLES
 	private SimpleIntegerProperty trainID;
-	//private SimpleStringProperty setpoint;
-	//private SimpleStringProperty speed;
-	//private SimpleStringProperty acceleration;
-	//private SimpleIntegerProperty passengerNumber;
-	//private SimpleStringProperty temp;
-	//private SimpleStringProperty fail;	
-	//private SimpleStringProperty doorValue;
-	//private SimpleStringProperty lightValue;
 	
 	public static void main(String args[])
 	{
-		//TrainView.createGUI();
-		//TrainView tView = new TrainView();
 		ViewController.data = FXCollections.observableArrayList();
 		ViewController.data.add(new TrainModel(0.001, /*null,*/ 100, "SUPERUSER"));
 		ViewController.data.add(new TrainModel(0.001, /*null,*/ 69.2, "ENGINEER"));
 		ViewController.data.add(new TrainModel(0.001, /*null,*/ 67.4, "?????????"));
-		//System.out.println("here!!");
 		
 		TrainView.createGUI();
 		
@@ -81,37 +65,16 @@ public class TrainModel
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
 		conductor = engineer;
-		//clockSpeed = clock;
-		//route = trip;
-		
+
 		//INITIALIZE TABLE VARIABLES
 		
 		trainIDGenerator += 121;
-		//setpoint = new SimpleStringProperty(powerGenerator + " KW");
-		//powerGenerator -= 3.12;
-		//speed = new SimpleStringProperty(speedGenerator + " MPH");
-		//speedGenerator += 1.91;
-		//acceleration = new SimpleStringProperty(accelerationGenerator + " m/s^2");
-		//accelerationGenerator += 0.151;		
-		//passengerNumber = new SimpleIntegerProperty(passengerGenerator);
-		//passengerGenerator += 3;
-		//temp = new SimpleStringProperty(temperatureGenerator + " F");
-		//temperatureGenerator += 1.91;
-		//fail = new SimpleStringProperty();
-		//doorValue = new SimpleStringProperty(doors.getDoors() + "");
-		//lightValue = new SimpleStringProperty(lights.getLights() + "");
-		//ViewController.data.add(this);
 	}
 		
 	public int getTrainID()
 	{
         return trainID.get();
     }
-	
-    /*public void setTrainID(int i)
-    {
-        trainID.set(i);
-    }*/
     
     public String getSetpoint()
 	{
@@ -125,29 +88,12 @@ public class TrainModel
     		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else
     		return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
-    	
-    	//return engine.getSetpoint();
     }
     
     public String getSpeed()
 	{
         return engine.getSpeed() + " m/s";
     }
-	
-    /*public void setSpeed(String s)
-    {
-        speed.set(s);
-    }
-    
-    public String getAcceleration()
-	{
-        return acceleration.get();
-    }
-	
-    public void setAcceleration(String s)
-    {
-        acceleration.set(s);
-    }*/
     
     public String getTemp()
 	{

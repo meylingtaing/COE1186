@@ -23,7 +23,6 @@ public class EngineModel
 	private double currentGradient;
 	private boolean engineFailure;
 	private boolean brakeFailure;
-	//private double tickTime;
 	
 	public EngineModel(double time, int id)
 	{
@@ -74,7 +73,7 @@ public class EngineModel
 	{
 		power = power * 1000;	//Convert kilowatts to watts
 		double angle = Math.atan(currentGradient / 100);
-		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; //* staticFrictionCoefficient;
+		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; 
 		
 		if (engineFailure)
 		{

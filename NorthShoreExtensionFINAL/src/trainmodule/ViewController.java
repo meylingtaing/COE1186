@@ -73,26 +73,7 @@ public class ViewController
     
     @FXML
     void initialize()
-    {
-    	/*data = FXCollections.observableArrayList(
-    				new TrainModel(new Route(new Stack<String>()), 70.2, "SUPERUSER"), 
-    				new TrainModel(new Route(new Stack<String>()), 69.2, "ENGINEER"), 
-    				new TrainModel(new Route(new Stack<String>()), 67.4, "?????????")
-    				);*/
-    	
-    	//data = FXCollections.observableArrayList();
-    	//TrainModel.setViewController(this);
-    	
-    	//addTrain(new Route(new Stack<String>()), 70.2, "SUPERUSER");
-    	//addTrain(new Route(new Stack<String>()), 69.2, "ENGINEER");
-    	//addTrain(new Route(new Stack<String>()), 67.4, "?????????");
-    	/*try {
-			Thread.sleep(00);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-    	
+    {    	
     	idColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, Integer>("trainID"));
     	setColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("setpoint"));
     	speedColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("speed"));
@@ -101,19 +82,6 @@ public class ViewController
     	passColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, Integer>("passengerNumber"));
     	tempColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("temp"));
     	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));    	
-    	
-    	//addTrain(new Route(new Stack<String>()), 68.4, "Tester");
-    	
-    	//Start a thread that updates the GUI!!!!!!
-    	
-    	//while (true)
-    	//{
-    		/*Timer t = new Timer();
-    		long delay = 100;
-    		long period = 100;
-    		Updater update = new Updater();
-    		t.schedule(update, delay, period);*/
-    	//}
     	
     	updateGUI();
     }
@@ -132,20 +100,16 @@ public class ViewController
     			data.remove(tm);
     		}
     	} 
-    	
-    	//updateGUI();
     }
     
     public void addTrain(TrainModel t)
     {
     	data.add(t);
-    	//updateGUI();
     }
     
     public void addTrain(/*ctc.Route r,*/ double t, String c)
     {
     	data.add(new TrainModel(0.001, /*r,*/ t, c));
-    	//updateGUI();
     }
     
     public void updateGUI()
@@ -159,29 +123,12 @@ public class ViewController
     		trains.add(tm.getTrainID());
     	}
     	
-    	//trainChoice.setItems(null);
-    	//System.out.println("get past");
     	trainChoice.setItems(trains);
     	
     	if (selectedTrain != null)
     		trainChoice.setValue(selectedTrain.getTrainID());    	
     	
-    	//trainTable.setItems(null);
     	trainTable.setItems(data);
-    	
-    	/*ObservableList<TrainModel> temp = FXCollections.observableArrayList();
-    	
-    	for (TrainModel t : data)
-    	{
-    		temp.add(t);
-    		data.remove(t);
-    	}
-    	
-    	for (TrainModel t : temp)
-    	{
-    		data.add(t);
-    		temp.remove(t);
-    	}*/
     	
     	((TableColumn)(trainTable.getColumns()).get(0)).setVisible(false);
     	((TableColumn)(trainTable.getColumns()).get(0)).setVisible(true);
@@ -195,13 +142,9 @@ public class ViewController
     	{
     		if (trainChoice.getValue().equals(tm.getTrainID()))
     		{
-    			//tm.refreshGUI();
-    			//TrainModel.refreshGUI();
     			selectedTrain = tm;
-    			//System.out.println(tm.getTrainID() + " " + trainChoice.getValue());
     		}
     	}    	
-    	//System.out.println("changed to " + selectedTrain.getTrainID());
     }
     
     public void throwEngineFailure()
