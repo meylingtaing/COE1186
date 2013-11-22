@@ -143,6 +143,7 @@ public class TrainController implements Runnable {
 		
 		speed = model.setSetpoint(powerSetpoint);
 		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta);
+		System.out.println("Power Setpoint: " + powerSetpoint);
 
 //		if(speed < speedSetpoint) {
 //			powerSetpoint += .5;

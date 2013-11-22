@@ -30,6 +30,13 @@ public class Block {
 	private double endX;
 	private double endY;
 	private boolean yard;
+	private String line;
+	
+	private Block authorityEnterBlock;
+	private Block authorityExitBlock;
+	
+	private boolean trainDetected;
+	
 	
 	
 	
@@ -37,6 +44,7 @@ public class Block {
 	public Block(String[] blockInfo)
 	{
 		
+		line = blockInfo[0];
 		section = blockInfo[1];
 		blockId = Integer.parseInt(blockInfo[2]);
 		length = Double.parseDouble(blockInfo[3]);
@@ -66,6 +74,8 @@ public class Block {
 		switchToYard = false;
 		switchFromYard = false;
 		
+		trainDetected=false;
+		
 		
 		if(infrastructure.contains("STATION")){
 			station=true;
@@ -90,6 +100,41 @@ public class Block {
 		}
 		
 	}
+	
+	public String getTrackLine(){
+		return line;
+	}
+	
+	public boolean isTrainDetected()
+	{
+		return trainDetected;
+	}
+	
+	public void setTrainDetected(boolean cond)
+	{
+		trainDetected=cond;
+	}
+	
+	public void setAuthorityEnterBlock(Block b)
+	{
+		authorityEnterBlock=b;
+	}
+	
+	public void setAuthorityExitBlock(Block b)
+	{
+		authorityExitBlock=b;
+	}
+	
+	public Block getAuthorityEnterBlock()
+	{
+		return authorityEnterBlock;
+	}
+	
+	public Block getAuthorityExitBlock()
+	{
+		return authorityExitBlock;
+	}
+	
 	
 	//the following methods are getters and setters for the block attributes
 	
