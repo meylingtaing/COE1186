@@ -16,8 +16,8 @@
 	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
 	<Text text="Track Name: " textAlignment="RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="0" />
 	<Text text="CSV File: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
-	<TextField fx:id="trackNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" onKeyReleased="#enter" />
-	<TextField fx:id="trackCsvInput" GridPane.rowIndex="1" GridPane.columnIndex="1" onKeyReleased="#enter" />
+	<TextField fx:id="trackNameInput" GridPane.rowIndex="0" GridPane.columnIndex="1" onKeyReleased="#enter" text="greenline" />
+	<TextField fx:id="trackCsvInput" GridPane.rowIndex="1" GridPane.columnIndex="1" onKeyReleased="#enter" text="greenline.csv" />
 	<Text text="Color: " GridPane.rowIndex="3" GridPane.columnIndex="0" />
 	<HBox GridPane.rowIndex="3" GridPane.columnIndex="1" spacing="10">
 		<fx:define><ToggleGroup fx:id="toggleColors" /></fx:define>
