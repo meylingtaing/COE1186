@@ -7,9 +7,9 @@ public class EngineModel
 {	
 	private double maxGradient = 0.60;
 	private double maxSpeed = 70000.0;
-	private double maxAcceleration = 0.5 * 0.5 + 0.5;
+	private double mediumAcceleration = 0.5;
 	private double maxPower = 120000;
-	private double maxBrakeDeceleration = 1.8;
+	private double mediumDeceleration = 1.2;
 	private double emergencyDeceleration = 4.095;
 	private double gravity = 9.8067;
 	private double frictionCoefficient = 0.1;
@@ -18,7 +18,10 @@ public class EngineModel
 	private boolean eBrake = false;
 	private double deltaT;
 	private int trainNum;
-		
+	private double friction = -0.4;
+	private double maxPowerChange = 5;
+	
+	private double lastPower;	
 	private double currentVelocity;
 	private double currentGradient;
 	private boolean engineFailure;
@@ -33,7 +36,9 @@ public class EngineModel
 		brakeFailure = false;
 		deltaT = time;
 		trainNum = id;
-		//deltaT = 0.05;
+		lastPower = 0;
+		//deltaT = time
+		deltaT = 0.2;
 	}
 	
 	public double pullBrake(double load, double mass)
@@ -44,7 +49,7 @@ public class EngineModel
 		double angle = Math.atan(currentGradient / 100);
 		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
 		
-		currentVelocity = currentVelocity - (staticFriction / mass) * deltaT - load * maxBrakeDeceleration * deltaT;
+		currentVelocity = currentVelocity - friction * deltaT - load * mediumDeceleration * deltaT;
 		
 		if (currentVelocity < 0)
 			currentVelocity = 0;
@@ -59,7 +64,7 @@ public class EngineModel
 		double angle = Math.atan(currentGradient / 100);
 		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
 		
-		currentVelocity = currentVelocity - (staticFriction / mass) * deltaT - emergencyDeceleration * deltaT;
+		currentVelocity = currentVelocity - friction * deltaT - emergencyDeceleration * deltaT;
 		
 		if (currentVelocity < 0)
 			currentVelocity = 0;
@@ -71,27 +76,30 @@ public class EngineModel
 	
 	public double calculateSetpoint(double power, double mass)
 	{
-		power = power * 1000;	//Convert kilowatts to watts
 		double angle = Math.atan(currentGradient / 100);
 		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; 
 		
 		if (engineFailure)
 		{
 			power = 0;
-			currentVelocity = currentVelocity - (staticFriction / mass) * deltaT;
+			currentVelocity = currentVelocity - friction * deltaT;
 			
 			if (currentVelocity < 0)
 				currentVelocity = 0;
 			
+			lastPower = 0;
 			return currentVelocity;
 		}
-		
-		if (power > maxPower)
-			power = maxPower;
+
 		if (power < 0)
 			power = 0;
 		
-		currentVelocity = (power / (staticFriction)) + currentVelocity - (staticFriction / mass) * deltaT;
+		maxPower = mass * mediumAcceleration * currentVelocity;
+		if (power > maxPower)
+			power = maxPower;
+			
+		double veloc = Math.sqrt((2 * power * deltaT) / (mass));
+		currentVelocity = currentVelocity + veloc - friction * deltaT;
 		
 		if (currentVelocity < 0)
 			currentVelocity = 0;
@@ -99,7 +107,7 @@ public class EngineModel
 			return maxSpeed;
 		
 		// TODO fix integrating this deltaT stuff
-		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * .2);
+		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		System.out.println("Current velocity: " + currentVelocity);
 		System.out.println("Current deltaT: " + deltaT);
 		return currentVelocity;
