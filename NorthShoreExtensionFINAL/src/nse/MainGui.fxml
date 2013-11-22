@@ -19,13 +19,13 @@
 	<HBox GridPane.rowIndex="1" GridPane.columnIndex="0" spacing="25">
 		<VBox spacing="10">
 			<Button text="CTC Office" onAction="#navigateCTC" prefWidth="300" styleClass="largeButton" />
-			<Button text="Track Model" prefWidth="300" styleClass="largeButton" />
-			<Button text="Train Model" prefWidth="300" styleClass="largeButton" />
+			<Button text="Track Model" prefWidth="300" styleClass="largeButton" disable="true" />
+			<Button text="Train Model" prefWidth="300" styleClass="largeButton" disable="true" />
 		</VBox>
 		<VBox spacing="10">
-			<Button text="Moving Block Overlay" prefWidth="300" styleClass="largeButton" />
-			<Button text="Track Controller" prefWidth="300" styleClass="largeButton" />
-			<Button text="Train Controller" prefWidth="300" styleClass="largeButton" />
+			<Button text="Moving Block Overlay" prefWidth="300" styleClass="largeButton" disable="true" />
+			<Button text="Track Controller" prefWidth="300" styleClass="largeButton" disable="true" />
+			<Button text="Train Controller" prefWidth="300" styleClass="largeButton" disable="true" />
 		</VBox>
 	</HBox>
 	<Button text="Simulate" prefWidth="625" styleClass="largeButton" GridPane.rowIndex="2" GridPane.columnIndex="0"

@@ -72,10 +72,10 @@ public class CTCController
 			for (final Double[] block: CTC.tracks.get(i)) 
 			{
 				
-				double startX = block[0]/10+10;
-				double startY = block[1]/10+10;
-				double endX = block[2]/10+10;
-				double endY = block[3]/10+10;
+				double startX = block[0]/9+10;
+				double startY = block[1]/9+10;
+				double endX = block[2]/9+10;
+				double endY = block[3]/9+10;
 				
 				//*/ For crisp looking lines
 				startX = Math.floor(startX) + .5;
@@ -133,11 +133,13 @@ public class CTCController
 				// System.out.println("Simulated? " + CTC.transitSystem.simulated);
 				// System.out.println("Checking track " + CTC.tracks.get(i).toString());
 				// System.out.println("Checking block " + currBlock.getBlockId());
+				/*
 				if (CTC.transitSystem.simulated && CTC.transitSystem.isTrainDetected(CTC.tracks.get(i).toString(), currBlock.getBlockId()))
 				{
 					strokeStyle = "-fx-stroke: #9933FF; -fx-stroke-width: 2px;";
 					System.out.println("Showing the train on the track");
 				}
+				//*/
 				
 				line.setStyle(strokeStyle);
 				line.setVisible(true);
@@ -153,19 +155,29 @@ public class CTCController
 	 */
 	public void displayTrains()
 	{
+		displayTrack();
 		System.out.println("Called displayTrains()");
 		System.out.println(CTC.transitSystem.trains.get(0));
+		CTC.transitSystem.simulated = false;
 		//for (TrainController train : CTC.transitSystem.trains.values())
 		//{
 			TrainController train = CTC.transitSystem.trains.get(0);
 			// We should probably actually talk to each other but for now just using global
 			TrainPosition trainPosition = CTC.transitSystem.trainPositions.get(train.model.getTrainID());
 			Block currBlock = trainPosition.getCurrBlock();
-			Line line = new Line(currBlock.getStartX()/10+10, currBlock.getStartY()/10+10, currBlock.getEndX()/10+10, currBlock.getEndY()/10+10);
-			line.setStyle("-fx-stroke: #9933FF; -fx-stroke-width: 2px;");
-			displayBox.getChildren().add(line);
+			Line line = new Line(currBlock.getStartX()/9+10, currBlock.getStartY()/9+10, currBlock.getEndX()/9+10, currBlock.getEndY()/9+10);
+			line.setStyle("-fx-stroke: #9966FF; -fx-stroke-width: 3px;");
 			System.out.println("Displaying the train");
+				displayBox.getChildren().add(line);
+			
+			
 		//}
+			CTC.transitSystem.simulated = true;
+			/*
+			synchronized(CTC.transitSystem) {
+				CTC.transitSystem.notify();
+			}
+			//*/
 	}
 	
 	protected void makeObjectsSelectable()

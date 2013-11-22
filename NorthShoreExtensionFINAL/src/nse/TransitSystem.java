@@ -11,11 +11,13 @@ package nse;
 
 import java.util.Hashtable;
 
+import javafx.application.Platform;
 import TrainController.TrainController;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
 import ctc.CTC;
 import ctc.Route;
+import nse.MainController;
 
 public class TransitSystem implements Runnable
 {
@@ -27,10 +29,13 @@ public class TransitSystem implements Runnable
 	public Hashtable<Integer, TrainPosition> trainPositions = new Hashtable<Integer, TrainPosition>();
 	private int tickRate;
 	public boolean simulated = false;
+	//public MainController mainController;
 	
 	public TransitSystem()
 	{
 		this(1);
+		
+		
 	}
 	
 	public TransitSystem(int tickRate)
@@ -57,11 +62,17 @@ public class TransitSystem implements Runnable
 	@Override
 	public void run() 
 	{
-		simulated = true;
 		while (true)
 		{
+			
 			try
 			{
+				//*
+				synchronized(this) {
+                    while (!simulated)
+                        wait();
+                }
+				
 				Thread.sleep(500);
 				for (TrainController train : trains.values())
 				{
@@ -69,7 +80,18 @@ public class TransitSystem implements Runnable
 					System.out.println("Train " + train.model.getTrainID() + " position: ");
 					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
 					System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
-					//ctc.ctcController.displayTrains();
+					
+					//simulated = false;
+					//synchronized(CTC.ctcController) {
+					//	CTC.ctcController.displayTrains();
+					//}
+					//simulated = true;
+					
+					Platform.runLater(new Runnable() {
+					    public void run() {
+					        CTC.ctcController.displayTrains();
+					    }
+					});
 				}
 			}
 			catch (Exception e)

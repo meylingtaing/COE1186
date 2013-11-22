@@ -1,4 +1,5 @@
 package nse;
+import ctc.CTC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -6,11 +7,15 @@ import javafx.stage.Stage;
 
 public class MainController {
 	public static TransitSystem transitSystem = new TransitSystem();
+	public static boolean simulatedMain = false;
 	protected Thread myThread = new Thread(transitSystem);
+	//public static boolean threadSuspended = true;
 	
 	public void initialize()
 	{
-
+		myThread.start();
+		transitSystem.simulated = false;
+		simulatedMain = false;
 	}
 	
 	@FXML private void navigateCTC() throws Exception 
@@ -24,14 +29,31 @@ public class MainController {
 		Button buttonClicked = (Button) event.getSource();
 		if (buttonClicked.getText().equals("Simulate"))
 		{
-			myThread.start();
+			
 			buttonClicked.setText("Stop Simulation");
-			buttonClicked.setDisable(true);
+			//buttonClicked.setDisable(true);
+			transitSystem.simulated = true;
+			simulatedMain = true;
+			
 		}
 		else
 		{
-			myThread.interrupt();
+			//myThread.interrupt();
 			buttonClicked.setText("Simulate");
+			transitSystem.simulated = false;
+			simulatedMain = false;
 		}
+		
+		if (transitSystem.simulated)
+		{
+			synchronized(transitSystem) {
+				transitSystem.notify();
+			}
+		}
+	}
+	
+	public void refreshDisplay()
+	{
+		CTC.ctcController.displayTrack();
 	}
 }
