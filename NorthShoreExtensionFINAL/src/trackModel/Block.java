@@ -31,6 +31,12 @@ public class Block {
 	private double endY;
 	private boolean yard;
 	
+	private Block authorityEnterBlock;
+	private Block authorityExitBlock;
+	
+	private boolean trainDetected;
+	
+	
 	
 	
 	//Constructor
@@ -66,6 +72,8 @@ public class Block {
 		switchToYard = false;
 		switchFromYard = false;
 		
+		trainDetected=false;
+		
 		
 		if(infrastructure.contains("STATION")){
 			station=true;
@@ -90,6 +98,37 @@ public class Block {
 		}
 		
 	}
+	
+	public boolean isTrainDetected()
+	{
+		return trainDetected;
+	}
+	
+	public void setTrainDetected(boolean cond)
+	{
+		trainDetected=cond;
+	}
+	
+	public void setAuthorityEnterBlock(Block b)
+	{
+		authorityEnterBlock=b;
+	}
+	
+	public void setAuthorityExitBlock(Block b)
+	{
+		authorityExitBlock=b;
+	}
+	
+	public Block getAuthorityEnterBlock()
+	{
+		return authorityEnterBlock;
+	}
+	
+	public Block getAuthorityExitBlock()
+	{
+		return authorityExitBlock;
+	}
+	
 	
 	//the following methods are getters and setters for the block attributes
 	
