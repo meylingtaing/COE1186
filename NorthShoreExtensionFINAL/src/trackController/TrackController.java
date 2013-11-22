@@ -1,6 +1,12 @@
 package trackController;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import ctc.Route;
+
+import nse.TrainPosition;
+import nse.TransitSystem;
 
 import TrainController.TrainController;
 import trackModel.Block;
@@ -25,7 +31,7 @@ public class TrackController {
 	public boolean stalled = false;
 	public TrainModel trainModule;
 	public TrackObject trackModel;
-	
+	public TransitSystem transitSys;
 	
 	/*
 	 * Between (inclusive) the start authority block and the terminal authority block we will pass authority to the
@@ -36,10 +42,11 @@ public class TrackController {
 	 * 
 	 * */
 	
-	public TrackController(String s,ArrayList<Block> b,ArrayList<Switch> switches)
+	public TrackController(String s,ArrayList<Block> b,ArrayList<Switch> switches, TransitSystem ts)
 	{
 		ID = s;
 		blocks = b;
+		transitSys = ts;
 		//trainsInSection = trainsOnTrack;
 		//trainModule = tm;
 		//getSwitchesInSections();
@@ -87,7 +94,7 @@ public class TrackController {
 	{
 		for(int k=0; k < blocks.size(); k++)
 		{
-			if(blocks.get(k).train != null)
+			if(blocks.get(k).isTrainDetected())
 				return true;
 		}
 		return false;
@@ -107,19 +114,26 @@ public class TrackController {
 	{			
 		for(TrainController t:trainsUnderControl)
 		{
-			Block currB = t.getCurrentBlock();
-			Block next = t.getRoute().getNextBlock(currB);
-			Route r = t.getRoute();
-			int start = r.route.indexOf(currB);
+			int id = t.getModel().getTrainID();
+			Route r = transitSys.routeList.get(id);
+			TrainPosition tp = transitSys.trainPositions.get(id);
+			
+			Block currB = tp.getCurrBlock();
+			
+			LinkedList<Block> blist = r.getBlockList();
+			int currInd = blist.indexOf(currB);
+			Block next = blist.get(currInd + 1);
+		
+			int start = currInd;
 			
 			int trainAuthority = 0;
 			boolean quit = false;
 			for(int j = start+1;quit == false ;j++)
 			{
-				if(next.isTrainPresent() == false && blocks.contains(next))
+				if(next.isTrainDetected() == false && blocks.contains(next))
 				{
 					trainAuthority++;
-					next = r.route.get(j);
+					next = blist.get(start);
 				}
 				else
 				{
@@ -170,12 +184,14 @@ public class TrackController {
 		{
 			int id = s.getContainingBlock().getBlockId();
 			Block prev = trackModel.getBlock(id -1);
-			if(prev.isTrainPresent())
+			if(prev.isTrainDetected())
 			{
-				TrainController curr = prev.train;
-				Route r1 = curr.getRoute();
-				int prevInd = r1.route.indexOf(curr);
-				if(s.direction.equals(r1.route.get(prevInd+2)))
+				TrainController curr = transitSys.getTrainInBlock(prev);
+				int currIndex = curr.getModel().getTrainID();
+				Route r1 = transitSys.routeList.get(currIndex);
+				
+				int prevInd = r1.getBlockList().indexOf(curr);
+				if(s.direction.equals(r1.getBlockList().get(prevInd+2)))
 				{
 					//Switch in correct position
 				}
@@ -194,22 +210,24 @@ public class TrackController {
 		{
 			for(Block b:startAuthorityBlocks)
 			{
-				if(b.isTrainPresent())
+				if(b.isTrainDetected())
 				{
-					if(!trainsUnderControl.contains(b.train))
+					TrainController tc = transitSys.getTrainInBlock(b);
+					if(!trainsUnderControl.contains(tc))
 					{
-						trainsUnderControl.add(b.train);
+						trainsUnderControl.add(tc);
 					}
 				}
 			}
 		
 			for(Block b:endAuthorityBlocks)
 			{
-				if(b.isTrainPresent())
+				if(b.isTrainDetected())
 				{
-					if(trainsUnderControl.contains(b.train))
+					TrainController tc = transitSys.getTrainInBlock(b);
+					if(trainsUnderControl.contains(tc))
 					{
-						trainsUnderControl.remove((b.train));
+						trainsUnderControl.remove((tc));
 					}
 				}
 			}
@@ -219,16 +237,20 @@ public class TrackController {
 			if(startAuthorityBlocks.get(0).equals(endAuthorityBlocks.get(0)))
 			{
 				Block b = startAuthorityBlocks.get(0);
-				if(b.isTrainPresent())
+				if(b.isTrainDetected())
 				{
-					TrainController tc = b.train;
-					if(tc.getNextBlock().equals(b.getAuthorityExitBlock()))
+					TrainController tc = transitSys.getTrainInBlock(b);
+					Route r = transitSys.routeList.get(tc.getModel().getTrainID());
+					LinkedList<Block> blist = r.getBlockList();
+					int curr = blist.indexOf(b);
+					
+					if(blist.get(curr+1).equals(b.getAuthorityExitBlock()))
 					{
-						trainsUnderControl.remove((b.train));
+						trainsUnderControl.remove((tc));
 					}
 					else
 					{
-						trainsUnderControl.add((b.train));
+						trainsUnderControl.add((tc));
 					}
 				}
 			}
@@ -237,8 +259,8 @@ public class TrackController {
 	
 	public void detectTrains()
 	{
-		if(startBlock.train != null)
-		{
+		//if(startBlock.train != null)
+		//{
 			//ensure that the train is headed this way
 			//This route would be typically given by CTC
 			/*
@@ -266,7 +288,7 @@ public class TrackController {
 		//If yes in either the terminal Block or the start block
 		//The train must be looked up and then added to this track controllers scope
 		
-	}
+	//}
 	}
 	/**
 	 * Create message handler that will be notified when a train is now under the track controllers control.
