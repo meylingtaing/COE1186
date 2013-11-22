@@ -13,6 +13,7 @@ import java.util.Hashtable;
 
 import javafx.application.Platform;
 import TrainController.TrainController;
+import trackModel.Block;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
 import ctc.CTC;
@@ -59,6 +60,19 @@ public class TransitSystem implements Runnable
 		return false;
 	}
 
+	public TrainController getTrainInBlock(Block b)
+	{
+		for(TrainController train: trains.values())
+		{
+			if(trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() == b.getBlockId())//When red line added make sure the track is the same 
+			{
+				return train;
+			}
+		}
+		
+		return null;
+	}
+	
 	@Override
 	public void run() 
 	{
