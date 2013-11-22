@@ -30,6 +30,7 @@ public class Block {
 	private double endX;
 	private double endY;
 	private boolean yard;
+	private String line;
 	
 	private Block authorityEnterBlock;
 	private Block authorityExitBlock;
@@ -43,6 +44,7 @@ public class Block {
 	public Block(String[] blockInfo)
 	{
 		
+		line = blockInfo[0];
 		section = blockInfo[1];
 		blockId = Integer.parseInt(blockInfo[2]);
 		length = Double.parseDouble(blockInfo[3]);
@@ -97,6 +99,10 @@ public class Block {
 			yard = true;
 		}
 		
+	}
+	
+	public String getTrackLine(){
+		return line;
 	}
 	
 	public boolean isTrainDetected()

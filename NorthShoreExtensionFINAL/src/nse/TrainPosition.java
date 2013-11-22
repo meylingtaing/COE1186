@@ -32,7 +32,9 @@ public class TrainPosition {
 	
 	public void setPosition(Block block, boolean direction, double distance)
 	{
+		currBlock.setTrainDetected(false); //train leaves current block
 		currBlock = block;
+		currBlock.setTrainDetected(true); //train enters new block
 		forward = direction;
 		distanceTraveled = distance;
 	}
