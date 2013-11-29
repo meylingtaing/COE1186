@@ -37,8 +37,8 @@ public class EngineModel
 		deltaT = time;
 		trainNum = id;
 		lastPower = 0;
-		//deltaT = time
-		deltaT = 0.2;
+		deltaT = time;
+		//deltaT = 0.2;
 	}
 	
 	public double pullBrake(double load, double mass)
@@ -47,7 +47,7 @@ public class EngineModel
 			load = 0;
 		
 		double angle = Math.atan(currentGradient / 100);
-		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
+		//double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
 		
 		currentVelocity = currentVelocity - friction * deltaT - load * mediumDeceleration * deltaT;
 		
@@ -62,7 +62,7 @@ public class EngineModel
 	public double pullEmergencyBrake(double mass)
 	{		
 		double angle = Math.atan(currentGradient / 100);
-		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
+		//double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient;		
 		
 		currentVelocity = currentVelocity - friction * deltaT - emergencyDeceleration * deltaT;
 		
@@ -77,7 +77,7 @@ public class EngineModel
 	public double calculateSetpoint(double power, double mass)
 	{
 		double angle = Math.atan(currentGradient / 100);
-		double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; 
+		//double staticFriction = mass * gravity * Math.cos(angle) * staticFrictionCoefficient; 
 		
 		if (engineFailure)
 		{
@@ -99,7 +99,7 @@ public class EngineModel
 			power = maxPower;
 			
 		double veloc = Math.sqrt((2 * power * deltaT) / (mass));
-		currentVelocity = currentVelocity + veloc - 0.00433 * deltaT;
+		currentVelocity = currentVelocity + veloc - 0.01433 * deltaT;
 		
 		if (currentVelocity < 0)
 			currentVelocity = 0;

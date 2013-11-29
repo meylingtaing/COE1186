@@ -81,13 +81,23 @@ public class TrainModel
         return engine.getSetpoint() + " watts";
     }
 	
-    public Double setSetpoint(double d)
+    public double setSetpoint(double d)
     {
     	
     	if (!eBrake)
     		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else
     		return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    }
+    
+    public double pullBrake(double load)
+    {    	
+    	return engine.pullBrake(load, (trainMass + passengers.getTotalPassengerMass()));
+    }
+    
+    public double pullEmergencyBrake()
+    {    	
+    	return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
     }
     
     public String getSpeed()

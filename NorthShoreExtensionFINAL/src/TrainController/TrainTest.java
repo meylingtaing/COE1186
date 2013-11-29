@@ -27,7 +27,7 @@ public class TrainTest {
 			lastFpsTime += updateLength;
 			fps++;
 			
-			train.cruiseControl();
+			train.cruiseControl(0.01);
 			train.maintainAuthority(delta);
 			
 			//System.out.println(iteration++ + ":\t\t" + fpsOut + "\t" + delta + "\t" + lastLoopTime + "\t" + optimalTime);
