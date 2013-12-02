@@ -111,7 +111,19 @@ public class TrackController {
 	}
 	
 	public void calculateFixedBlockAuthority()
+	{
+		//Compare the results of the two different algorithms 
+		//Set the lowest authority to the trains
+		ArrayList<TrainWithAuthority> t1List;
+		t1List = calculateFixedBlockAuthority1();
+		ArrayList<TrainWithAuthority> t2List;
+		t2List = calculateFixedBlockAuthority2();
+	}
+	
+	
+	public ArrayList<TrainWithAuthority> calculateFixedBlockAuthority1()
 	{			
+		ArrayList<TrainWithAuthority> trainList = new ArrayList<TrainWithAuthority>();
 		for(TrainController t:trainsUnderControl)
 		{
 			int id = t.getModel().getTrainID();
@@ -125,7 +137,6 @@ public class TrackController {
 			Block next = blist.get(currInd + 1);
 		
 			int start = currInd;
-			
 			int trainAuthority = 0;
 			boolean quit = false;
 			for(int j = start+1;quit == false ;j++)
@@ -133,7 +144,7 @@ public class TrackController {
 				if(next.isTrainDetected() == false && blocks.contains(next))
 				{
 					trainAuthority++;
-					next = blist.get(start);
+					next = blist.get(j);
 				}
 				else
 				{
@@ -141,8 +152,58 @@ public class TrackController {
 				}
 			}
 			
-			t.setAuthorityFixed(trainAuthority);
-		}		
+			TrainWithAuthority ta = new TrainWithAuthority(t,trainAuthority);
+			trainList.add(ta);
+		}
+		return trainList;
+	}
+	
+	
+	/*
+	 * Method 2 for calculating authority.
+	 * 
+	 * Look at all blocks in the Track Controller's scope. If a train is found anywhere in the
+	 * Scope, continue forward to find the next train
+	 * 
+	 * Compare the next train's route against the first found train's route
+	 * 
+	 * If the next train's future blocks will collide with the first train's route;
+	 * Choose the train with higher priority and set the other train's authority to zero
+	 */
+	public ArrayList<TrainWithAuthority> calculateFixedBlockAuthority2()
+	{
+		ArrayList<TrainWithAuthority> trains = new ArrayList<TrainWithAuthority>();
+		TrainController train1 = null;
+		TrainController train2 = null;
+		int authority = 0;
+		boolean start = true;
+		
+		for(Block b: blocks)
+		{
+			if(b.isTrainDetected() && train2 == null)
+			{
+				train1 = transitSys.getTrainInBlock(b);
+				start = false;
+			}
+			if(b.isTrainDetected() && train2 == null && start==false)
+			{
+				train2 = transitSys.getTrainInBlock(b);
+				TrainWithAuthority ta = new TrainWithAuthority(train1,authority);
+				/*
+				 * Calculate the priority between the trains based on their routes
+				 * Set the authority appropriately
+				 * */
+				trains.add(ta);
+				authority = 0;
+				train1 = train2;
+				train2 = null;
+			}
+			else
+			{
+				authority++;
+			}
+		}
+		return trains;
 	}
 	
 	public void loadPLCProgram()
@@ -198,6 +259,10 @@ public class TrackController {
 				else
 				{
 					s.toggleState();
+					Block switchBlock = s.getContainingBlock();
+					
+					//Can I send the train model a block that will show the current direction of the switch?
+					switchBlock.setSwitchBoo(true);
 					//Notify model that switch state has changed
 				}
 			}
@@ -213,6 +278,7 @@ public class TrackController {
 				if(b.isTrainDetected())
 				{
 					TrainController tc = transitSys.getTrainInBlock(b);
+					
 					if(!trainsUnderControl.contains(tc))
 					{
 						trainsUnderControl.add(tc);
