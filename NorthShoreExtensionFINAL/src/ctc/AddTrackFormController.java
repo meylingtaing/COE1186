@@ -26,7 +26,8 @@ public class AddTrackFormController extends FormController
 	 * Grabs inputs and passes them to addTrack()
 	 */
 	@Override
-	protected void submit() {
+	protected void submit() 
+	{
 		
 		String trackCsv = trackCsvInput.getText();
 		String trackName = trackNameInput.getText();
