@@ -87,7 +87,7 @@ public class TrainController implements Runnable {
 		speedSetpoint = 0.0;
 		speed = 0.0;
 		authoritySetpointMoving = 0.0;
-		authoritySetpointFixed = new Block();
+		authoritySetpointFixed = 0;
 		doorsOpen = false;
 		lightsOn = false;
 		passengerCount = 0;
@@ -97,20 +97,20 @@ public class TrainController implements Runnable {
 		// TODO: TrainController: Add ID
 	}
 	
-	public Boolean closeDoors() {
-		return false;
+	public void openDoors() {
+		model.setDoorValue(true);
 	}
 	
-	public Boolean openDoors() {
-		return false;
+	public void closeDoors() {
+		model.setDoorValue(false);
 	}
 	
-	public Boolean turnOnLights() {
-		return false;
+	public void turnOnLights() {
+		model.setLightValue(true);
 	}
 	
-	public Boolean turnOffLights() {
-		return false;
+	public void turnOffLights() {
+		model.setLightValue(false);
 	}
 	
 	public Vector getPosition() {
@@ -122,19 +122,19 @@ public class TrainController implements Runnable {
 	}
 	
 	public Boolean ensureSpeedLimit() {
-		return false;
+		return true;
 	}
 	
 	public Boolean setPower(Double level) {
 		return false;
 	}
 	
-	public Boolean brakes(Double level) {
-		return false;
+	public Double brakes(Double level) {
+		return model.pullBrake(level);
 	}
 	
-	public Boolean emergencyBrakes(Boolean engadged) {
-		return false;
+	public void emergencyBrakes() {
+		model.pullEmergencyBrake();
 	}
 	
 	public Double getSpeedSetpoint() {
@@ -182,19 +182,24 @@ public class TrainController implements Runnable {
 	}
 	
 	public Boolean isTrainStopped() {
-		return false;
+		if(speed == 0.0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public Double getTrainLength() {
+		// TODO: get from train model, need to implement getter.
 		return 0.0;
 	}
 	
 	public Double getAuthorityMoving() {
-		return 0.0;
+		return authoritySetpointMoving;
 	}
 	
-	public Block getAuthorityFixed() {
-		return null;
+	public int getAuthorityFixed() {
+		return authoritySetpointFixed;
 	}
 	
 	public Boolean setAuthorityMoving(Double distance) {
@@ -204,28 +209,31 @@ public class TrainController implements Runnable {
 	}
 	
 	public Boolean setAuthorityFixed(int distance) {
-		authoritySetpointFixed = distance;
+		authoritySetpointFixed = distance; 
 		return true;
 	}
 	
 	public Double getMaxAcceleration() {
+		// TODO: get from train model, need to implement getter.
 		return 0.0;
 	}
 	
 	public Double getMaxDeceleration() {
+		// TODO: get from train model, need to implement getter.
 		return 0.0;
 	}
 	
 	public int getPassengerCount() {
-		return 0;
+		return model.getPassengerNumber();
 	}
 	
 	public Double getTotalTrainMass() {
+		// TODO: get from train model, need to implement getter.
 		return 0.0;
 	}
 	
 	public Double getPower() {
-		return 0.0;
+		return powerSetpoint;
 	}
 
 	public trainmodule.TrainModel getModel() {
