@@ -87,7 +87,7 @@ public class TrainController implements Runnable {
 		speedSetpoint = 0.0;
 		speed = 0.0;
 		authoritySetpointMoving = 0.0;
-		authoritySetpointFixed = new Block();
+		authoritySetpointFixed = 0;
 		doorsOpen = false;
 		lightsOn = false;
 		passengerCount = 0;
