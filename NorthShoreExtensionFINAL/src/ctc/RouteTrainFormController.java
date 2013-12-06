@@ -91,7 +91,7 @@ public class RouteTrainFormController extends FormController
 		ctcOffice.transitSystem.ctcSetInitialPosition(trainID, selectedTrack);
 		
 		// Send route to track controller
-		ctcOffice.transitSystem.ctcSendRoute(route);
+		ctcOffice.transitSystem.ctcSendRoute(trainID, route);
 		
 		// Figure out a way to display this
 		System.out.println(route);

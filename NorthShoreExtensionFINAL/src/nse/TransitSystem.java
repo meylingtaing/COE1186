@@ -218,9 +218,10 @@ public class TransitSystem implements Runnable
 	 * CTC -> TrackController
 	 * @param route
 	 */
-	public void ctcSendRoute(Route route)
+	public void ctcSendRoute(int trainID, Route route)
 	{
 		// TODO: fill this in!
+		routeList.put(trainID, route);
 	}
 	
 	/**
