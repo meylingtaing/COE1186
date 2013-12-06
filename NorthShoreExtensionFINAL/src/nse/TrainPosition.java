@@ -55,6 +55,7 @@ public class TrainPosition {
 				route.removeBlock();
 				
 				// Go to the next block
+				// TODO: what if route has no more blocks?
 				currBlock = route.getFirstBlock();
 				
 				distanceTraveled = 0;

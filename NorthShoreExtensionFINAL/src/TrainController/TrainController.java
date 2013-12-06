@@ -69,9 +69,17 @@ public class TrainController implements Runnable {
 			}
 		}
 	}
+	
+	/**
+	 * Added this just so I can put an ID in the train
+	 */
+	public TrainController()
+	{
+		this(1);
+	}
 
-	public TrainController() {
-		model = new trainmodule.TrainModel(1 / loopsPS, /*null,*/ 70.2, "???");
+	public TrainController(int id) {
+		model = new trainmodule.TrainModel(1 / loopsPS, /*null,*/ 70.2, "???", id);
 		pidc = new PIDController(37103.9);
 		//route = new ctc.Route();
 		gps = new GPS();
@@ -85,6 +93,8 @@ public class TrainController implements Runnable {
 		passengerCount = 0;
 		position = new Vector();
 		temperatureSetpoint = 68;
+		
+		// TODO: TrainController: Add ID
 	}
 	
 	public Boolean closeDoors() {

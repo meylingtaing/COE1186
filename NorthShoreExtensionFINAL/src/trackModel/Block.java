@@ -31,6 +31,7 @@ public class Block {
 	private double endY;
 	private boolean yard;
 	private String line;
+	private boolean closed;
 	
 	private Block authorityEnterBlock;
 	private Block authorityExitBlock;
@@ -75,6 +76,8 @@ public class Block {
 		switchFromYard = false;
 		
 		trainDetected=false;
+		
+		closed = false;
 		
 		
 		if(infrastructure.contains("STATION")){
@@ -366,9 +369,9 @@ public class Block {
 		return this.blockId;
 	}
 	
-	public double[] getCoordinates()
+	public Double[] getCoordinates()
 	{
-		double[] coordinates = {startX, startY, endX, endY};
+		Double[] coordinates = {startX, startY, endX, endY};
 		return coordinates;
 	}
 	
@@ -383,6 +386,16 @@ public class Block {
 		// change this for redline
 		int[] prev = {SecondNextBlockId, -1};
 		return prev;
+	}
+	
+	public boolean isClosed()
+	{
+		return closed;
+	}
+	
+	public void setClosed(boolean closed)
+	{
+		this.closed = closed;
 	}
 
 }

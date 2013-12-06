@@ -35,9 +35,9 @@ public class TrainModel
 	public static void main(String args[])
 	{
 		ViewController.data = FXCollections.observableArrayList();
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 100, "SUPERUSER"));
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 69.2, "ENGINEER"));
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 67.4, "?????????"));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 100, "SUPERUSER", 0));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 69.2, "ENGINEER", 1));
+		ViewController.data.add(new TrainModel(0.001, /*null,*/ 67.4, "?????????", 2));
 		
 		TrainView.createGUI();
 		
@@ -57,6 +57,11 @@ public class TrainModel
 	
 	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer)
 	{
+		this(tick, t, engineer, 0);
+	}
+	
+	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer, int id)
+	{
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
@@ -68,7 +73,7 @@ public class TrainModel
 
 		//INITIALIZE TABLE VARIABLES
 		
-		trainIDGenerator += 121;
+		this.trainID = new SimpleIntegerProperty(id);
 	}
 		
 	public int getTrainID()

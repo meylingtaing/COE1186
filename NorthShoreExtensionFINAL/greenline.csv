@@ -1,4 +1,4 @@
-Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,,ELEVATION (M),CUMALTIVE ELEVATION (M),Bi-Directional,Can go to two places,Next Block,Other Next Block if App,Third Next Block,next block switch?,switch block id,Switched to Block:,Start X,Start Y,End X,End Y
+#Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,,ELEVATION (M),CUMALTIVE ELEVATION (M),Bi-Directional,Can go to two places,Next Block,Other Next Block if App,Third Next Block,next block switch?,switch block id,Switched to Block:,Start X,Start Y,End X,End Y
 Green,J,0,0,0,0,,,0,0,FALSE,FALSE,62,-1,-1,TRUE,62,-1,4280,2185,4280,2185
 Green,A,1,100,0.5,55,,,0.5,0.5,FALSE,FALSE,13,-1,-1,TRUE,12,-1,3910,100,3910,0
 Green,A,2,100,1,55,STATION; PIONEER,PIONEER,1,1.5,FALSE,FALSE,1,-1,-1,FALSE,-1,-1,3910,200,3910,100

@@ -1,5 +1,5 @@
 /**
- * Controller for the Add Track Form in the CTC
+ * Controller for adding a new track
  * @author meyling
  */
 package ctc;
@@ -8,104 +8,98 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import trackModel.Block;
-import trackModel.Track;
-import trackModel.TrackObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import trackModel.Block;
+import trackModel.TrackObject;
 
 public class AddTrackFormController extends FormController 
 {
-	
+	// GUI related fields
 	@FXML private TextField trackCsvInput, trackNameInput;
 	@FXML private ToggleGroup toggleColors;
 	
 	/**
-	 * Grabs the user inputs from add track form
+	 * Grabs inputs and passes them to addTrack()
 	 */
-	public void submit()
-	{
+	@Override
+	protected void submit() {
+		
 		String trackCsv = trackCsvInput.getText();
 		String trackName = trackNameInput.getText();
 		
 		RadioButton selectedButton = (RadioButton) toggleColors.getSelectedToggle();
 		String color = selectedButton.getText().toUpperCase();
 		
-		if (addTrack(trackName, trackCsv, color)) 
+		if (addTrack(trackName, trackCsv, color, ctcOffice)) 
 		{
 			Stage currStage = (Stage) trackCsvInput.getScene().getWindow();
 			currStage.close();
-			CTC.ctcController.displayTrack();
-			CTC.ctcController.displayLegend();
+			
+			// Update displays
+			ctcOffice.ctcController.displayTrack();
+			ctcOffice.ctcController.displayLegend();
 		}
 		else
 			errorMessage.setVisible(true);
+
 	}
 	
 	/**
-	 * Creates a track layout for CTC and track object for TrackModel
+	 * Adds a track to north shore extension
 	 * @param trackName
 	 * @param trackCsv
 	 * @param color
 	 * @return
 	 */
-	public boolean addTrack(String trackName, String trackCsv, String color) 
+	public static boolean addTrack(String trackName, String trackCsv, String color, CTC ctc)
 	{
 		TrackLayout newTrackLayout = new TrackLayout(trackName, color);
-		TrackObject newTrackObject = new TrackObject();
-		newTrackObject.setLine(trackName);
+		TrackObject newTrack = new TrackObject();
 		
-		// Load coordinates from csv file
-		try
+		try 
 		{
 			Scanner fileScan = new Scanner(new File(trackCsv));
-			// Ignore first line
-			fileScan.nextLine();
 			while (fileScan.hasNextLine())
 			{
 				String line = fileScan.nextLine();
+				if (line.charAt(0) == '#')
+					continue;
+				
 				String[] blockInfo = line.split(",");
 				
-				// Everything else in TrackObject Block
+				// Add block to track
 				Block newBlock = new Block(blockInfo);
+				newTrack.addBlock(newBlock);
 				
-				newTrackObject.addBlock(newBlock);
-				
-				// Need coordinates for track layout
-				Double[] block = new Double[4];
-				
-				block[0] = newBlock.getStartX();
-				block[1] = newBlock.getStartY();
-				block[2] = newBlock.getEndX();
-				block[3] = newBlock.getEndY();
-				
-				if (!newTrackLayout.addBlock(block))
-				{
-					fileScan.close();
-					System.err.println("Bad file");
-					return false;
-				}
-				
-				// Add to track
-				Track.trackArray.put(trackName, newTrackObject);
+				// Add block to CTC's track database
+				Double[] blockCoordinates = newBlock.getCoordinates();
+				newTrackLayout.addBlock(blockCoordinates);
 				
 			}
+			
+			// Add track to the transit system
+			ctc.transitSystem.ctcAddTrack(trackName, newTrack);
+			
+			// Add track to CTC's track database
+			ctc.tracks.put(trackName, newTrackLayout);
+			
 			fileScan.close();
-		}
-		catch (FileNotFoundException e)
+		} 
+		catch (FileNotFoundException e) 
 		{
-			System.err.println("Can't find file " + trackCsv);
+			System.err.println("Can't load track file");
 			return false;
 		}
-		
-		CTC.tracks.add(newTrackLayout);
-		
-		// TODO: figure out a better way to make a new track object.
-		CTC.transitSystem.trackArray.put(trackName, newTrackObject);
-		
+		catch (Exception e)
+		{
+			System.err.println("Bad file.");
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 }

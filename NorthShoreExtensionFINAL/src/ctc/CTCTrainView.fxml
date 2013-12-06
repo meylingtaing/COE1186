@@ -6,8 +6,7 @@
 <?import javafx.geometry.*?>
 <?import java.net.*?>
 
-<fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.CTCTrackController" 
-	minWidth="640" minHeight="480" spacing="10" >
+<fx:root type="VBox" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.CTCTrainController" minWidth="640" minHeight="480" spacing="10" >
 	<padding><Insets top="0" right="0" bottom="10" left="0"/></padding>
 <stylesheets>
 		<URL value="@../style.css" />
@@ -28,9 +27,10 @@
 	<VBox fx:id="infoContainer" spacing="10" />
 	<HBox fx:id="buttonContainer" spacing="10">
 		<padding><Insets right="10" left="10"/></padding>
-		<Button fx:id="addTrackButton" text="Add track" onAction="#displayPopup" />
-		<Button fx:id="removeTrackButton" text="Remove track" onAction="#displayPopup" />
-		<Button fx:id="maintenanceButton" text="Track maintenance" onAction="#displayPopup" />
+		<Button fx:id="addTrainButton" text="Add train" onAction="#displayPopup" />
+		<Button fx:id="removeTrainButton" text="Remove train" onAction="#displayPopup" />
+		<Button fx:id="routeTrainButton" text="Route train" onAction="#displayPopup" />
+		<Button fx:id="suggestSetptButton" text="Suggest Setpoint/Authority" onAction="#displayPopup" />
 		<Button fx:id="navigateMainButton" text="Back to main" onAction="#navigate" />
 	</HBox>
 

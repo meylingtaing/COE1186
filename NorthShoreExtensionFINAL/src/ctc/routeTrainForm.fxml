@@ -13,15 +13,17 @@
 		<URL value="@../style.css" />
 </stylesheets>
 	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
-	<Text text="Track: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
-	<ComboBox fx:id="trackListBox" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200" >
+	<Text text="Train: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<ComboBox fx:id="trainListBox" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200" />
+	<Text text="Track: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
+	<ComboBox fx:id="trackListBox" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200" >
 		<items>
 				<FXCollections fx:factory="observableArrayList" />
 		</items>
 	</ComboBox>
-	<Text text="Route to station: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
-	<ComboBox fx:id="stationListBox" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200" />
-	<HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" spacing = "10" >
+	<Text text="Route to station: " GridPane.rowIndex="2" GridPane.columnIndex="0" />
+	<ComboBox fx:id="stationListBox" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="200" />
+	<HBox GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" spacing = "10" >
 		<Text fx:id="errorMessage" text="Error in choosing track" visible="false" />
 		<Button text="Submit" onAction="#submit" />
 		<Button text="Cancel" onAction="#cancel" />

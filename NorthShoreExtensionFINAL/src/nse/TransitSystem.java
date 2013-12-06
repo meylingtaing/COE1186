@@ -9,19 +9,27 @@
  */
 package nse;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 import javafx.application.Platform;
 import TrainController.TrainController;
+import trackModel.Track;
 import trackModel.Block;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
+import ctc.AddTrackFormController;
+import ctc.AddTrainFormController;
 import ctc.CTC;
 import ctc.Route;
 import nse.MainController;
 
 public class TransitSystem implements Runnable
 {
+	private String configFile = "config.txt";
+	
 	// Instances of all of the modules
 	public CTC ctc = new CTC(this);
 	public Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
@@ -36,7 +44,48 @@ public class TransitSystem implements Runnable
 	{
 		this(1);
 		
-		
+		loadConfigFile(configFile);
+	}
+	
+	/**
+	 * Loads configuration file with track data at startup
+	 * @param configFile
+	 */
+	private void loadConfigFile(String configFile)
+	{
+		// Check the configuration file
+		try 
+		{
+			Scanner configScan = new Scanner(new File(configFile));
+			while (configScan.hasNextLine())
+			{
+				String line = configScan.nextLine();
+				
+				// Skip comments
+				if (line.charAt(0) == '#')
+					continue;
+				
+				String[] fields = line.split(",");
+				
+				switch(fields[0])
+				{
+				case "TRACK":
+					AddTrackFormController.addTrack(fields[1], fields[3], fields[2], ctc);
+					break;
+				case "TRAIN":
+					AddTrainFormController.addTrain(fields[1], ctc);
+				default:
+					// Maybe something should go here?
+				}
+				
+			}
+			configScan.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			System.out.println("Configuration file " + configFile + " was not found.");
+			System.out.println("No default settings will be loaded.");
+		}
 	}
 	
 	public TransitSystem(int tickRate)
@@ -73,6 +122,138 @@ public class TransitSystem implements Runnable
 		return null;
 	}
 	
+	/**
+	 * Creates a physical track object in the system
+	 * CTC -> TrackController
+	 * @param trackName
+	 * @param track
+	 */
+	public void ctcAddTrack(String trackName, TrackObject track)
+	{
+		// TODO: TrackController: Change this so TrackController is created here
+		trackArray.put(trackName, track);
+	}
+	
+	/**
+	 * Removes a physical track object in the system
+	 * CTC -> TrackController
+	 */
+	public void ctcRemoveTrack(String trackName)
+	{
+		//TODO: talk to TrackController first?
+		trackArray.remove(trackName);
+	}
+	
+	/**
+	 * Adds a train to the system
+	 * CTC -> TrainController
+	 * @param train
+	 */
+	public void ctcAddTrain(TrainController train)
+	{
+		// TODO: I don't know, but maybe TrainController needs to do something here
+		trains.put(train.model.getTrainID(), train);
+	}
+	
+	/**
+	 * Gets a Block object in order to get information about it
+	 * CTC -> TrackModel (TrackController?)
+	 * @param trackName
+	 * @param blockId
+	 * @return
+	 */
+	public Block ctcGetBlock(String trackName, int blockId)
+	{
+		// TODO: Does ctc need to talk to track controller to access this correctly?
+		return trackArray.get(trackName).getBlock(blockId);
+	}
+	
+	/**
+	 * Get information about track
+	 * CTC -> TrackController
+	 */
+	public TrackObject ctcGetTrack(String trackName)
+	{
+		// TODO: talk to track controller?
+		return trackArray.get(trackName);
+	}
+	
+	/**
+	 * Closes a block for maintenance
+	 * CTC -> TrackController
+	 * @param trackName
+	 * @param blockId
+	 */
+	public void ctcCloseBlock(String trackName, int blockId)
+	{
+		// TODO: talk to track controller first?
+		trackArray.get(trackName).getBlock(blockId).setClosed(true);
+	}
+	
+	/**
+	 * Opens a block out of maintenance
+	 * CTC -> TrackController
+	 * @param trackName
+	 * @param blockId
+	 */
+	public void ctcOpenBlock(String trackName, int blockId)
+	{
+		//TODO: talk to track controller first?
+		trackArray.get(trackName).getBlock(blockId).setClosed(false);
+	}
+	
+	/**
+	 * Removes a train from the system
+	 * CTC -> TrainController (should track controller be notified as well??)
+	 * @param trainId
+	 */
+	public void ctcRemoveTrain(int trainId)
+	{
+		// TODO: notify track controller?
+		trains.remove(trainId);
+	}
+	
+	/**
+	 * Send route to track controller
+	 * CTC -> TrackController
+	 * @param route
+	 */
+	public void ctcSendRoute(Route route)
+	{
+		// TODO: fill this in!
+	}
+	
+	/**
+	 * Send setpoint to track controller
+	 * CTC -> TrackController
+	 * @param setpoint
+	 */
+	public void ctcSuggestSetpoint(int trainId, double setpoint)
+	{
+		// TODO: fill this in!
+	}
+	
+	/**
+	 * Send authority to track controller
+	 * CTC -> TrackController
+	 * @param blocks
+	 */
+	public void ctcSuggestAuthority(int trainId, int blocks)
+	{
+		//TODO: fill this in!
+	}
+	
+	/**
+	 * Sets the initial train position
+	 * CTC -> ?
+	 * @param trainID
+	 */
+	public void ctcSetInitialPosition(int trainID, String trackName)
+	{
+		TrackObject track = trackArray.get(trackName);
+		trainPositions.put(trainID, new TrainPosition(track));
+	}
+	
 	@Override
 	public void run() 
 	{
@@ -103,7 +284,7 @@ public class TransitSystem implements Runnable
 					
 					Platform.runLater(new Runnable() {
 					    public void run() {
-					        CTC.ctcController.displayTrains();
+					        //ctc.ctcController.displayTrains();
 					    }
 					});
 				}

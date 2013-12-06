@@ -6,109 +6,59 @@ package ctc;
 import java.util.LinkedList;
 import java.util.Random;
 
-import TrainController.TrainController;
 import trackModel.Block;
 import trackModel.TrackObject;
-import trainmodule.TrainModel;
 
 public class Route 
 {
-	private TrainController train;
+	private int trainId;
 	private TrackObject track;
 	private LinkedList<Block> blockList;
-	private boolean lastBlockForward;
+	private boolean lastBlockForward;		// Direction of last block
 	
-	public Route(TrainController train, TrackObject track)
+	/**
+	 * Route is initialized with the train and the track
+	 * @param train
+	 * @param track
+	 */
+	public Route(int train, TrackObject track)
 	{
-		this.train = train;
+		this.trainId = train;
 		this.track = track;
 		
 		this.blockList = new LinkedList<Block>();
 		
 		// Add first block
-		addBlock(track.getBlock(0));
+		blockList.add(track.getBlock(0));
 		lastBlockForward = true;
 	}
 	
-	public void removeBlock()
-	{
-		blockList.removeFirst();
-	}
-	
-	public Block getFirstBlock()
-	{
-		return blockList.getFirst();
-	}
-	
-	public LinkedList<Block> getBlockList()
-	{
-		return blockList;
-	}
-	
 	/**
-	 * Present the route in readable string form
-	 * 
+	 * Displays in a readable format
 	 */
-	public String toString() 
+	public String toString()
 	{
 		StringBuffer routeString = new StringBuffer();
-		int i = 0;
+		routeString.append("Route for Train " + trainId + "\n");
 		for (Block block : blockList)
 		{
 			routeString.append(block.getBlockID() + " ");
+			/*
 			if (i == 20)
 			{
 				routeString.append("\n");
 				i = 0;
 			}
-			
-			i++;
+			//*/
 		}
 		
 		return routeString.toString();
 	}
 	
-	
-	private void addBlock(Block block)
-	{
-		blockList.add(block);
-	}
-	
 	/**
-	 * This method is kind of complicated for adding a single block to a route
-	 * @param block
-	 */
-	public void addSingleBlock(Block block)
-	{
-		double[] coordinates = blockList.getLast().getCoordinates();
-		double[] endCoordinates = new double[2];
-		
-		if (lastBlockForward)
-		{
-			endCoordinates[0] = coordinates[0];
-			endCoordinates[1] = coordinates[1];
-		}
-		else
-		{
-			endCoordinates[0] = coordinates[2];
-			endCoordinates[1] = coordinates[3];
-		}
-		
-		// Figure out direction of next block
-		coordinates = block.getCoordinates();
-		if (coordinates[0] == endCoordinates[0] && coordinates[1] == endCoordinates[1])
-			lastBlockForward = true;
-		else
-			lastBlockForward = false;
-		
-		addBlock(block);
-	}
-	
-	/**
-	 * Attempts to add blocks to route depending on station user picked
-	 * 
+	 * Continues the route from the last block to the station
 	 * @param station
-	 * @return 			blockID of last block added to route
+	 * @return
 	 */
 	public int addStation(String station)
 	{
@@ -123,18 +73,18 @@ public class Route
 		// Add blocks to the list until we hit the station
 		while (!lastBlock.isStation() || !lastBlock.getStationName().equals(station))
 		{
-			//System.out.println("Block " + lastBlock.getBlockID());
-			// Direction
-			int[] possibleNextBlocks;
-			double[] coordinates = lastBlock.getCoordinates();
-			double[] endCoordinates = new double[2];
+			System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
 			
-			if (lastBlockForward || !lastBlock.isBiDirectional())
+			int[] possibleNextBlocks;
+			Double[] coordinates = lastBlock.getCoordinates();
+			Double[] endCoordinates = new Double[2];
+			
+			// Determine the possible next blocks by the direction 
+			// of the last block
+			if (!lastBlock.isBiDirectional() || lastBlockForward)
 			{
 				possibleNextBlocks = lastBlock.getPossibleNextBlocks();
-				endCoordinates[0] = coordinates[2];
 				endCoordinates[1] = coordinates[3];
-				
 			}
 			else
 			{
@@ -143,37 +93,34 @@ public class Route
 				endCoordinates[1] = coordinates[1];
 			}
 			
-			//System.out.println("Possble next block: " + possibleNextBlocks[0]);
-			int nextBlockId;
+			int nextBlockId; // the next block the train must travel
 			
-			// No switch, only one next block possible
+			// No switch, only next block possible
 			if (possibleNextBlocks[1] == -1)
-			{
 				nextBlockId = possibleNextBlocks[0];
-			}
 			
-			// Two possible next blocks, randomly pick one
-			// Really terrible logic and flow here...
+			// Two possible next blocks
 			else
 			{
+				// If we are routing to the yard, take that switch
 				if (station.equals("YARD"))
 				{
 					if (track.getBlock(possibleNextBlocks[0]).isYard())
-					{
 						nextBlockId = possibleNextBlocks[0];
-					}
 					else
 						nextBlockId = possibleNextBlocks[1];
 				}
+				// Not routing to yard
 				else
 				{
+					// If either switch is yard, take the other one
 					if (track.getBlock(possibleNextBlocks[0]).isYard())
 						nextBlockId = possibleNextBlocks[1];
 					else if (track.getBlock(possibleNextBlocks[1]).isYard())
 						nextBlockId = possibleNextBlocks[0];
+					// Otherwise, randomly pick one
 					else
 					{
-						// Randomly pick one
 						Random rand = new Random();
 						int randomIndex = rand.nextInt(2);
 						nextBlockId = possibleNextBlocks[randomIndex];
@@ -181,31 +128,46 @@ public class Route
 				}
 			}
 			
+			// Get and add the next block
 			Block nextBlock = track.getBlock(nextBlockId);
-			//System.out.println("Next block: " + nextBlock);
-			addBlock(nextBlock);
+			blockList.add(nextBlock);
 			
 			// Figure out direction of next block
 			coordinates = nextBlock.getCoordinates();
-			if (coordinates[0] == endCoordinates[0] && coordinates[1] == endCoordinates[1])
+			if (coordinates[0].equals(endCoordinates[0]) && coordinates[1].equals(endCoordinates[1]))
 				lastBlockForward = true;
 			else
 				lastBlockForward = false;
 			
-			lastBlock = blockList.getLast();
-			//System.out.println("Last block " + lastBlock);
+			// Change the last block
+			lastBlock = nextBlock;
 		}
 		
 		return blockList.getLast().getBlockID();
 	}
 	
-	public TrainController getTrain()
+	/**
+	 * Removes the first block if there is more
+	 */
+	public void removeBlock()
 	{
-		return train;
+		// TODO: what if there is only one block left?
+		blockList.removeFirst();
 	}
 	
-	public TrackObject getTrack()
+	/**
+	 * Gets the first block of the route
+	 */
+	public Block getFirstBlock()
 	{
-		return track;
+		return blockList.getFirst();
+	}
+	
+	/**
+	 * Gets the block list
+	 */
+	public LinkedList<Block> getBlockList()
+	{
+		return blockList;
 	}
 }

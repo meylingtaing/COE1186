@@ -1,6 +1,5 @@
 /**
  * Controller for CTC popup forms
- * 
  * @author meyling
  */
 package ctc;
@@ -15,8 +14,25 @@ import javafx.stage.Stage;
 
 public abstract class FormController 
 {
+	protected CTC ctcOffice;
 	@FXML protected Text errorMessage;
 	
+	/**
+	 * Sets the CTC office model that we are controlling
+	 * @param ctcOffice
+	 */
+	public void setContext(CTC ctcOffice)
+	{
+		this.ctcOffice = ctcOffice;
+		initialize();
+	}
+	
+	public void initialize() {
+		// I would make this abstract but maybe some of the controllers don't
+		// need any initialization
+		
+	}
+
 	/**
 	 * Closes the popup window when cancel button is pressed
 	 * 

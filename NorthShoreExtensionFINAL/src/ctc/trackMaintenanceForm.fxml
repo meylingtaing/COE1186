@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.stage.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.*?>
+
+<GridPane fx:id="rootPane" xmlns:fx="https://javafx.com/fxml" fx:controller="ctc.TrackMaintenanceFormController" hgap="10" vgap="10">
+	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+	<Text text="Track: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
+	<ComboBox fx:id="trackListBox"  GridPane.rowIndex="0" GridPane.columnIndex="1">
+		<items>
+			<FXCollections fx:factory="observableArrayList" />
+		</items>
+	</ComboBox>
+	<Text text="Block ID: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
+	<ComboBox fx:id="blockListBox" GridPane.rowIndex="1" GridPane.columnIndex="1">
+		<items>
+			<FXCollections fx:factory="observableArrayList" />
+		</items>
+	</ComboBox>
+	<HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" spacing="10">
+		<Button fx:id="maintenanceSubmitButton" text="Close track" onAction="#submit" disable="true" />
+		<Button text="Cancel" onAction="#cancel" />
+	</HBox>
+</GridPane>

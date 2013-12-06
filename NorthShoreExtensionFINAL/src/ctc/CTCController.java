@@ -1,15 +1,13 @@
 /**
- * Main controller class for CTC
+ * Main controller for CTC Office. From here we can navigate to other views
+ * and monitor the state of the transit system.
  * @author meyling
  */
 package ctc;
 
 import java.io.IOException;
 
-import TrainController.TrainController;
-import nse.TrainPosition;
 import trackModel.Block;
-import trainmodule.TrainModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,224 +23,179 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-public class CTCController 
+public class CTCController  
 {
-	@FXML protected Button editTracksButton, editRoutesButton, addTrackButton, 
-							navigateMainButton, addTrainButton, routeTrainButton,
-							suggestSetptButton;
+	private CTC ctcOffice;
+	
+	// GUI related fields
+	@FXML protected Button editTracksButton, navigateMainButton, addTrackButton,
+	removeTrackButton, maintenanceButton, editRoutesButton, addTrainButton,
+	removeTrainButton, routeTrainButton, suggestSetptButton;
 	@FXML protected Pane displayBox;
-	@FXML protected VBox legendBox, trackLegendBox, trainLegendBox, infoContainer;
-	
+	@FXML protected VBox trackLegendBox, trainLegendBox;
 	private String trackGui = "CTCTrackView.fxml";
-	private String routeGui = "CTCRouteView.fxml";
+	private String mainGui = "CTCView.fxml";
+	private String routeGui = "CTCTrainView.fxml";
+	private String addTrackForm = "addTrackForm.fxml";
+	private String removeTrackForm = "removeTrackForm.fxml";
+	private String maintenanceForm = "trackMaintenanceForm.fxml";
+	private String addTrainForm = "addTrainForm.fxml";
+	private String removeTrainForm = "removeTrainForm.fxml";
+	private String routeTrainForm = "routeTrainForm.fxml";
+	private String setpointForm = "suggestSetptForm.fxml";
+	private int shrinkDisplay = 9;
 	
-	protected EventHandler<MouseEvent> selectLegendHandler, selectStationHandler;
-	
-	protected Block selectedStation;
-	
+	/**
+	 * Sets the CTC office model that we are controlling
+	 * @param ctcOffice
+	 */
+	public void setContext(CTC ctcOffice)
+	{
+		this.ctcOffice = ctcOffice;
+		
+		initialize();
+	}
+
+	/**
+	 * Actions that are done on initialization of the controller
+	 */
 	public void initialize() 
 	{
-		CTC.ctcController = this;
-		
-		// Based on permissions of user, disable certain buttons
-		if (!CTC.currUser.isTrackCreator() && !CTC.currUser.isMaintenance())
-			editTracksButton.setDisable(true);
-		
-		displayTrack();
-		displayLegend();
+		if (ctcOffice != null)
+		{
+			ctcOffice.ctcController = this;
+			displayTrack();
+			displayLegend();
+		}
 	}
 	
 	/**
-	 * Creates the track display
+	 * Displays the track
 	 */
-	public void displayTrack() 
+	public void displayTrack()
 	{
-		//System.out.println("Refreshing track, number of tracks " + CTC.tracks.size());
-		// Clear display first
+		// Clear the display first
 		displayBox.getChildren().clear();
 		
-		
-		for (int i = 0; i < CTC.tracks.size(); i++) {
-			int j = 0;
-			
-			for (final Double[] block: CTC.tracks.get(i)) 
+		for (TrackLayout track : ctcOffice.tracks.values())
+		{
+			int blockId = 0;
+			for (Double[] blockCoordinates : track)
 			{
+				String strokeStyle;
 				
-				double startX = block[0]/9+10;
-				double startY = block[1]/9+10;
-				double endX = block[2]/9+10;
-				double endY = block[3]/9+10;
+				// Resizing the lines so they fit on the screen
+				double startX = blockCoordinates[0]/shrinkDisplay+10;
+				double startY = blockCoordinates[1]/shrinkDisplay+10;
+				double endX = blockCoordinates[2]/shrinkDisplay+10;
+				double endY = blockCoordinates[3]/shrinkDisplay+10;
 				
-				//*/ For crisp looking lines
+				// For crisp looking lines
 				startX = Math.floor(startX) + .5;
 				startY = Math.floor(startY) + .5;
 				endX = Math.floor(endX) + .5;
 				endY = Math.floor(endY) + .5;
-				//*/
+				
 				Line line = new Line(startX, startY, endX, endY);
 				
-				String strokeStyle;
-				// TODO: better integration stuff
-				final Block currBlock = CTC.transitSystem.trackArray.get(CTC.tracks.get(i).toString()).getBlock(j);
-				//System.out.println("Display: " + CTC.transitSystem.track.trackArray.get(CTC.tracks.get(i).toString()));
-				
-				
-				if (currBlock.isStation()) 
+				// Determine if block is station
+				final Block block = ctcOffice.transitSystem.ctcGetBlock(track.toString(), blockId);
+				if (block.isStation())
 				{
+					// Format line to represent station
 					strokeStyle = "-fx-stroke: #FFFFFF; -fx-stroke-width: 1px;";
 					line.setStrokeType(StrokeType.OUTSIDE);
 					line.setTranslateX(-.5);
 					line.setTranslateY(-.5);
 					
+					// Add mouseover popup with station name
 					final Popup stationPopup = new Popup();
+					
 					// Add a mouseover for the line
 					line.setOnMouseEntered(new EventHandler<MouseEvent>() {
 						public void handle (MouseEvent event) {
-							Label stationName = new Label(" " + currBlock.getStationName() + " ");
+							Label stationName = new Label(" " + block.getStationName() + " ");
 							stationPopup.getContent().add(stationName);
 							stationName.setStyle("-fx-background-color: #FFFFFF");
-							stationPopup.show(CTC.ctcStage, event.getScreenX(), event.getScreenY() - 20);
+							stationPopup.show(ctcOffice.ctcStage, event.getScreenX(), event.getScreenY() - 20);
 						}
 					});
 					
+					// Make sure popup disappears after mouse leaves
 					line.setOnMouseExited(new EventHandler<MouseEvent>() {
 						public void handle (MouseEvent event) {
 							stationPopup.hide();
 						}
 					});
-					
-					line.setOnMouseClicked(new EventHandler<MouseEvent>() {
-						public void handle(MouseEvent event)
-						{
-							selectedStation = currBlock;
-							
-						}
-					});
-					
 				}
+				
+				// Normal track color if block isn't station
 				else
+					strokeStyle = "-fx-stroke: " + track.getColor() + ";";
+				
+				// Determine if block is closed for maintenance
+				if (block.isClosed())
 				{
-					strokeStyle = "-fx-stroke: " + CTC.tracks.get(i).getColor() + ";";
+					// Make dotted line
+					strokeStyle += "-fx-stroke-dash-array: 0.2 4.0;";
 				}
 				
-				// Trying to display line differently if train is present
-				// System.out.println("Simulated? " + CTC.transitSystem.simulated);
-				// System.out.println("Checking track " + CTC.tracks.get(i).toString());
-				// System.out.println("Checking block " + currBlock.getBlockId());
-				/*
-				if (CTC.transitSystem.simulated && CTC.transitSystem.isTrainDetected(CTC.tracks.get(i).toString(), currBlock.getBlockId()))
-				{
-					strokeStyle = "-fx-stroke: #9933FF; -fx-stroke-width: 2px;";
-					System.out.println("Showing the train on the track");
-				}
-				//*/
-				
+				// Display line
 				line.setStyle(strokeStyle);
 				line.setVisible(true);
 				displayBox.getChildren().add(line);
 				
-				j++;
+				blockId++;
 			}
 		}
 	}
 	
-	/**
-	 * Displays the position of the trains on the track
-	 */
-	public void displayTrains()
-	{
-		displayTrack();
-		System.out.println("Called displayTrains()");
-		System.out.println(CTC.transitSystem.trains.get(0));
-		CTC.transitSystem.simulated = false;
-		//for (TrainController train : CTC.transitSystem.trains.values())
-		//{
-			TrainController train = CTC.transitSystem.trains.get(0);
-			// We should probably actually talk to each other but for now just using global
-			TrainPosition trainPosition = CTC.transitSystem.trainPositions.get(train.model.getTrainID());
-			Block currBlock = trainPosition.getCurrBlock();
-			Line line = new Line(currBlock.getStartX()/9+10, currBlock.getStartY()/9+10, currBlock.getEndX()/9+10, currBlock.getEndY()/9+10);
-			line.setStyle("-fx-stroke: #CC33FF; -fx-stroke-width: 3px;");
-			System.out.println("Displaying the train");
-				displayBox.getChildren().add(line);
-			
-			
-		//}
-			CTC.transitSystem.simulated = true;
-			/*
-			synchronized(CTC.transitSystem) {
-				CTC.transitSystem.notify();
-			}
-			//*/
-	}
-	
-	protected void makeObjectsSelectable()
-	{
-		
-	}
-	
-	/**
-	 * Display the legend
-	 */
 	protected void displayLegend()
 	{
+		// Clear legend contents
 		trackLegendBox.getChildren().clear();
 		trainLegendBox.getChildren().clear();
 		
-		for (int i = 0; i < CTC.tracks.size(); i++) 
+		// Display tracks on the side
+		for (TrackLayout track : ctcOffice.tracks.values())
 		{
-			// Display legend at the right of the track
 			Rectangle trackSymbol = new Rectangle(20, 3);
-			Label trackLabel = new Label(CTC.tracks.get(i).toString(), trackSymbol);
+			Label trackLabel = new Label(track.toString(), trackSymbol);
 			trackLabel.getStyleClass().add("ctcLegend");
-			String symbolStyle = "-fx-fill: " + CTC.tracks.get(i).getColor() + ";";
+			String symbolStyle = "-fx-fill: " + track.getColor() + ";";
 			trackSymbol.setStyle(symbolStyle);
 			
 			trackLegendBox.getChildren().add(trackLabel);
 		}
 		
-		for (TrainController train : CTC.transitSystem.trains.values())
+		// Display trains on the side
+		for (String trainName : ctcOffice.trains.keySet())
 		{
-			// Display trains in the legend
 			Circle trainSymbol = new Circle(3);
-			String trainString = CTC.trains.get(train.model.getTrainID());
+			String trainString = "#" + ctcOffice.trains.get(trainName) + " " + trainName;
+			
 			Label trainLabel = new Label(trainString, trainSymbol);
 			trainLabel.getStyleClass().add("ctcLegend");
-			trainSymbol.setStyle("-fx-fill: #FFFFFF;");
+			trainSymbol.setStyle("-fx-fill: #CC33FF;");
 			
 			trainLegendBox.getChildren().add(trainLabel);
 		}
 	}
 	
 	/**
-	 * Display route information for selected train
-	 * @param route
+	 * Navigate to the other views of the CTC
+	 * @param event defines button that was pressed
 	 */
-	public void displayRouteInfo(Route route)
-	{
-		Text train = new Text("Train " + route.getTrain().model.getTrainID() + ": ");
-		Text routeInfo = new Text(route.toString());
-		infoContainer.getChildren().clear();
-		infoContainer.getChildren().addAll(train, routeInfo);
-		CTC.ctcStage.sizeToScene();
-	}
-	
-	/**
-	 * Navigate to other views of the CTC
-	 * @param event		identifies the button that was clicked
-	 */
-	//*
-	@FXML protected void navigate(ActionEvent event) 
+	@FXML protected void navigate(ActionEvent event)
 	{
 		String fxmlFile = "";
 		String title = "";
 		Button buttonClicked = (Button) event.getSource();
 		
-		// Get the fxml file and the title of the new view
+		// Get the FXML file and the title of the new view
 		if (buttonClicked == editTracksButton)
 		{
 			fxmlFile = trackGui;
@@ -250,92 +203,96 @@ public class CTCController
 		}
 		else if (buttonClicked == navigateMainButton)
 		{
-			fxmlFile = "CTCView.fxml";
+			fxmlFile = mainGui;
 			title = "CTC";
 		}
 		else if (buttonClicked == editRoutesButton)
 		{
 			fxmlFile = routeGui;
-			title = "CTC -- Train and Route Manager";
-		}
-		else
-		{
-			System.err.println("Didn't click a valid button??");
-			return;
+			title = "CTC -- Trains and Routes Manager";
 		}
 		
 		// Navigate to the new view
 		try 
 		{
-			Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-			CTC.ctcStage.setScene(new Scene(root));
-			CTC.ctcStage.setTitle(title);
-			CTC.ctcStage.show();
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource(fxmlFile));
+			Parent root = (Parent) fxmlLoader.load();
+			((CTCController)fxmlLoader.getController()).setContext(ctcOffice);
+			
+			ctcOffice.ctcStage.setScene(new Scene(root));
+			ctcOffice.ctcStage.setTitle(title);
+			ctcOffice.ctcStage.show();
 		} 
 		catch (IOException e) 
 		{
 			System.err.println("Error loading " + buttonClicked.getText());
 		}
 	}
-	//*/
 	
 	/**
-	 * Displays a popup form whenever an appropriate button is pressed
-	 * @param viewFile
-	 * @param title
+	 * Displays a popup, which is usually just a form
+	 * @param event
 	 */
-	@FXML protected void displayPopup(ActionEvent event) 
+	@FXML protected void displayPopup(ActionEvent event)
 	{
 		Button clickedButton = (Button) event.getSource();
-		String viewFile = "";
+		String fxmlFile = "";
 		String title = "";
 		
 		if (clickedButton == addTrackButton)
 		{
-			viewFile = "addTrackForm.fxml";
-			title = "Add New Track";
+			fxmlFile = addTrackForm;
+			title = "Add new track";
+		}
+		else if (clickedButton == removeTrackButton)
+		{
+			fxmlFile = removeTrackForm;
+			title = "Remove Track";
+		}
+		else if (clickedButton == maintenanceButton)
+		{
+			fxmlFile = maintenanceForm;
+			title = "Track Maintenance";
 		}
 		else if (clickedButton == addTrainButton)
 		{
-			viewFile = "addTrainForm.fxml";
-			title = "Add New Train";
+			fxmlFile = addTrainForm;
+			title = "Add train";
+		}
+		else if (clickedButton == removeTrainButton)
+		{
+			fxmlFile = removeTrainForm;
+			title = "Remove train";
 		}
 		else if (clickedButton == routeTrainButton)
 		{
-			viewFile = "routeTrainForm.fxml";
-			title = "Choose Track";
+			fxmlFile = routeTrainForm;
+			title = "Route train";
 		}
 		else if (clickedButton == suggestSetptButton)
 		{
-			viewFile = "suggestSetptForm.fxml";
-			title = "Suggest Setpoint";
-		}
-		else
-		{
-			System.err.println("Didn't click a valid button??");
-			return;
+			fxmlFile = setpointForm;
+			title = "Suggest Setpoint and Authority";
 		}
 		
 		try 
 		{
-			Stage newStage = new Stage();
-			Parent newRoot = FXMLLoader.load(getClass().getResource(viewFile));
-			newStage.setScene(new Scene(newRoot));
-			newStage.setTitle(title);
-			newStage.show();
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource(fxmlFile));
+			Parent root = (Parent) fxmlLoader.load();
+			((FormController)fxmlLoader.getController()).setContext(ctcOffice);
+			
+			Stage popupStage = new Stage();
+			popupStage.setScene(new Scene(root));
+			popupStage.setTitle(title);
+			popupStage.show();
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("Can't load " + title);
+			System.out.println("Can't load popup " + title);
+			//e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * TODO: implement this method
-	 * @return
-	 */
-	public TrainController getSelectedTrain()
-	{
-		return null;
-	}
+
 }

@@ -1,5 +1,4 @@
 package nse;
-import ctc.CTC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,8 +51,4 @@ public class MainController {
 		}
 	}
 	
-	public void refreshDisplay()
-	{
-		CTC.ctcController.displayTrack();
-	}
 }
