@@ -14,7 +14,7 @@ public class TrainController implements Runnable {
 	public Double speedSetpoint;
 	public Double speed;
 	public Double authoritySetpointMoving;
-	public Block authoritySetpointFixed;
+	public int authoritySetpointFixed;
 	public Boolean doorsOpen;
 	public Boolean lightsOn;
 	public int passengerCount;
@@ -203,8 +203,9 @@ public class TrainController implements Runnable {
 		return true;
 	}
 	
-	public Boolean setAuthorityFixed(Block distance) {
-		return false;
+	public Boolean setAuthorityFixed(int distance) {
+		authoritySetpointFixed = distance;
+		return true;
 	}
 	
 	public Double getMaxAcceleration() {
