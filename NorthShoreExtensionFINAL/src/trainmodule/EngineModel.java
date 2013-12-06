@@ -37,8 +37,7 @@ public class EngineModel
 		deltaT = time;
 		trainNum = id;
 		lastPower = 0;
-		deltaT = time;
-		//deltaT = 0.2;
+		deltaT = 0.2;
 	}
 	
 	public double pullBrake(double load, double mass)
