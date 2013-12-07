@@ -191,6 +191,53 @@ public class TrackController {
 		t2List = calculateFixedBlockAuthority2();
 	}
 	
+	public void calculateSignalStates()
+	{
+		//Traverse backwards through the trains blocks.
+		//When a train is detected in the scope set the block it is in to be red
+		//Set the blocks behind accordingly
+		Block [] b = (Block[]) blocks.toArray();		
+		int setNum = 1;
+		if(b != null)
+		{
+			for(int i = b.length; i >= 0; i--)
+			{
+				if(b[i].isTrainDetected())
+				{
+					setNum = 4;
+					b[i].setSignalState(setNum);					
+				}
+				if(!b[i].isTrainDetected() && setNum == 4)
+				{
+					setNum--;
+				}
+				if(setNum == 3)
+				{
+					b[i].setSignalState(setNum);
+					setNum--;
+				}
+				if(b[i].isCrossing() && setNum >= 2)
+				{
+					//Turn on the RR Signal in the block
+					b[i].setCrossingSignalState(1);
+				}
+				if(b[i].isCrossing() && setNum < 2)
+				{
+					//Turn off crossing signals
+					b[i].setCrossingSignalState(0);
+				}
+				if(setNum == 2)
+				{
+					b[i].setSignalState(setNum);
+					setNum--;
+				}
+				if(setNum == 1)
+				{
+					b[i].setSignalState(setNum);
+				}
+			}
+		}
+	}
 	
 	public ArrayList<TrainWithAuthority> calculateFixedBlockAuthority1()
 	{			
