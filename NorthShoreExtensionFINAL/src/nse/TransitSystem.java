@@ -11,6 +11,7 @@ package nse;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ import trackModel.Track;
 import trackModel.Block;
 import trackModel.TrackObject;
 import trainmodule.TrainModel;
+import trackController.*;
 import ctc.AddTrackFormController;
 import ctc.AddTrainFormController;
 import ctc.CTC;
@@ -36,6 +38,12 @@ public class TransitSystem implements Runnable
 	public Hashtable<Integer, TrainController> trains = new Hashtable<Integer, TrainController>();
 	public Hashtable<Integer, Route> routeList = new Hashtable<Integer, Route>();
 	public Hashtable<Integer, TrainPosition> trainPositions = new Hashtable<Integer, TrainPosition>();
+	public ArrayList<TrackController> greenLinePlcs = new ArrayList<TrackController>();
+	public ArrayList<TrainWithAuthority> suggestedAuthorities = new ArrayList<TrainWithAuthority>();
+	public ArrayList<TrainWithSetpoint> suggestedSetpoints = new ArrayList<TrainWithSetpoint>();
+	
+	//When this is set the CTC must resend the suggested items to the new PLC
+	private int suggestionHandoff = 0;
 	private int tickRate;
 	public boolean simulated = false;
 	//public MainController mainController;
@@ -93,6 +101,11 @@ public class TransitSystem implements Runnable
 		this.tickRate = tickRate;
 	}
 	
+	public void setSegHandoffFlag(int val)
+	{
+		suggestionHandoff = val;
+	}
+	
 	public void setTickRate(int tickRate)
 	{
 		this.tickRate = tickRate;
@@ -132,6 +145,12 @@ public class TransitSystem implements Runnable
 	{
 		// TODO: TrackController: Change this so TrackController is created here
 		trackArray.put(trackName, track);
+		
+		if(trackName.compareToIgnoreCase("greenline") == 0)
+		{
+			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , this);
+			greenLinePlcs = greenPlcIni.initialize();
+		}
 	}
 	
 	/**
@@ -141,7 +160,12 @@ public class TransitSystem implements Runnable
 	public void ctcRemoveTrack(String trackName)
 	{
 		//TODO: talk to TrackController first?
+		//Maybe confirm this to the user?
 		trackArray.remove(trackName);
+		if(trackName.compareToIgnoreCase("greenline") == 0)
+		{
+			greenLinePlcs.clear();
+		}
 	}
 	
 	/**
@@ -164,7 +188,6 @@ public class TransitSystem implements Runnable
 	 */
 	public Block ctcGetBlock(String trackName, int blockId)
 	{
-		// TODO: Does ctc need to talk to track controller to access this correctly?
 		return trackArray.get(trackName).getBlock(blockId);
 	}
 	
@@ -174,7 +197,6 @@ public class TransitSystem implements Runnable
 	 */
 	public TrackObject ctcGetTrack(String trackName)
 	{
-		// TODO: talk to track controller?
 		return trackArray.get(trackName);
 	}
 	
@@ -186,7 +208,6 @@ public class TransitSystem implements Runnable
 	 */
 	public void ctcCloseBlock(String trackName, int blockId)
 	{
-		// TODO: talk to track controller first?
 		trackArray.get(trackName).getBlock(blockId).setClosed(true);
 	}
 	
@@ -198,7 +219,6 @@ public class TransitSystem implements Runnable
 	 */
 	public void ctcOpenBlock(String trackName, int blockId)
 	{
-		//TODO: talk to track controller first?
 		trackArray.get(trackName).getBlock(blockId).setClosed(false);
 	}
 	
@@ -209,8 +229,30 @@ public class TransitSystem implements Runnable
 	 */
 	public void ctcRemoveTrain(int trainId)
 	{
-		// TODO: notify track controller?
+		
 		trains.remove(trainId);
+		
+		for(TrackController tc:greenLinePlcs)
+		{
+			ArrayList<TrainController> ts = tc.trainsInSection;
+			ArrayList<TrainController> tUnderControl = tc.trainsUnderControl;
+			
+			for(TrainController train:ts)
+			{
+				if(train.model.getTrainID() == trainId)
+				{
+					ts.remove(train);
+				}
+			}
+			
+			for(TrainController train:tUnderControl)
+			{
+				if(train.model.getTrainID() == trainId)
+				{
+					tUnderControl.remove(train);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -222,6 +264,7 @@ public class TransitSystem implements Runnable
 	{
 		// TODO: fill this in!
 		routeList.put(trainID, route);
+		
 	}
 	
 	/**
@@ -231,7 +274,24 @@ public class TransitSystem implements Runnable
 	 */
 	public void ctcSuggestSetpoint(int trainId, double setpoint)
 	{
-		// TODO: fill this in!
+		// Find the appropriate track controller that contains the train in it's control
+		// Pass the newly suggested setpoint to the plc which will send it to the train
+		
+		int set = 0;
+		for(TrackController tc: greenLinePlcs)
+		{
+			boolean retVal = false;
+			retVal= tc.suggestSetPoint(trainId, setpoint);
+			if(retVal == true)
+			{
+				set = 1;
+				suggestedSetpoints.add(new TrainWithSetpoint(trains.get(trainId),setpoint));
+			}
+		}
+		//If set equals one the suggetstion made it to the train
+		//If set equals zero the suggestion was;
+			//A.)Not safe for the current block
+			//B.)The train was not found in any PLC (Shouldn't happen)
 	}
 	
 	/**
@@ -242,6 +302,17 @@ public class TransitSystem implements Runnable
 	public void ctcSuggestAuthority(int trainId, int blocks)
 	{
 		//TODO: fill this in!
+		boolean retVal = false;
+		for(TrackController tc: greenLinePlcs)
+		{			
+			retVal= tc.suggestAuthority(trainId, blocks);
+			if(retVal == true)
+			{				
+				suggestedAuthorities.add(new TrainWithAuthority(trains.get(trainId),blocks));
+			}
+		}
+		
+		//If retVal == false The train was Not Found on a PLC!
 	}
 	
 	/**
@@ -282,6 +353,13 @@ public class TransitSystem implements Runnable
 					//	CTC.ctcController.displayTrains();
 					//}
 					//simulated = true;
+					
+					/*
+					 * Should add a lot of calls here for the PLCs to calculate authorities
+					 * 
+					 * Also remember about the hand-off flag for transferring the 
+					 * suggested authorities between Track Controllers
+					 */
 					
 					Platform.runLater(new Runnable() {
 					    public void run() {
