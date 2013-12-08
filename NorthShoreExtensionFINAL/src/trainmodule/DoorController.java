@@ -14,11 +14,11 @@ package trainmodule;
  */
 public class DoorController
 {
-	/**Holds the door state (false = closed, true = open)*/
+	/**Holds the doors state (false = closed, true = open)*/
 	private boolean doors;
 	
 	/**This is the constructor
-	 * Initializes the door to closed state
+	 * Initializes the doors to closed state
 	 */
 	public DoorController()
 	{
