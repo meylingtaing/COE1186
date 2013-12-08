@@ -98,19 +98,19 @@ public class TrainController implements Runnable {
 	}
 	
 	public void openDoors() {
-		model.setDoorValue(true);
+		model.openDoors();
 	}
 	
 	public void closeDoors() {
-		model.setDoorValue(false);
+		model.closeDoors();
 	}
 	
 	public void turnOnLights() {
-		model.setLightValue(true);
+		model.turnLightsOn();
 	}
 	
 	public void turnOffLights() {
-		model.setLightValue(false);
+		model.turnLightsOff();
 	}
 	
 	public Vector getPosition() {
