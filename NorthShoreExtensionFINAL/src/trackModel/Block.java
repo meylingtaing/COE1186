@@ -32,6 +32,8 @@ public class Block {
 	private boolean yard;
 	private String line;
 	private boolean closed;
+	private int signalState;
+	private int crossingSigState;
 	
 	private Block authorityEnterBlock;
 	private Block authorityExitBlock;
@@ -74,6 +76,8 @@ public class Block {
 		crossing = false;
 		switchToYard = false;
 		switchFromYard = false;
+		signalState = 1;
+		crossingSigState = 0;
 		
 		trainDetected=false;
 		
@@ -396,6 +400,35 @@ public class Block {
 	public void setClosed(boolean closed)
 	{
 		this.closed = closed;
+	}
+	
+	/*
+	 * Signal States
+	 * 1 - Super Green
+	 * 2 - Green
+	 * 3 - Yellow
+	 * 4 - Red
+	 * */
+	public void setSignalState(int state)
+	{
+		signalState = state;
+	}
+	
+	public int getSignalState()
+	{
+		return signalState;
+	}
+	
+	// 0 - Crossing sig off
+	// 1 - Crossing sig on
+	public void setCrossingSignalState(int state)
+	{
+		crossingSigState = state;
+	}
+	
+	public int getCrossingSignalState()
+	{
+		return crossingSigState;
 	}
 
 }

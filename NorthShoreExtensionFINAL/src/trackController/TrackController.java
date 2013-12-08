@@ -32,7 +32,8 @@ public class TrackController {
 	public TrainModel trainModule;
 	public TrackObject trackModel;
 	public TransitSystem transitSys;
-	
+	public ArrayList<TrainWithSetpoint> trainsWithSetSpeed;
+	public ArrayList<TrainWithAuthority> trainsWithAuthoritySuggestion;
 	/*
 	 * Between (inclusive) the start authority block and the terminal authority block we will pass authority to the
 	 * trains that are in this section of track
@@ -47,6 +48,8 @@ public class TrackController {
 		ID = s;
 		blocks = b;
 		transitSys = ts;
+		trainsWithSetSpeed = new ArrayList<TrainWithSetpoint>();
+		trainsWithAuthoritySuggestion = new ArrayList<TrainWithAuthority>();
 		//trainsInSection = trainsOnTrack;
 		//trainModule = tm;
 		//getSwitchesInSections();
@@ -66,6 +69,8 @@ public class TrackController {
 			
 		}
 	}
+	
+	
 	
 	public void setStartAuthorityBlocks(ArrayList<Block> b){
 		startAuthorityBlocks = b;
@@ -110,9 +115,75 @@ public class TrackController {
 		return blocks;
 	}
 	
+	public void sendSetPoint()
+	{
+		//Send the set point information to the train controller
+		for(TrainController tc:trainsUnderControl)
+		{
+			for(TrainWithSetpoint t: trainsWithSetSpeed)
+			{
+				if(t.train.equals(tc))
+				{
+					TrainPosition tp = transitSys.trainPositions.get(tc.getModel().getTrainID());
+					Block curr = tp.getCurrBlock();
+					if(t.suggestedSetPoint <= curr.getSpeedLimit())
+					{
+						tc.setSpeedSetpoint(t.suggestedSetPoint);
+					}
+					else
+					{
+						//The Blocks Speed limit has went down change setpoint speed
+						t.suggestedSetPoint = curr.getSpeedLimit();
+						tc.setSpeedSetpoint(t.suggestedSetPoint);
+					}
+				}
+			}
+		}
+	}
+	
+	//Return false if the suggested speed is faster than the block speed limit
+	public boolean suggestSetPoint(int trainID, double suggestion)
+	{
+		for(TrainWithSetpoint ts: trainsWithSetSpeed)
+		{
+			if(ts.train.getModel().getTrainID() == trainID)
+			{
+				//Make sure the suggestion is safe for the current block
+				TrainPosition tp = transitSys.trainPositions.get(trainID);
+				Block curr = tp.getCurrBlock();
+				if(curr.getSpeedLimit() >= suggestion)
+				{
+					ts.suggestedSetPoint = suggestion;
+					return true;
+				}
+				else
+				{
+					//Not a safe suggestion
+					return false;
+				}
+			}
+		}
+		//Train not found in this plc -- BAD
+		return false;
+	}
+	
+	public boolean suggestAuthority(int trainID, int blockNum)
+	{
+		for(TrainController tc: trainsUnderControl)
+		{
+			if(tc.getModel().getTrainID() == trainID)
+			{
+				trainsWithAuthoritySuggestion.add(new TrainWithAuthority(tc,blockNum));
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void calculateFixedBlockAuthority()
 	{
-		//Compare the results of the two different algorithms 
+		//Compare the results of the two different algorithms
+		//Also take into account CTC suggestions
 		//Set the lowest authority to the trains
 		ArrayList<TrainWithAuthority> t1List;
 		t1List = calculateFixedBlockAuthority1();
@@ -120,9 +191,57 @@ public class TrackController {
 		t2List = calculateFixedBlockAuthority2();
 	}
 	
+	public void calculateSignalStates()
+	{
+		//Traverse backwards through the trains blocks.
+		//When a train is detected in the scope set the block it is in to be red
+		//Set the blocks behind accordingly
+		Block [] b = (Block[]) blocks.toArray();		
+		int setNum = 1;
+		if(b != null)
+		{
+			for(int i = b.length; i >= 0; i--)
+			{
+				if(b[i].isTrainDetected())
+				{
+					setNum = 4;
+					b[i].setSignalState(setNum);					
+				}
+				if(!b[i].isTrainDetected() && setNum == 4)
+				{
+					setNum--;
+				}
+				if(setNum == 3)
+				{
+					b[i].setSignalState(setNum);
+					setNum--;
+				}
+				if(b[i].isCrossing() && setNum >= 2)
+				{
+					//Turn on the RR Signal in the block
+					b[i].setCrossingSignalState(1);
+				}
+				if(b[i].isCrossing() && setNum < 2)
+				{
+					//Turn off crossing signals
+					b[i].setCrossingSignalState(0);
+				}
+				if(setNum == 2)
+				{
+					b[i].setSignalState(setNum);
+					setNum--;
+				}
+				if(setNum == 1)
+				{
+					b[i].setSignalState(setNum);
+				}
+			}
+		}
+	}
 	
 	public ArrayList<TrainWithAuthority> calculateFixedBlockAuthority1()
 	{			
+		//What if a block is under maintenece?
 		ArrayList<TrainWithAuthority> trainList = new ArrayList<TrainWithAuthority>();
 		for(TrainController t:trainsUnderControl)
 		{
@@ -141,7 +260,7 @@ public class TrackController {
 			boolean quit = false;
 			for(int j = start+1;quit == false ;j++)
 			{
-				if(next.isTrainDetected() == false && blocks.contains(next))
+				if(next.isTrainDetected() == false && blocks.contains(next) && !next.isClosed())
 				{
 					trainAuthority++;
 					next = blist.get(j);
@@ -180,7 +299,7 @@ public class TrackController {
 		
 		for(Block b: blocks)
 		{
-			if(b.isTrainDetected() && train2 == null)
+			if(b.isTrainDetected() && train2 == null && start == true)
 			{
 				train1 = transitSys.getTrainInBlock(b);
 				start = false;
@@ -198,6 +317,12 @@ public class TrackController {
 				train1 = train2;
 				train2 = null;
 			}
+			if(start == false && !b.isClosed())
+			{
+				TrainWithAuthority ta = new TrainWithAuthority(train1,authority);
+				authority = 0;
+				start = true;
+			}
 			else
 			{
 				authority++;
@@ -209,14 +334,9 @@ public class TrackController {
 	public void loadPLCProgram()
 	{
 		//Load a text file that tell the controller of the switches
+		//Allow user to modify state
 	}
 	
-	public void runPLCProgram()
-	{
-		//Switch based on train destination and switches
-		//The plc program will alter a switch when the train is present in block prior
-		
-	}
 	
 	public void setTerminalBlock(Block end)
 	{
@@ -282,6 +402,8 @@ public class TrackController {
 					if(!trainsUnderControl.contains(tc))
 					{
 						trainsUnderControl.add(tc);
+						TrainWithSetpoint t = new TrainWithSetpoint(tc, b.getSpeedLimit());
+						trainsWithSetSpeed.add(t);
 					}
 				}
 			}
@@ -294,6 +416,27 @@ public class TrackController {
 					if(trainsUnderControl.contains(tc))
 					{
 						trainsUnderControl.remove((tc));
+						//Remove From set point array
+						for(TrainWithSetpoint t : trainsWithSetSpeed)
+						{
+							if(t.train.equals(tc))
+							{
+								//Notify CTC that this PLC is loosing suggestion
+								transitSys.setSegHandoffFlag(1);
+								trainsWithSetSpeed.remove(t);
+							}
+						}
+						//Remove From authority suggestion array
+						for(TrainWithAuthority t : trainsWithAuthoritySuggestion)
+						{
+							if(t.train.equals(tc))
+							{
+								//Notify CTC that this PLC is loosing suggestion
+								transitSys.setSegHandoffFlag(1);
+								trainsWithAuthoritySuggestion.remove(t);
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -313,10 +456,32 @@ public class TrackController {
 					if(blist.get(curr+1).equals(b.getAuthorityExitBlock()))
 					{
 						trainsUnderControl.remove((tc));
+						for(TrainWithSetpoint t : trainsWithSetSpeed)
+						{
+							if(t.train.equals(tc))
+							{
+								//Notify CTC that this PLC is loosing suggestion
+								transitSys.setSegHandoffFlag(1);
+								trainsWithSetSpeed.remove(t);
+							}
+						}
+						//Remove From authority suggestion array
+						for(TrainWithAuthority t : trainsWithAuthoritySuggestion)
+						{
+							if(t.train.equals(tc))
+							{
+								//Notify CTC that this PLC is loosing suggestion
+								transitSys.setSegHandoffFlag(1);
+								trainsWithAuthoritySuggestion.remove(t);
+								break;
+							}
+						}
 					}
 					else
 					{
 						trainsUnderControl.add((tc));
+						TrainWithSetpoint t = new TrainWithSetpoint(tc, b.getSpeedLimit());
+						trainsWithSetSpeed.add(t);
 					}
 				}
 			}
