@@ -17,20 +17,32 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * This class creates the GUI
+ */
 public class TrainView extends Application
 {	
-	protected static ViewController viewController;
+	protected static ViewController viewController;		//This holds the view controller
 	
+	/**
+	 * This is the GUI constructor
+	 */
 	public TrainView()
 	{
 		
 	}
 	
+	/**
+	 * This method launches the GUI
+	 */
 	public static void createGUI()
 	{
 		launch();
 	}
 	
+	/**
+	 * This method initializes the GUI and starts it
+	 */
 	@Override
 	public void start(Stage primaryStage)
 	{

@@ -28,62 +28,70 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * This class handles the actions registered in the GUI
+ */
 public class ViewController
 {
     @FXML
-    private ResourceBundle resources;
+    private ResourceBundle resources;		//Holds the resources of trainmodule
 
     @FXML
-    private URL location;
+    private URL location;					//This contains the URL location
     
     @FXML 
-    private TextField nextStop;
+    private TextField nextStop;				//This holds the next stop information
     
     @FXML 
-    private TextField currentStop;
+    private TextField currentStop;			//This holds the currentStop
 
     @FXML 
-    private TableView trainTable;
+    private TableView trainTable;			//This is the table that contains the trains and associated information
        
     @FXML 
-    private TableColumn idColumn;
+    private TableColumn idColumn;			//This is the id column of the table
     
     @FXML 
-    private TableColumn setColumn;
+    private TableColumn setColumn;			//This is the setpoint column of the table
     
     @FXML 
-    private TableColumn speedColumn;
+    private TableColumn speedColumn;		//This is the speed column  of the table
     
     @FXML 
-    private TableColumn accColumn;
+    private TableColumn accColumn;			//This is the acceleration column  of the table
     
     @FXML 
-    private TableColumn passColumn;
+    private TableColumn passColumn;			//This is the passenger column  of the table
     
     @FXML 
-    private TableColumn tempColumn;
+    private TableColumn tempColumn;			//This is the temperature column of the table
     
     @FXML 
-    private TableColumn doorColumn;
+    private TableColumn doorColumn;			//This is the doors column  of the table
     
     @FXML 
-    private TableColumn lightColumn;
+	    private TableColumn lightColumn;	//This is the light column  of the table
+	    
+    @FXML 
+    private TableColumn failColumn;			//This is the failure column  of the table
     
     @FXML 
-    private TableColumn failColumn;
-    
-    @FXML 
-    private ComboBox trainChoice;
+    private ComboBox trainChoice;			//This is the train choice selector
 
-    public static ObservableList<TrainModel> data;
-    private ObservableList<Integer> trains;
-    private TrainModel selectedTrain;
+    public static ObservableList<TrainModel> data;		//This holds the active trains 
+    private ObservableList<Integer> trains;				//This holds the selector options
+    private TrainModel selectedTrain;					//This holds the selected train
     
+    /**
+	 * This method initializes the window
+	 */	
     @FXML
     void initialize()
     {   
+    	//Sets the view controller for the train model
     	TrainModel.vc = this;
     	
+    	//Sets up the columns of the table
     	idColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, Integer>("trainID"));
     	setColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("setpoint"));
     	speedColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("speed"));
@@ -93,16 +101,23 @@ public class ViewController
     	tempColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("temp"));
     	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));
     	
+    	//Initializes the table data to empty list
     	data = FXCollections.observableArrayList();
     	
-    	updateGUI();
+    	updateGUI();	//Needed to refresh the window with updated values
     }
     
+    /**
+	 * This method returns the active trains
+	 */
     public ObservableList<TrainModel> getActiveTrains()
     {
     	return data;
     }
     
+    /**
+	 * This method removes a train from the active trains
+	 */
     public void removeTrain(int i)
     {
     	for (TrainModel tm : data)
@@ -114,16 +129,25 @@ public class ViewController
     	} 
     }
     
+    /**
+	 * This method adds a train to the active trains
+	 */
     public void addTrain(TrainModel t)
     {
     	data.add(t);
     }
     
+    /**
+	 * This method adds a train to the active trains
+	 */
     public void addTrain(/*ctc.Route r,*/ double t, String c)
     {
     	data.add(new TrainModel(0.2, /*r,*/ t, c));
     }
     
+    /**
+	 * This method updates the GUI by refreshing the table, selector, etc. values
+	 */
     public void updateGUI()
     {     	
     	trains = FXCollections.observableArrayList();
@@ -155,6 +179,9 @@ public class ViewController
     	System.out.println("GUI REFRESH");
     }
     
+    /**
+	 * This method returns the selected train
+	 */
     public void currentTrain()
     {   	
     	for (TrainModel tm : data)
@@ -166,6 +193,9 @@ public class ViewController
     	}    	
     }
     
+    /**
+	 * This method throws the engine failure
+	 */
     public void throwEngineFailure()
     {
     	if (selectedTrain != null && !selectedTrain.isEngineBroken())
@@ -178,6 +208,9 @@ public class ViewController
     		System.out.println("No selection");
     }
     
+    /**
+   	 * This method throws the signal failure
+   	 */
     public void throwSignalFailure()
     {
     	if (selectedTrain != null && !selectedTrain.isSignalBroken())
@@ -189,6 +222,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method throws the brake failure
+   	 */
     public void throwBrakeFailure()
     {
     	if (selectedTrain != null && !selectedTrain.isBrakeBroken())
@@ -200,6 +236,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method fixes the engine failure
+   	 */
     public void fixEngineFailure()
     {
     	if (selectedTrain != null)
@@ -211,6 +250,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method fixes the signal failure
+   	 */
     public void fixSignalFailure()
     {
     	if (selectedTrain != null)
@@ -222,6 +264,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method fixes the brake failure
+   	 */
     public void fixBrakeFailure()
     {
     	if (selectedTrain != null)
@@ -233,6 +278,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method fixes all failures
+   	 */
     public void fixAllFailures()
     {
     	if (selectedTrain != null)
@@ -244,6 +292,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method engages the emergency brake
+   	 */
     public void engageEBrake()
     {
     	if (selectedTrain != null)
@@ -255,6 +306,9 @@ public class ViewController
 			System.out.println("No selection");
     }
     
+    /**
+   	 * This method disengages the emergency brake
+   	 */
     public void disengageEBrake()
     {
     	if (selectedTrain != null)
