@@ -1,4 +1,5 @@
 package nse;
+import trainmodule.TrainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +22,12 @@ public class MainController {
 	{
 		Stage newStage = new Stage();
 		transitSystem.ctc.start(newStage);
+	}
+	
+	@FXML private void TrainGUI() throws Exception 
+	{
+		TrainView train = new TrainView();
+		train.start(new Stage());
 	}
 	
 	@FXML private void simulate(ActionEvent event)

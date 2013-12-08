@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -28,10 +29,12 @@ public class TrainView extends Application
 		try
 		{
 			FXMLLoader fxml = new FXMLLoader();
-            AnchorPane page = (AnchorPane) fxml.load(TrainModel.class.getResource("/trainmodule/TrainGUI.fxml"));
-            Scene scene = new Scene(page);
+			fxml.setLocation(getClass().getResource("TrainGUI.fxml"));
+            //AnchorPane page = (AnchorPane) fxml.load(TrainModel.class.getResource("/trainmodule/TrainGUI.fxml"));
+            //Scene scene = new Scene(page);
+			Parent root = (Parent) fxml.load();
             
-            primaryStage.setScene(scene);
+            primaryStage.setScene(new Scene(root));
             primaryStage.setTitle("Train Model");
             primaryStage.show();
         }

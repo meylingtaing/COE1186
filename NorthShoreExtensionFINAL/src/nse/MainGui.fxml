@@ -20,7 +20,7 @@
 		<VBox spacing="10">
 			<Button text="CTC Office" onAction="#navigateCTC" prefWidth="300" styleClass="largeButton" />
 			<Button text="Track Model" prefWidth="300" styleClass="largeButton" disable="true" />
-			<Button text="Train Model" prefWidth="300" styleClass="largeButton" disable="true" />
+			<Button text="Train Model" prefWidth="300" styleClass="largeButton" onAction="#TrainGUI" />
 		</VBox>
 		<VBox spacing="10">
 			<Button text="Moving Block Overlay" prefWidth="300" styleClass="largeButton" disable="true" />

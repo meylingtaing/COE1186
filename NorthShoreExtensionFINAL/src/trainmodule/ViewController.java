@@ -83,7 +83,7 @@ public class ViewController
     	tempColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("temp"));
     	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));    	
     	
-    	updateGUI();
+    	//updateGUI();
     }
     
     public ObservableList<TrainModel> getActiveTrains()
