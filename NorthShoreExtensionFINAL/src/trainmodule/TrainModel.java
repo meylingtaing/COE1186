@@ -1,3 +1,11 @@
+/**
+ * trainmodule
+ *
+ * Version 1
+ *
+ * This code was developed by Keith Payne
+ */
+
 package trainmodule;
 
 import java.util.*;
@@ -17,6 +25,7 @@ public class TrainModel
 	private LightController lights;
 	private PassengerManager passengers;
 	private EngineModel engine;
+	public static ViewController vc;
 	//private ctc.Route route;
 	private TemperatureController temperature;
 	private double trainMass = 37103.9;
@@ -34,13 +43,7 @@ public class TrainModel
 	
 	public static void main(String args[])
 	{
-		ViewController.data = FXCollections.observableArrayList();
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 100, "SUPERUSER", 0));
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 69.2, "ENGINEER", 1));
-		ViewController.data.add(new TrainModel(0.001, /*null,*/ 67.4, "?????????", 2));
-		
-		TrainView.createGUI();
-		
+		TrainView.createGUI();	
 	}
 	
 	public TrainModel(int id)
@@ -87,22 +90,43 @@ public class TrainModel
     }
 	
     public double setSetpoint(double d)
-    {
+    {    	
+    	double speed;
     	
     	if (!eBrake)
-    		return engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
+    		speed = engine.calculateSetpoint(d, (trainMass + passengers.getTotalPassengerMass()));
     	else
-    		return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    		speed = engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());    	
+    	
+    	updateG();
+    	
+    	return speed;
     }
     
     public double pullBrake(double load)
     {    	
-    	return engine.pullBrake(load, (trainMass + passengers.getTotalPassengerMass()));
+    	double speed = engine.pullBrake(load, (trainMass + passengers.getTotalPassengerMass()));
+    	
+    	updateG();
+    	
+    	return speed;
     }
     
     public double pullEmergencyBrake()
     {    	
-    	return engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    	double speed = engine.pullEmergencyBrake(trainMass + passengers.getTotalPassengerMass());
+    	
+    	updateG();
+    	
+    	return speed;
+    }
+    
+    private void updateG()
+    {
+    	if (vc != null)
+    		vc.updateGUI();
+    	else
+    		System.out.println("No view controller");
     }
     
     public String getSpeed()

@@ -1,3 +1,11 @@
+/**
+ * trainmodule
+ *
+ * Version 1
+ *
+ * This code was developed by Keith Payne
+ */
+
 package trainmodule;
 
 import java.util.Random;

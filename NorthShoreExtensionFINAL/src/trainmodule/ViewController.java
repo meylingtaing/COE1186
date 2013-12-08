@@ -1,3 +1,11 @@
+/**
+ * trainmodule
+ *
+ * Version 1
+ *
+ * This code was developed by Keith Payne
+ */
+
 package trainmodule;
 
 import java.net.URL;
@@ -73,7 +81,9 @@ public class ViewController
     
     @FXML
     void initialize()
-    {    	
+    {   
+    	TrainModel.vc = this;
+    	
     	idColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, Integer>("trainID"));
     	setColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("setpoint"));
     	speedColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("speed"));
@@ -113,18 +123,6 @@ public class ViewController
     {
     	data.add(new TrainModel(0.2, /*r,*/ t, c));
     }
-    
-    /*trains = FXCollections.observableArrayList();
-	TrainModel tm;
-	//for (TrainModel tm : data)
-	for (TrainController.TrainController tc : MainController.transitSystem.trains.values())    	
-	{
-		tm = tc.getModel();
-		data.add(tm);
-		if (selectedTrain == null)
-			selectedTrain = tm;
-		trains.add(tm.getTrainID());
-	}*/
     
     public void updateGUI()
     {     	
