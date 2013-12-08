@@ -81,9 +81,11 @@ public class ViewController
     	lightColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("lightValue"));
     	passColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, Integer>("passengerNumber"));
     	tempColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("temp"));
-    	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));    	
+    	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));
     	
-    	//updateGUI();
+    	data = FXCollections.observableArrayList();
+    	
+    	updateGUI();
     }
     
     public ObservableList<TrainModel> getActiveTrains()
@@ -109,12 +111,31 @@ public class ViewController
     
     public void addTrain(/*ctc.Route r,*/ double t, String c)
     {
-    	data.add(new TrainModel(0.001, /*r,*/ t, c));
+    	data.add(new TrainModel(0.2, /*r,*/ t, c));
     }
+    
+    /*trains = FXCollections.observableArrayList();
+	TrainModel tm;
+	//for (TrainModel tm : data)
+	for (TrainController.TrainController tc : MainController.transitSystem.trains.values())    	
+	{
+		tm = tc.getModel();
+		data.add(tm);
+		if (selectedTrain == null)
+			selectedTrain = tm;
+		trains.add(tm.getTrainID());
+	}*/
     
     public void updateGUI()
     {     	
     	trains = FXCollections.observableArrayList();
+    	data.clear();
+    	
+    	for (TrainController.TrainController tc : nse.MainController.transitSystem.trains.values())
+		{    		
+    		data.add(tc.getModel());
+    		System.out.println("Train added: " + tc.getModel().getTrainID());
+		}
     	
     	for (TrainModel tm : data)
     	{

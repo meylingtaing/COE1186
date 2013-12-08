@@ -30,8 +30,6 @@ public class TrainView extends Application
 		{
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(getClass().getResource("TrainGUI.fxml"));
-            //AnchorPane page = (AnchorPane) fxml.load(TrainModel.class.getResource("/trainmodule/TrainGUI.fxml"));
-            //Scene scene = new Scene(page);
 			Parent root = (Parent) fxml.load();
             
             primaryStage.setScene(new Scene(root));
