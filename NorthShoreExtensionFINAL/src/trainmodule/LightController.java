@@ -46,4 +46,11 @@ public class LightController
 		else
 			return "Off";
 	}
+	
+	/**This method returns the lights state
+	 */
+	public boolean getLightState()
+	{
+		return lights;
+	}
 }

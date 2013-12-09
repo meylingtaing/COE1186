@@ -10,8 +10,10 @@ package trainmodule;
 
 //TODO Signal failure ie cannot update train position
 //TODO Add information to table
-//TODO create test cases
+//TODO Create test cases
 //TODO Add information to table
+//TODO Open doors only when train is stopped
+//TODO Update passenger count when train is stopped and doors are open
 
 import java.util.*;
 
@@ -29,8 +31,8 @@ import javafx.stage.Stage;
  */
 public class TrainModel
 {
-	private static final double TRAIN_MASS = 37103.9;	//This variable contains the train mass			
-	private static final double LENGTH = 32.2;			//This variable contains the train LENGTH
+	public static final double TRAIN_MASS = 37103.9;	//This variable contains the train mass			
+	public static final double LENGTH = 32.2;			//This variable contains the train LENGTH
 	public static ViewController vc;				//This holds the view controller
 	
 	private DoorController doors;					//This holds the door controller
@@ -51,7 +53,7 @@ public class TrainModel
 	private SimpleIntegerProperty trainID;			//Holds the train ID
 	
 	/**
-	 * This is the main to run the train model indiviually
+	 * This is the main to run the train model individually
 	 */
 	public static void main(String args[])
 	{
@@ -183,18 +185,29 @@ public class TrainModel
 	{
         return temperature.getTrainTemperature() + " F";
     }
+    
+    /**
+	 * This method returns the temperature of the train
+	 */
+    public double getTemperature()
+	{
+        return temperature.getTrainTemperature();
+    }
 	
     /**
-	 * This method sets the temperature on the train
+	 * This method cools the train
 	 */
-    public void setTemp(double t)
+    public void coolTrain()
     {
-    	if (t <= temperature.getTrainTemperature())
-    		temperature.heatTrain();
-    	else
-    	{
-    		temperature.coolTrain();
-    	}
+    	temperature.coolTrain();
+    }
+    
+    /**
+   	 * This method heats the train
+   	 */
+    public void heatTrain()
+    {
+    	temperature.heatTrain();
     }
     
     /**
@@ -320,18 +333,27 @@ public class TrainModel
     }
 	
     /**
-	 * This method sets the state of the lights (true = broken, false = functional)
+	 * This method returns the state of the lights (true = on, false = off)
 	 */
-    public void setLightValue(boolean val)
+    public boolean getLightState()
+	{
+        return lights.getLightState();
+    }
+    
+    /**
+	 * This method turns the lights on
+	 */
+    public void turnLightsOn()
     {
-        if (val)
-        {
-        	lights.turnLightsOn();
-        }
-        else
-        {
-        	lights.turnLightsOff();
-        }
+    	lights.turnLightsOn();
+    }
+    
+    /**
+	 * This method turns the lights off
+	 */
+    public void turnLightsOff()
+    {
+    	lights.turnLightsOff();
     }
     
     /**
@@ -343,18 +365,35 @@ public class TrainModel
     }
 	
     /**
-	 * This method sets the state of the doors (true = open, false = closed)
+	 * This method sets the state of the doors to open
 	 */
-    public void setDoorValue(boolean val)
+    public void openDoors()
     {
-        if (val)
-        {
-        	doors.openDoors();
-        }
-        else
-        {
-        	doors.closeDoors();
-        }
+        doors.openDoors();
+    }
+    
+    /**
+	 * This method sets the state of the doors to closed
+	 */
+    public void closeDoors()
+    {
+        doors.closeDoors();
+    }
+    
+    /**
+   	 * This method returns the conductor name or id
+   	 */
+    public String getConductor()
+    {
+    	return conductor;
+    }
+    
+    /**
+   	 * This method returns delta t
+   	 */
+    public double getDeltaT()
+    {
+    	return engine.getDeltaT();
     }
     
     /**
@@ -371,5 +410,45 @@ public class TrainModel
     public void releaseEBrake()
     {
     	eBrake = false;
+    }
+    
+    /**
+   	 * This method gets the door state
+   	 */
+    public boolean getDoorState()
+    {
+    	return doors.getState();
+    }
+    
+    /**
+  	 * This method updates the passenger count if the speed is 0 and the train doors are open
+  	 */
+    public int updatePassengers()
+    {
+    	if (doors.getState())
+    	{
+    		return passengers.updatePassengers();
+    	}
+    	else
+    	{
+    		return passengers.getPassengerCount();
+    	}
+    }
+    
+    /**
+  	 * This method clears the passenger count to one if the speed is 0 and the train doors are open
+  	 */
+    public int clearPassengers()
+    {
+    	if (doors.getState())
+    	{
+    		passengers.clearPassengers();
+    	}
+    	else
+    	{
+    		passengers.clearPassengers();
+    	}
+    	
+    	return passengers.getPassengerCount();
     }
 }

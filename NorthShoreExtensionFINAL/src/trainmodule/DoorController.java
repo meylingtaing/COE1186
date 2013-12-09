@@ -41,6 +41,13 @@ public class DoorController
 	
 	/**This method gets doors state
 	 */
+	public boolean getState()
+	{
+		return doors;
+	}
+	
+	/**This method gets doors state
+	 */
 	public String getDoors()
 	{
 		if (doors)

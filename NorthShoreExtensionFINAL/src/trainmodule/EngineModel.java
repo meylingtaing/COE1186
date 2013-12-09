@@ -9,6 +9,7 @@
 package trainmodule;
 
 import java.lang.*;
+
 import nse.MainController;
 
 /**
@@ -18,18 +19,18 @@ import nse.MainController;
  */
 public class EngineModel
 {	
-	private static final double MAX_GRADIENT = 0.60;						//The max gradient (percentage) the train can handle (in the spec)
-	private static final double MAX_SPEED = 70000.0;						//The max speed (m/s) the train can go (in the spec)
-	private static final double MEDIUM_ACCELERATION = 0.5;				//A comfortable acceleration (m/s^2) speed (in the spec)
-	private static final double TOTAL_MAX_POWER = 120000;					//The max power (watt) input the train can handle (in the spec)
-	private static final double MEDIUM_DECELERATION = 1.2;				//A comfortable braking deceleration (m/s^2) (in the spec)
-	private static final double EMERGENCY_DECELERATION = 4.095;			//The emergency braking deceleration (m/s^2) of the train (in the spec)
-	private static final double GRAVITY = 9.8067;						//The gravitational acceleration constant (m/s^2) (in the spec)
-	private static final double FRICTION_COEFFICIENT = 0.1;				//The kinetic frictional (unitless) constant (in the spec)
-	private static final double STATIC_FRICTION_COEFFICIENT = 0.5;		//The static frictional (unitless) constant (in the spec)
-	private static final double FRICTION = 2.6667 * Math.pow(10, -2);	//The actual frictional acceleration (m/s^2) for the train
-	private double maxPowerChange = 5;
+	public static final double MAX_GRADIENT = 0.60;						//The max gradient (percentage) the train can handle (in the spec)
+	public static final double MAX_SPEED = 70000.0;						//The max speed (m/s) the train can go (in the spec)
+	public static final double MEDIUM_ACCELERATION = 0.5;				//A comfortable acceleration (m/s^2) speed (in the spec)
+	public static final double TOTAL_MAX_POWER = 120000;					//The max power (watt) input the train can handle (in the spec)
+	public static final double MEDIUM_DECELERATION = 1.2;				//A comfortable braking deceleration (m/s^2) (in the spec)
+	public static final double EMERGENCY_DECELERATION = 4.095;			//The emergency braking deceleration (m/s^2) of the train (in the spec)
+	public static final double GRAVITY = 9.8067;						//The gravitational acceleration constant (m/s^2) (in the spec)
+	public static final double FRICTION_COEFFICIENT = 0.1;				//The kinetic frictional (unitless) constant (in the spec)
+	public static final double STATIC_FRICTION_COEFFICIENT = 0.5;		//The static frictional (unitless) constant (in the spec)
+	public static final double FRICTION = 2.6667 * Math.pow(10, -2);	//The actual frictional acceleration (m/s^2) for the train
 	
+	private double maxPowerChange;
 	private double maxPower;			//The max power (watt) increase in a time step		
 	private double lastPower;			//The power (watt) input in a previous time step
 	private double currentVelocity;		//The current velocity (m/s) the train is traveling
@@ -211,4 +212,12 @@ public class EngineModel
 	{
 		return currentVelocity;
 	}
+	
+	/**
+   	 * This method returns delta t
+   	 */
+    public double getDeltaT()
+    {
+    	return deltaT;
+    }
 }
