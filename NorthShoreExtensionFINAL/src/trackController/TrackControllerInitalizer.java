@@ -230,8 +230,9 @@ public class TrackControllerInitalizer {
 			if(k==68)
 			{
 				//Set Blocks To the yard
-				directionBPLC3 = null;
-				direction2BPLC3 = null;
+				directionBPLC3 = model.getBlock(0);
+				direction2BPLC3 = model.getBlock(0);
+				startAuthoritys3.add(model.getBlock(0));
 			}
 			index++;
 		}
@@ -263,7 +264,7 @@ public class TrackControllerInitalizer {
 		Block enter2 = null;
 		Block exit2 = null;
 		
-		index = 0;
+		
 		for(int k=117; k<=150;k++)
 		{
 			
@@ -274,7 +275,7 @@ public class TrackControllerInitalizer {
 			{
 				enter = model.getBlock(k - 1);
 				b.setAuthorityEnterBlock(enter);
-				authorityB1Index = index;
+				authorityB1Index = plc4Blocks.size();
 				startAuthoritys4.add(b);
 			}
 			if(k==118)
@@ -285,7 +286,7 @@ public class TrackControllerInitalizer {
 			{
 				enter2 = model.getBlock(k - 1);
 				b.setAuthorityEnterBlock(enter2);
-				authorityB1Index = index;
+				authorityB1Index = plc4Blocks.size();
 				exit2 = model.getBlock(28);
 				b.setAuthorityExitBlock(exit2);
 				endAuthoritys4.add(b);
@@ -293,7 +294,6 @@ public class TrackControllerInitalizer {
 			}
 			
 		
-			index++;
 			
 		}
 		for(int k = 28; k > 0; k--)
@@ -303,7 +303,7 @@ public class TrackControllerInitalizer {
 				Block b = model.getBlock(k);
 				plc4Blocks.add(b);				
 			}
-			index++;
+	
 		}
 		for(int k = 29; k < 58; k++)
 		{
@@ -313,7 +313,7 @@ public class TrackControllerInitalizer {
 			{
 				enter = model.getBlock(k - 1);
 				b.setAuthorityEnterBlock(enter);
-				authorityB1Index = index;
+				authorityB1Index = plc4Blocks.size();
 				startAuthoritys4.add(b);
 			}
 			if(k == 35)
@@ -329,7 +329,7 @@ public class TrackControllerInitalizer {
 			{
 				directionBPLC4 = b;
 			}
-			index++;
+			
 		}
 		index = 0;
 		
@@ -358,7 +358,6 @@ public class TrackControllerInitalizer {
 		{
 			Block b = model.getBlock(k);
 			plc5Blocks.add(b);
-			index++;
 		}
 		for(int k = 28; k > 0; k--)
 		{
@@ -368,7 +367,7 @@ public class TrackControllerInitalizer {
 			{
 				enter = model.getBlock(150); //Z
 				b.setAuthorityEnterBlock(enter);
-				authorityBIndex = index;
+				authorityBIndex = plc5Blocks.size() - 1;
 				startAuthoritys5.add(b);
 				endAuthoritys5.add(b);
 				exit = model.getBlock(k+1);
@@ -383,7 +382,7 @@ public class TrackControllerInitalizer {
 			{
 				directionBPLC5 = b;
 			}
-			index++;
+			
 		}
 
 		index = 0;
