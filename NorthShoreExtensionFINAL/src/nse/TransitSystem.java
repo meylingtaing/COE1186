@@ -75,14 +75,18 @@ public class TransitSystem implements Runnable
 				
 				String[] fields = line.split(",");
 				
-				switch(fields[0])
-				{
-				case "TRACK":
+			
+				
+				if(fields[0].contentEquals("TRACK"))
+				{				
 					AddTrackFormController.addTrack(fields[1], fields[3], fields[2], ctc);
-					break;
-				case "TRAIN":
+				}
+				if(fields[0].contentEquals("TRAIN"))
+				{				
 					AddTrainFormController.addTrain(fields[1], ctc);
-				default:
+				}
+				else
+				{				
 					// Maybe something should go here?
 				}
 				
@@ -115,9 +119,12 @@ public class TransitSystem implements Runnable
 	{
 		for (TrainController train : trains.values())
 		{
+			if(train.getModel().getTrainID() > 0)
+			{
 			if (trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() == blockId && 
 					trainPositions.get(train.model.getTrainID()).getCurrTrack().getClass().equals(track))
 				return true;
+			}
 		}
 		return false;
 	}
@@ -135,6 +142,55 @@ public class TransitSystem implements Runnable
 		return null;
 	}
 	
+	public int getPossibleFutureSignals(Block end)
+	{
+		int check = 0;
+		int start = end.getBlockId();
+		start++;
+		
+		/*!! end.getTrackLine() returns "Green" track array contains string greenline*/
+		TrackObject to = trackArray.get("greenline");
+		Block b = null;
+		while(check <= 3)
+		{
+			//The end of the green line
+			if(start == 151)
+			{
+				start = 1;
+				b = to.getBlock(start);
+			}
+			else
+			{
+				b = to.getBlock(start);
+			}
+			
+			
+			
+			if(b.isTrainDetected())
+			{
+				if(check == 0)
+				{
+					return 4;
+				}
+				if(check == 1)
+				{
+					return 3;
+				}
+				if(check == 2)
+				{
+					return 2;
+				}
+				if(check == 3)
+				{
+					return 1;
+				}
+				
+			}
+			start++;
+			check++;
+		}
+		return 1;
+	}
 	/**
 	 * Creates a physical track object in the system
 	 * CTC -> TrackController

@@ -73,7 +73,7 @@ public class Route
 		// Add blocks to the list until we hit the station
 		while (!lastBlock.isStation() || !lastBlock.getStationName().equals(station))
 		{
-			System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
+			//System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
 			
 			int[] possibleNextBlocks;
 			Double[] coordinates = lastBlock.getCoordinates();

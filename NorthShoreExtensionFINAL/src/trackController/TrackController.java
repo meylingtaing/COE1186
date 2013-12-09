@@ -29,6 +29,7 @@ public class TrackController {
 	public Block switchBlock2;
 	public Block terminalBlock;
 	public boolean stalled = false;
+	public Block [] bArray;
 	public TrainModel trainModule;
 	public TrackObject trackModel;
 	public TransitSystem transitSys;
@@ -54,7 +55,11 @@ public class TrackController {
 		//trainModule = tm;
 		//getSwitchesInSections();
 		getCrossingsInSections();
-		
+		bArray = new Block[blocks.size()];
+		for(int i = 0; i < blocks.size(); i++)
+		{
+			bArray[i] = blocks.get(i);
+		}
 	}
 	
 	private void getCrossingsInSections() {
@@ -196,44 +201,49 @@ public class TrackController {
 		//Traverse backwards through the trains blocks.
 		//When a train is detected in the scope set the block it is in to be red
 		//Set the blocks behind accordingly
-		Block [] b = (Block[]) blocks.toArray();		
-		int setNum = 1;
-		if(b != null)
+		Block end = bArray[bArray.length - 1];
+		int setNum = transitSys.getPossibleFutureSignals(end);
+		if(bArray != null)
 		{
-			for(int i = b.length; i >= 0; i--)
+			boolean check = false;
+			for(int i = bArray.length -1; i >= 0; i--)
 			{
-				if(b[i].isTrainDetected())
+				check = false;
+				if(bArray[i].isTrainDetected())
 				{
 					setNum = 4;
-					b[i].setSignalState(setNum);					
+					bArray[i].setSignalState(setNum);
+					check = true;
 				}
-				if(!b[i].isTrainDetected() && setNum == 4)
+				if(!bArray[i].isTrainDetected() && setNum == 4)
 				{
 					setNum--;
 				}
 				if(setNum == 3)
 				{
-					b[i].setSignalState(setNum);
+					bArray[i].setSignalState(setNum);
 					setNum--;
+					check = true;
 				}
-				if(b[i].isCrossing() && setNum >= 2)
+				if(bArray[i].isCrossing() && setNum >= 2)
 				{
 					//Turn on the RR Signal in the block
-					b[i].setCrossingSignalState(1);
+					bArray[i].setCrossingSignalState(1);
 				}
-				if(b[i].isCrossing() && setNum < 2)
+				if(bArray[i].isCrossing() && setNum < 2)
 				{
 					//Turn off crossing signals
-					b[i].setCrossingSignalState(0);
+					bArray[i].setCrossingSignalState(0);
 				}
-				if(setNum == 2)
+				if(setNum == 2 && !check)
 				{
-					b[i].setSignalState(setNum);
+					bArray[i].setSignalState(setNum);
 					setNum--;
+					check = true;
 				}
-				if(setNum == 1)
+				if(setNum == 1 && !check)
 				{
-					b[i].setSignalState(setNum);
+					bArray[i].setSignalState(setNum);
 				}
 			}
 		}
