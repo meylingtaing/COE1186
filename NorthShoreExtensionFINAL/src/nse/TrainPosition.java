@@ -56,7 +56,9 @@ public class TrainPosition {
 				
 				// Go to the next block
 				// TODO: what if route has no more blocks?
+				currBlock.setTrainDetected(false); //train leaves current block
 				currBlock = route.getFirstBlock();
+				currBlock.setTrainDetected(true); //train enters new block
 				
 				distanceTraveled = 0;
 			}
