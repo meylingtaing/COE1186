@@ -68,10 +68,60 @@ public class TrainModelTest
 		}	
 		train.closeDoors();
 		assertTrue(train.getPassengerNumber() <= PassengerManager.MAX_PASSENGERS);
-		assertTrue(train.getPassengerNumber() >= 1);
+		assertTrue(train.getPassengerNumber() > 1);
 		System.out.println("It took " + i + " transfers\nPassenger number: " + train.getPassengerNumber());
+		
+		train.openDoors();
 		assertEquals(train.clearPassengers(), 1);
+		train.closeDoors();
 		
+		//Tests for initial failure states
+		assertFalse(train.isEngineBroken());
+		assertFalse(train.isBrakeBroken());
+		assertFalse(train.isSignalBroken());
 		
+		//Tests for failure toggling
+		train.throwEngineFailure();
+		assertTrue(train.isEngineBroken());
+		train.fixEngineFailure();
+		assertFalse(train.isEngineBroken());
+		train.throwBrakeFailure();
+		assertTrue(train.isBrakeBroken());
+		train.fixBrakeFailure();
+		assertFalse(train.isBrakeBroken());
+		train.throwSignalFailure();
+		assertTrue(train.isSignalBroken());
+		train.fixSignalFailure();
+		assertFalse(train.isSignalBroken());
+		
+		//Tests that the fix all failures works
+		train.throwEngineFailure();
+		train.throwBrakeFailure();
+		train.throwSignalFailure();
+		train.fixAllFailures();
+		assertFalse(train.isEngineBroken());
+		assertFalse(train.isBrakeBroken());
+		assertFalse(train.isSignalBroken());
+		
+		//TODO create test methods for engine
+		//Tests for correct initial train speed
+		assertEquals(train.getPower(), 0, 0);
+		assertEquals(train.getVelocity(), 0, 0);
+		
+		//Tests that the engine input changes the speed
+		train.setSetpoint(100);
+		double pow = train.getPower();
+		double speed = train.getVelocity();
+		assertTrue((pow > 0));	
+		assertTrue((speed > 0));
+		System.out.println("Train power: " + pow + "\nTrain speed: " + speed);
+		
+		train.setSetpoint(0);
+		
+		double nextPow = train.getPower();
+		double nextSpeed = train.getVelocity();
+		assertTrue((nextPow <= pow));	
+		assertTrue((nextSpeed <= speed));
+		System.out.println("Train power: " + nextPow + "\nTrain speed: " + nextSpeed);
 	}
 }

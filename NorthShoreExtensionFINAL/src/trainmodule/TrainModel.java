@@ -119,6 +119,22 @@ public class TrainModel
     }
 	
     /**
+	 * This method returns the setpoint of the train
+	 */
+    public double getPower()
+   	{
+           return engine.getSetpoint();
+    }
+    
+    /**
+	 * This method returns the speed of the train
+	 */
+    public double getVelocity()
+   	{
+           return engine.getSpeed();
+    }
+    
+    /**
 	 * This method sets the setpoint of the train
 	 */
     public double setSetpoint(double d)
@@ -369,7 +385,10 @@ public class TrainModel
 	 */
     public void openDoors()
     {
-        doors.openDoors();
+    	if (engine.getSpeed() <= 0)
+    	{
+    		doors.openDoors();
+    	}
     }
     
     /**
@@ -425,7 +444,7 @@ public class TrainModel
   	 */
     public int updatePassengers()
     {
-    	if (doors.getState())
+    	if (doors.getState() && engine.getSpeed() <= 0)
     	{
     		return passengers.updatePassengers();
     	}
@@ -440,11 +459,7 @@ public class TrainModel
   	 */
     public int clearPassengers()
     {
-    	if (doors.getState())
-    	{
-    		passengers.clearPassengers();
-    	}
-    	else
+    	if (doors.getState() && engine.getSpeed() <= 0)
     	{
     		passengers.clearPassengers();
     	}

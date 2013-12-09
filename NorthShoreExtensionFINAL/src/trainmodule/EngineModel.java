@@ -146,6 +146,7 @@ public class EngineModel
 		//This calculates the velocity
 		double veloc = Math.sqrt((2 * power * deltaT) / (mass));
 		currentVelocity = currentVelocity + veloc - 0.01433 * deltaT;
+		setpoint = power;
 		
 		if (currentVelocity < 0)
 		{
@@ -158,7 +159,10 @@ public class EngineModel
 		
 		// TODO fix integrating this deltaT stuff
 		//Signals the distance traveled by the train
-		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		}		
 		
 		System.out.println("Current velocity: " + currentVelocity);
 		System.out.println("Current deltaT: " + deltaT);
