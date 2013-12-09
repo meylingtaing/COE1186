@@ -51,6 +51,7 @@ public class TrainModel
 	
 	//TABLE COLUMN VARIABLES
 	private SimpleIntegerProperty trainID;			//Holds the train ID
+	private int trainIdentitiy;
 	
 	/**
 	 * This is the main to run the train model individually
@@ -65,11 +66,12 @@ public class TrainModel
 	 */
 	public TrainModel(int id)
 	{
+		trainIdentitiy = id;
 		this.trainID = new SimpleIntegerProperty(id);
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
-		engine = new EngineModel(0.1, trainID.getValue());
+		engine = new EngineModel(0.1, trainIdentitiy);
 		temperature = new TemperatureController(72);
 		failure = new TrainFailure();
 		conductor = "engineer";
@@ -89,11 +91,12 @@ public class TrainModel
 	 */
 	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer, int id)
 	{
+		trainIdentitiy = id;
 		doors = new DoorController();
 		lights= new LightController();
 		passengers = new PassengerManager();
 		trainID = new SimpleIntegerProperty(trainIDGenerator);
-		engine = new EngineModel(tick, trainID.getValue());
+		engine = new EngineModel(tick, trainIdentitiy);
 		temperature = new TemperatureController(t);
 		failure = new TrainFailure();
 		conductor = engineer;
