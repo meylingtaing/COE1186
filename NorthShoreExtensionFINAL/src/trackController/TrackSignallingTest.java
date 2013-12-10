@@ -38,29 +38,6 @@ public class TrackSignallingTest {
 		@Test public void testTrackSignals() 
 		{
 			//Create a track model for the green line
-			/*
-			TrackObject trackModel = new TrackObject();
-			Scanner fileScan = null;
-			try {
-				fileScan = new Scanner(new File("greenline.csv"));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			String trackLineColor=null;
-			
-			String linetwo = fileScan.nextLine();
-			while (fileScan.hasNextLine()) {
-				String line = fileScan.nextLine();
-				String[] blockInfo = line.split(",");
-				
-				trackLineColor=blockInfo[0];
-				trackModel.setLine(blockInfo[0]);
-				Block newBlock = new Block(blockInfo);
-				trackModel.addBlock(newBlock);
-				
-			}
-			fileScan.close();
-			*/
 			MainController main = new MainController();
 			trainSys = main.transitSystem;
 			TrackControllerInitalizer ini = new TrackControllerInitalizer(main.transitSystem.ctcGetTrack("greenline"),trainSys);
@@ -96,8 +73,15 @@ public class TrackSignallingTest {
 					assertEquals(trackModel.getBlock(id-1).getSignalState(),3);
 					//Currently not working between plcs
 					
+					//The block two back is green
 					assertEquals(trackModel.getBlock(id-2).getSignalState(),2);
+					//The block two back is green
 					assertEquals(trackModel.getBlock(id-3).getSignalState(),1);
+					if(tp.getCurrBlock().isCrossing())
+					{
+						//Crossing Signals set
+						assertEquals(trackModel.getBlock(id).getCrossingSignalState(), 1);
+					}
 				}
 				moveTrain();
 				plcUpdate();
