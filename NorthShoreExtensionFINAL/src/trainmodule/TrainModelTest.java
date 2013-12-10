@@ -109,7 +109,9 @@ public class TrainModelTest
 		assertEquals(train.getVelocity(), 0, 0);
 		
 		//Tests that the engine input changes the speed
-		train.setSetpoint(100);
+		train.setSetpoint(500);
+		train.setSetpoint(500);
+		train.setSetpoint(500);
 		double pow = train.getPower();
 		double speed = train.getVelocity();
 		assertTrue((pow > 0));	
@@ -123,5 +125,17 @@ public class TrainModelTest
 		assertTrue((nextPow <= pow));	
 		assertTrue((nextSpeed <= speed));
 		System.out.println("Train power: " + nextPow + "\nTrain speed: " + nextSpeed);
+		
+		TrainModel train2 = new TrainModel(0.2, 65.2, "susan", 105);
+		train2.setSetpoint(500);
+		train2.setSetpoint(500);
+		train2.setSetpoint(500);
+		train2.pullBrake(0.5);
+		
+		double newPow = train2.getPower();
+		double newSpeed = train2.getVelocity();
+		System.out.println("Train power: " + newPow + "\nTrain speed: " + newSpeed);
+		assertTrue(newPow < nextPow);	
+		assertTrue(newSpeed < nextSpeed);
 	}
 }

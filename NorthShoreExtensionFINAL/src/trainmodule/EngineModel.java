@@ -8,8 +8,6 @@
 
 package trainmodule;
 
-import java.lang.*;
-
 import nse.MainController;
 
 /**
@@ -78,7 +76,11 @@ public class EngineModel
 			currentVelocity = 0;
 		}
 		
-		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		//Signals the distance traveled by the train
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		}
 		
 		return currentVelocity;
 	}
@@ -97,7 +99,11 @@ public class EngineModel
 			currentVelocity = 0;
 		}
 		
-		MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		//Signals the distance traveled by the train
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+		}
 		
 		return currentVelocity;
 	}

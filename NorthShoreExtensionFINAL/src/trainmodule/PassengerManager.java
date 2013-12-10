@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class PassengerManager
 {
-	public static final double PASSENGER_MASS = 150.0;		//Is the individual passenger weight (Kg) on the train
+	public static final double PASSENGER_MASS = (150.0 * 0.453592);		//Is the individual passenger weight (Kg) on the train
 	public static final int MAX_PASSENGERS = 222;		//Is the maximum amount of passengers that can be on the train a time
 	
 	private int passengerCount;				//Holds the passenger count on the train

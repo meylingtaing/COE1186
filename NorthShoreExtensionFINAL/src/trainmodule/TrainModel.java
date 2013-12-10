@@ -8,23 +8,24 @@
 
 package trainmodule;
 
-//TODO Signal failure ie cannot update train position
-//TODO Add information to table
-//TODO Create test cases
-//TODO Add information to table
-//TODO Open doors only when train is stopped
-//TODO Update passenger count when train is stopped and doors are open
+/*TODO The train model shall accept input from the train controller regarding the setpoint 
+ * speed command, brake command, speed limit, acceleration limit, deceleration limit, route 
+ * information, temperature control, door open, door close, transponder input, track circuit input, 
+ * and light controller for tunnel.
+*/
 
-import java.util.*;
+/*import java.util.*;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleIntegerProperty;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.stage.Stage;*/
+
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * This class simulates the train model
@@ -194,10 +195,20 @@ public class TrainModel
 	 */
     public String getSpeed()
 	{
-        return engine.getSpeed() + " m/s";
+    	double mph = convertToMPH(engine.getSpeed());
+        return mph + " MPH";
     }
     
     /**
+     * 
+     *This method returns the velocity to miles per hour
+     */
+    private double convertToMPH(double speed)
+    {
+		return speed * 2.23694;
+	}
+
+	/**
 	 * This method returns the temperature of the train
 	 */
     public String getTemp()
