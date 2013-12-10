@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 /**
  * This class creates the GUI
  */
-public class TrainView extends Application
+public class TrainView extends Application implements Runnable
 {	
 	protected static ViewController viewController;		//This holds the view controller
 	
@@ -60,6 +60,11 @@ public class TrainView extends Application
         {
             ex.printStackTrace();
         }
+	}
+
+	@Override
+	public void run() {
+		launch();
 	}
 }
 

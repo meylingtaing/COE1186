@@ -28,6 +28,7 @@ import javafx.stage.Stage;*/
 import nse.TransitSystemGui;
 import javafx.application.Application;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.stage.Stage;
 
 /**
  * This class simulates the train model
@@ -66,7 +67,6 @@ public class TrainModel
 		
 		TrainView tv = new TrainView();
 		tv.createGUI();
-		System.out.println("leggooooo");
 	}
 	
 	/**
@@ -152,6 +152,14 @@ public class TrainModel
     {    	
     	double speed;
     	
+    	if (doors.getState())
+    	{
+    		//throw new Exception("");
+    		System.out.println("The doors are still open. Train wont move until doors are closed");
+    		return this.getVelocity();
+ 
+    	}
+    	
     	if (!eBrake)
     		speed = engine.calculateSetpoint(d, (TRAIN_MASS + passengers.getTotalPassengerMass()));
     	else
@@ -192,9 +200,13 @@ public class TrainModel
     private void updateG()
     {
     	if (vc != null)
+    	{
     		vc.updateGUI();
+    	}
     	else
-    		System.out.println("No view controller");
+    	{
+    		//System.out.println("No view controller");
+    	}
     }
     
     /**
@@ -214,6 +226,14 @@ public class TrainModel
     {
 		return speed * 2.23694;
 	}
+    
+    /**
+	 * This method returns the temperature of the train
+	 */
+    public double getPassengerMass()
+	{
+        return passengers.getTotalPassengerMass();
+    }
 
 	/**
 	 * This method returns the temperature of the train
