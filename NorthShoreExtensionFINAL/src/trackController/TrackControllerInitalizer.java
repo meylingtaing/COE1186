@@ -103,9 +103,9 @@ public class TrackControllerInitalizer {
 			
 			Block b = model.getBlock(k);
 			plc2Blocks.add(b);
-			if(k==69)
+			if(k==68)
 			{
-				b.setAuthorityEnterBlock(plc2Blocks.get(index-1));
+				b.setAuthorityEnterBlock(model.getBlock(67));
 				authorityB1Index = index;
 				startAuthoritys2.add(b);
 			}
@@ -209,9 +209,15 @@ public class TrackControllerInitalizer {
 			{
 				plc3Blocks.get(authorityBIndex).setAuthorityExitBlock(b);
 			}
+			if(k== 62)
+			{
+				b.setAuthorityEnterBlock(model.getBlock(0));
+				b.setAuthorityExitBlock(model.getBlock(k +1));
+				startAuthoritys3.add(b);
+			}
 			if(k==68)
 			{
-				b.setAuthorityEnterBlock(plc3Blocks.get(index-1));
+				b.setAuthorityEnterBlock(model.getBlock(k-1));
 				authorityBIndex = index;
 				endAuthoritys3.add(b);
 			}
@@ -392,10 +398,10 @@ public class TrackControllerInitalizer {
 		Switch DCA = new Switch(directionAPLC5,directionBPLC5,container);
 		switchesUnderPLC5Control.add(DCA);
 		TrackController plc5 = new TrackController("PLC 5",plc5Blocks,switchesUnderPLC5Control,trainsitSys);
-		plc4.setEndAuthorityBlocks(endAuthoritys5);
-		plc4.setStartAuthorityBlocks(startAuthoritys5);
-		plc4.setStartingBlock(model.getBlock(147));
-		plc4.setTerminalBlock(model.getBlock(28));
+		plc5.setEndAuthorityBlocks(endAuthoritys5);
+		plc5.setStartAuthorityBlocks(startAuthoritys5);
+		plc5.setStartingBlock(model.getBlock(147));
+		plc5.setTerminalBlock(model.getBlock(28));
 		plcs.add(plc5);
 		
 		return plcs;

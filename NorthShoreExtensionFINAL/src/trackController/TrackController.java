@@ -51,6 +51,7 @@ public class TrackController {
 		transitSys = ts;
 		trainsWithSetSpeed = new ArrayList<TrainWithSetpoint>();
 		trainsWithAuthoritySuggestion = new ArrayList<TrainWithAuthority>();
+		trainsUnderControl = new ArrayList<TrainController>();
 		//trainsInSection = trainsOnTrack;
 		//trainModule = tm;
 		//getSwitchesInSections();
@@ -268,17 +269,31 @@ public class TrackController {
 			int start = currInd;
 			int trainAuthority = 0;
 			boolean quit = false;
+			int check = 0;
+			
 			for(int j = start+1;quit == false ;j++)
 			{
-				if(next.isTrainDetected() == false && blocks.contains(next) && !next.isClosed())
+				if(next.isTrainDetected() == false && blocks.contains(next) && !next.isClosed() && j < blist.size())
 				{
 					trainAuthority++;
 					next = blist.get(j);
 				}
+				/*
+				while(!blocks.contains(next) && check < 3 && j < blist.size())
+					{
+						next = blist.get(j);
+						if(next.isTrainDetected() == false && !next.isClosed())
+						{
+							trainAuthority++;
+							j++;
+						}
+						check++;
+					}*/
 				else
-				{
-					quit = true;
-				}
+					//(check == 3)
+					{
+						quit = true;
+					}
 			}
 			
 			TrainWithAuthority ta = new TrainWithAuthority(t,trainAuthority);
@@ -413,6 +428,8 @@ public class TrackController {
 					{
 						trainsUnderControl.add(tc);
 						TrainWithSetpoint t = new TrainWithSetpoint(tc, b.getSpeedLimit());
+						TrainWithAuthority ta = new TrainWithAuthority(tc,tc.authoritySetpointFixed);
+						trainsWithAuthoritySuggestion.add(ta);
 						trainsWithSetSpeed.add(t);
 					}
 				}
@@ -426,6 +443,7 @@ public class TrackController {
 					if(trainsUnderControl.contains(tc))
 					{
 						trainsUnderControl.remove((tc));
+						int indToRemove = -1;
 						//Remove From set point array
 						for(TrainWithSetpoint t : trainsWithSetSpeed)
 						{
@@ -433,19 +451,33 @@ public class TrackController {
 							{
 								//Notify CTC that this PLC is loosing suggestion
 								transitSys.setSegHandoffFlag(1);
-								trainsWithSetSpeed.remove(t);
+								//trainsWithSetSpeed.remove(t);
+								indToRemove = trainsWithSetSpeed.indexOf(t);
+								break;
 							}
 						}
+						
+						if(indToRemove > -1)
+						{
+							trainsWithSetSpeed.remove(indToRemove);
+						}
+						
 						//Remove From authority suggestion array
+						indToRemove = -1;
 						for(TrainWithAuthority t : trainsWithAuthoritySuggestion)
 						{
 							if(t.train.equals(tc))
 							{
 								//Notify CTC that this PLC is loosing suggestion
 								transitSys.setSegHandoffFlag(1);
-								trainsWithAuthoritySuggestion.remove(t);
+								indToRemove = trainsWithAuthoritySuggestion.indexOf(t);
 								break;
 							}
+						}
+						
+						if(indToRemove > -1)
+						{
+							trainsWithAuthoritySuggestion.remove(indToRemove);
 						}
 					}
 				}
@@ -462,19 +494,30 @@ public class TrackController {
 					Route r = transitSys.routeList.get(tc.getModel().getTrainID());
 					LinkedList<Block> blist = r.getBlockList();
 					int curr = blist.indexOf(b);
-					
+				if(blist.size() > curr + 1)
+				{
 					if(blist.get(curr+1).equals(b.getAuthorityExitBlock()))
 					{
 						trainsUnderControl.remove((tc));
+						
+						int indToRemove = -1;
 						for(TrainWithSetpoint t : trainsWithSetSpeed)
 						{
 							if(t.train.equals(tc))
 							{
 								//Notify CTC that this PLC is loosing suggestion
 								transitSys.setSegHandoffFlag(1);
-								trainsWithSetSpeed.remove(t);
+								//trainsWithSetSpeed.remove(t);
+								indToRemove = trainsWithSetSpeed.indexOf(t);
+								break;
 							}
 						}
+						
+						if(indToRemove > -1)
+						{
+							trainsWithSetSpeed.remove(indToRemove);
+						}
+						
 						//Remove From authority suggestion array
 						for(TrainWithAuthority t : trainsWithAuthoritySuggestion)
 						{
@@ -482,18 +525,27 @@ public class TrackController {
 							{
 								//Notify CTC that this PLC is loosing suggestion
 								transitSys.setSegHandoffFlag(1);
-								trainsWithAuthoritySuggestion.remove(t);
+								//trainsWithAuthoritySuggestion.remove(t);
+								indToRemove = trainsWithAuthoritySuggestion.indexOf(t);
 								break;
 							}
+						}
+						
+						if(indToRemove > -1)
+						{
+							trainsWithAuthoritySuggestion.remove(indToRemove);
 						}
 					}
 					else
 					{
 						trainsUnderControl.add((tc));
 						TrainWithSetpoint t = new TrainWithSetpoint(tc, b.getSpeedLimit());
+						TrainWithAuthority ta = new TrainWithAuthority(tc,tc.authoritySetpointFixed);
+						trainsWithAuthoritySuggestion.add(ta);
 						trainsWithSetSpeed.add(t);
 					}
 				}
+			}
 			}
 		}
 	}
