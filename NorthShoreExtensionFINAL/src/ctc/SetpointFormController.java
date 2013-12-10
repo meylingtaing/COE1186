@@ -68,6 +68,7 @@ public class SetpointFormController extends FormController
 		catch (Exception e)
 		{
 			errorMessage.setVisible(true);
+			e.printStackTrace();
 		}
 
 	}
