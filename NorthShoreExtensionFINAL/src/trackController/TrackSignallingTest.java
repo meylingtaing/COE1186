@@ -38,6 +38,7 @@ public class TrackSignallingTest {
 		@Test public void testTrackSignals() 
 		{
 			//Create a track model for the green line
+			/*
 			TrackObject trackModel = new TrackObject();
 			Scanner fileScan = null;
 			try {
@@ -59,12 +60,12 @@ public class TrackSignallingTest {
 				
 			}
 			fileScan.close();
-			
+			*/
 			MainController main = new MainController();
 			trainSys = main.transitSystem;
-			TrackControllerInitalizer ini = new TrackControllerInitalizer(trackModel,trainSys);
+			TrackControllerInitalizer ini = new TrackControllerInitalizer(main.transitSystem.ctcGetTrack("greenline"),trainSys);
 			plcs = ini.initialize();
-			
+			TrackObject trackModel = main.transitSystem.ctcGetTrack("greenline");
 			
 			//assertNotNull("TrackControllers Intialized", plcs);
 			
@@ -92,8 +93,11 @@ public class TrackSignallingTest {
 					int id = tp.getCurrBlock().getBlockId();
 					
 					//The block before this one has a yellow signal
-					//assertEquals(trackModel.getBlock(id-1).getSignalState(),3);
+					assertEquals(trackModel.getBlock(id-1).getSignalState(),3);
 					//Currently not working between plcs
+					
+					assertEquals(trackModel.getBlock(id-2).getSignalState(),2);
+					assertEquals(trackModel.getBlock(id-3).getSignalState(),1);
 				}
 				moveTrain();
 				plcUpdate();

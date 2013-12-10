@@ -142,14 +142,14 @@ public class TransitSystem implements Runnable
 		return null;
 	}
 	
-	public int getPossibleFutureSignals(Block end)
+	public int getPossibleFutureSignals(TransitSystem ts,Block end)
 	{
 		int check = 0;
 		int start = end.getBlockId();
-		start++;
+		//start++;
 		
 		/*!! end.getTrackLine() returns "Green" track array contains string greenline*/
-		TrackObject to = trackArray.get("greenline");
+		TrackObject to = MainController.transitSystem.trackArray.get("greenline");
 		Block b = null;
 		while(check <= 3)
 		{
@@ -165,7 +165,7 @@ public class TransitSystem implements Runnable
 			}
 			
 			
-			
+		
 			if(b.isTrainDetected())
 			{
 				if(check == 0)
@@ -204,7 +204,7 @@ public class TransitSystem implements Runnable
 		
 		if(trackName.compareToIgnoreCase("greenline") == 0)
 		{
-			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , this);
+			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , MainController.transitSystem);
 			greenLinePlcs = greenPlcIni.initialize();
 		}
 	}

@@ -202,7 +202,7 @@ public class TrackController {
 		//When a train is detected in the scope set the block it is in to be red
 		//Set the blocks behind accordingly
 		Block end = bArray[bArray.length - 1];
-		int setNum = transitSys.getPossibleFutureSignals(end);
+		int setNum = transitSys.getPossibleFutureSignals(transitSys,end);
 		if(bArray != null)
 		{
 			boolean check = false;

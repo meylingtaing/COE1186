@@ -2,6 +2,7 @@ package trackController;
 
 import java.util.ArrayList;
 
+import nse.MainController;
 import nse.TransitSystem;
 
 import trackModel.Block;
@@ -17,7 +18,7 @@ public class TrackControllerInitalizer {
 	public TrackControllerInitalizer(TrackObject track, TransitSystem ts)
 	{
 		trainsitSys = ts;
-		model = track;
+		model = track;//MainController.transitSystem.ctcGetTrack("greenline");
 	}
 	
 	public ArrayList<TrackController> initialize()
