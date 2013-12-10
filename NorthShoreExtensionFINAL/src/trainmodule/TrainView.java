@@ -35,7 +35,7 @@ public class TrainView extends Application
 	/**
 	 * This method launches the GUI
 	 */
-	public static void createGUI()
+	public void createGUI()
 	{
 		launch();
 	}

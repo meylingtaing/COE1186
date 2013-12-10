@@ -25,6 +25,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;*/
 
+import nse.TransitSystemGui;
+import javafx.application.Application;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -35,6 +37,7 @@ public class TrainModel
 	public static final double TRAIN_MASS = 37103.9;	//This variable contains the train mass			
 	public static final double LENGTH = 32.2;			//This variable contains the train LENGTH
 	public static ViewController vc;				//This holds the view controller
+	public static boolean demo = false;
 	
 	private DoorController doors;					//This holds the door controller
 	private LightController lights;					//This holds the light controller
@@ -59,7 +62,11 @@ public class TrainModel
 	 */
 	public static void main(String args[])
 	{
-		TrainView.createGUI();	
+		demo = true;
+		
+		TrainView tv = new TrainView();
+		tv.createGUI();
+		System.out.println("leggooooo");
 	}
 	
 	/**

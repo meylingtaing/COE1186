@@ -62,6 +62,7 @@ public class EngineModel
 	 */	
 	public double pullBrake(double load, double mass)
 	{		
+		setpoint = 0;
 		if (brakeFailure)
 		{
 			load = 0;
@@ -90,6 +91,7 @@ public class EngineModel
 	 */	
 	public double pullEmergencyBrake(double mass)
 	{		
+		setpoint = 0;
 		double angle = Math.atan(currentGradient / 100);	
 		
 		currentVelocity = currentVelocity - FRICTION * deltaT - EMERGENCY_DECELERATION * deltaT;

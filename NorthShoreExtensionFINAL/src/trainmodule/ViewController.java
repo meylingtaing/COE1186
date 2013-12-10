@@ -78,7 +78,9 @@ public class ViewController
     @FXML 
     private ComboBox trainChoice;			//This is the train choice selector
 
-    public static ObservableList<TrainModel> data;		//This holds the active trains 
+    private ObservableList<TrainModel> data;
+    
+    //This holds the active trains 
     private ObservableList<Integer> trains;				//This holds the selector options
     private TrainModel selectedTrain;					//This holds the selected train
     
@@ -101,8 +103,17 @@ public class ViewController
     	tempColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("temp"));
     	failColumn.setCellValueFactory(new PropertyValueFactory<TrainModel, String>("fail"));
     	
-    	//Initializes the table data to empty list
-    	data = FXCollections.observableArrayList();
+    	if (TrainModel.demo)
+    	{
+    		data = FXCollections.observableArrayList(
+    			new TrainModel(0.2, 65.2, "Matt", 101),
+    			new TrainModel(0.2, 68.9, "Jackie", 105)
+    		);
+    	}
+    	else
+    	{
+    		data = FXCollections.observableArrayList();
+    	}
     	
     	updateGUI();	//Needed to refresh the window with updated values
     }
@@ -149,27 +160,43 @@ public class ViewController
 	 * This method updates the GUI by refreshing the table, selector, etc. values
 	 */
     public void updateGUI()
-    {     	
-    	trains = FXCollections.observableArrayList();
-    	data.clear();
+    {     
+    	if (TrainModel.demo)
+    	{   		
+    		for (TrainModel tm : data)
+    		{    		
+        		System.out.println("Train added: " + tm.getTrainID());
+    		}
+    	}
+    	else
+    	{
+	    	//Initializes the table data to empty list    		
+        	data.clear();
+        	
+        	for (TrainController.TrainController tc : nse.MainController.transitSystem.trains.values())
+    		{    		
+        		data.add(tc.getModel());
+        		System.out.println("Train added: " + tc.getModel().getTrainID());
+    		}
+    	}
     	
-    	for (TrainController.TrainController tc : nse.MainController.transitSystem.trains.values())
-		{    		
-    		data.add(tc.getModel());
-    		System.out.println("Train added: " + tc.getModel().getTrainID());
-		}
+    	trains = FXCollections.observableArrayList();   	
     	
     	for (TrainModel tm : data)
     	{
     		if (selectedTrain == null)
+    		{
     			selectedTrain = tm;
+    		}
     		trains.add(tm.getTrainID());
     	}
     	
     	trainChoice.setItems(trains);
     	
     	if (selectedTrain != null)
+    	{
     		trainChoice.setValue(selectedTrain.getTrainID());    	
+    	}
     	
     	trainTable.setItems(data);
     	

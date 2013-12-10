@@ -123,7 +123,7 @@ public class TrainModelTest
 		double nextPow = train.getPower();
 		double nextSpeed = train.getVelocity();
 		assertTrue((nextPow <= pow));	
-		assertTrue((nextSpeed <= speed));
+		assertTrue((nextSpeed < speed));
 		System.out.println("Train power: " + nextPow + "\nTrain speed: " + nextSpeed);
 		
 		TrainModel train2 = new TrainModel(0.2, 65.2, "susan", 105);
@@ -135,7 +135,7 @@ public class TrainModelTest
 		double newPow = train2.getPower();
 		double newSpeed = train2.getVelocity();
 		System.out.println("Train power: " + newPow + "\nTrain speed: " + newSpeed);
-		assertTrue(newPow < nextPow);	
+		assertTrue(newPow <= nextPow);	
 		assertTrue(newSpeed < nextSpeed);
 	}
 }
