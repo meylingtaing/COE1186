@@ -61,8 +61,25 @@ public class EngineModel
 	 * This method calculates the speed after the brake is pulled
 	 */	
 	public double pullBrake(double load, double mass)
-	{		
+	{	
+		//Gets the current block slope
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+		}
+		
+		double angle = Math.atan(currentGradient / 100);
+		double slopeAccel;
+		
+		if (currentGradient > 0)
+		{
+			angle = angle * -1;
+		}
+		
+		slopeAccel = GRAVITY * Math.sin(angle);
+		
 		setpoint = 0;
+		
 		if (brakeFailure)
 		{
 			load = 0;
@@ -76,11 +93,9 @@ public class EngineModel
 		else if (load < 0)
 		{
 			load = 0;
-		}
+		}			
 		
-		double angle = Math.atan(currentGradient / 100);	
-		
-		currentVelocity = currentVelocity - 0.01433 * deltaT - load * MEDIUM_DECELERATION * deltaT;
+		currentVelocity = currentVelocity - 0.01433 * deltaT - load * (MEDIUM_DECELERATION - slopeAccel) * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -101,10 +116,25 @@ public class EngineModel
 	 */	
 	public double pullEmergencyBrake(double mass)
 	{		
-		setpoint = 0;
-		double angle = Math.atan(currentGradient / 100);	
+		//Gets the current block slope
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+		}
 		
-		currentVelocity = currentVelocity - 0.01433 * deltaT - EMERGENCY_DECELERATION * deltaT;
+		double angle = Math.atan(currentGradient / 100);
+		double slopeAccel;
+		
+		if (currentGradient > 0)
+		{
+			angle = angle * -1;
+		}
+		
+		slopeAccel = GRAVITY * Math.sin(angle);
+		
+		setpoint = 0;	
+		
+		currentVelocity = currentVelocity - 0.01433 * deltaT - (EMERGENCY_DECELERATION - slopeAccel) * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -125,9 +155,26 @@ public class EngineModel
 	 */	
 	public double calculateSetpoint(double power, double mass)
 	{
-		// TODO add in the effects of the slope also make sure it handles negative and positive values
+		//Gets the current block slope
+		if (!MainController.transitSystem.trainPositions.isEmpty())
+		{
+			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+		}
 		
-		double angle = Math.atan(currentGradient / 100);		//Calculates the angle from the slope
+		double angle = Math.atan(currentGradient / 100);
+		double slopeAccel;
+		
+		if (currentGradient > 0)
+		{
+			angle = angle * -1;
+		}
+		
+		slopeAccel = GRAVITY * Math.sin(angle);
+		
+		if (currentGradient < 0)
+		{
+			angle = angle * -1;
+		}
 		
 		//If an engine failure occurs velocity is only effected by friction and slope
 		if (engineFailure)
@@ -151,7 +198,7 @@ public class EngineModel
 		}
 		
 		//This calculates the comfortable power change
-		maxPower = mass * MEDIUM_ACCELERATION * currentVelocity;
+		maxPower = mass * (MEDIUM_ACCELERATION - slopeAccel) * currentVelocity;
 		if (power > maxPower && currentVelocity != 0)
 		{
 			power = maxPower;

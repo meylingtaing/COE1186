@@ -214,4 +214,11 @@ public class TrainModelTest
 		assertTrue(train4.getPower() <= 120000);
 		System.out.println("Train handles too large of power inputs");
 	}
+	
+	@Test
+	public void testTrainEngine()
+	{
+		TrainModel train = new TrainModel(0.2, 65.5, "Sandy", 241);
+		
+	}
 }
