@@ -16,7 +16,7 @@ public class Route
 	private LinkedList<Block> blockList;
 	private boolean lastBlockForward;		// Direction of last block
 	
-	private final boolean DEBUG = false;
+	private final boolean DEBUG = true;
 	
 	/**
 	 * Route is initialized with the train and the track
@@ -141,7 +141,7 @@ public class Route
 			if (DEBUG)
 			{
 				System.out.println("End coordinates: " + endCoordinates[0] + " " + endCoordinates[1]);
-				System.out.println("Next start coordinates: " + coordinates[0] + coordinates[1]);
+				System.out.println("Next start coordinates: " + coordinates[0] + " " + coordinates[1]);
 			}
 			if (coordinates[0].equals(endCoordinates[0]) && coordinates[1].equals(endCoordinates[1]))
 				lastBlockForward = true;

@@ -16,6 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -46,7 +49,7 @@ public class CTCController
 	private String removeTrainForm = "removeTrainForm.fxml";
 	private String routeTrainForm = "routeTrainForm.fxml";
 	private String setpointForm = "suggestSetptForm.fxml";
-	private int shrinkDisplay = 9;
+	private int shrinkDisplay = 5;
 	
 	/**
 	 * Sets the CTC office model that we are controlling
@@ -85,7 +88,7 @@ public class CTCController
 			int blockId = 0;
 			for (Double[] blockCoordinates : track)
 			{
-				String strokeStyle;
+				String strokeStyle = "";
 				
 				// Resizing the lines so they fit on the screen
 				double startX = blockCoordinates[0]/shrinkDisplay+10;
@@ -99,17 +102,21 @@ public class CTCController
 				endX = Math.floor(endX) + .5;
 				endY = Math.floor(endY) + .5;
 				
-				Line line = new Line(startX, startY, endX, endY);
+				final Line line = new Line(startX, startY, endX, endY);
 				
 				// Determine if block is station
 				final Block block = ctcOffice.transitSystem.ctcGetBlock(track.toString(), blockId);
-				if (block.isStation())
+				
+				// Add mouseovers to ALL blocks!
 				{
 					// Format line to represent station
-					strokeStyle = "-fx-stroke: #FFFFFF; -fx-stroke-width: 1px;";
-					line.setStrokeType(StrokeType.OUTSIDE);
-					line.setTranslateX(-.5);
-					line.setTranslateY(-.5);
+					if (block.isStation())
+					{
+						strokeStyle = "-fx-stroke: #FFFFFF; -fx-stroke-width: 1px;";
+						line.setStrokeType(StrokeType.OUTSIDE);
+						line.setTranslateX(-.5);
+						line.setTranslateY(-.5);
+					}
 					
 					// Add mouseover popup with station name
 					final Popup stationPopup = new Popup();
@@ -117,10 +124,21 @@ public class CTCController
 					// Add a mouseover for the line
 					line.setOnMouseEntered(new EventHandler<MouseEvent>() {
 						public void handle (MouseEvent event) {
-							Label stationName = new Label(" " + block.getStationName() + " ");
+							String popupString = "" + block.getBlockId();
+							if (block.isStation())
+								popupString += " " + block.getStationName() + " ";
+							Label stationName = new Label(popupString);
 							stationPopup.getContent().add(stationName);
 							stationName.setStyle("-fx-background-color: #FFFFFF");
 							stationPopup.show(ctcOffice.ctcStage, event.getScreenX(), event.getScreenY() - 20);
+							/*
+							Bloom bloom = new Bloom(.1);
+							GaussianBlur blur = new GaussianBlur(2);
+							blur.setInput(bloom);
+							line.setEffect(blur);
+							line.setStrokeType(StrokeType.OUTSIDE);
+							//*/
+
 						}
 					});
 					
@@ -133,8 +151,10 @@ public class CTCController
 				}
 				
 				// Normal track color if block isn't station
-				else
+				if (!block.isStation())
+				{
 					strokeStyle = "-fx-stroke: " + track.getColor() + ";";
+				}
 				
 				// Determine if block is closed for maintenance
 				if (block.isClosed())
