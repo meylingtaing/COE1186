@@ -100,7 +100,7 @@ public class Route
 			int nextBlockId; // the next block the train must travel
 			
 			// No switch, only next block possible
-			if (possibleNextBlocks[1] == -1)
+			if (possibleNextBlocks[1] == -1 || !lastBlockForward)
 				nextBlockId = possibleNextBlocks[0];
 			
 			// Two possible next blocks

@@ -43,6 +43,7 @@ public class AddTrackFormController extends FormController
 			// Update displays
 			ctcOffice.ctcController.displayTrack();
 			ctcOffice.ctcController.displayLegend();
+			ctcOffice.ctcStage.sizeToScene();
 		}
 		else
 			errorMessage.setVisible(true);
