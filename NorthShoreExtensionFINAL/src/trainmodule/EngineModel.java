@@ -62,14 +62,25 @@ public class EngineModel
 	 */	
 	public double pullBrake(double load, double mass)
 	{		
+		setpoint = 0;
 		if (brakeFailure)
+		{
+			load = 0;
+			//System.out.println("Load = 0");
+		}
+		
+		if (load > 1)
+		{
+			load = 1;
+		}
+		else if (load < 0)
 		{
 			load = 0;
 		}
 		
 		double angle = Math.atan(currentGradient / 100);	
 		
-		currentVelocity = currentVelocity - FRICTION * deltaT - load * MEDIUM_DECELERATION * deltaT;
+		currentVelocity = currentVelocity - 0.01433 * deltaT - load * MEDIUM_DECELERATION * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -90,9 +101,10 @@ public class EngineModel
 	 */	
 	public double pullEmergencyBrake(double mass)
 	{		
+		setpoint = 0;
 		double angle = Math.atan(currentGradient / 100);	
 		
-		currentVelocity = currentVelocity - FRICTION * deltaT - EMERGENCY_DECELERATION * deltaT;
+		currentVelocity = currentVelocity - 0.01433 * deltaT - EMERGENCY_DECELERATION * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -121,13 +133,14 @@ public class EngineModel
 		if (engineFailure)
 		{
 			power = 0;
-			currentVelocity = currentVelocity - FRICTION * deltaT;
+			currentVelocity = currentVelocity - 0.01433 * deltaT;
 			
 			if (currentVelocity < 0)
 			{
 				currentVelocity = 0;
 			}
 			
+			setpoint = 0;
 			lastPower = 0;
 			return currentVelocity;
 		}
@@ -170,8 +183,8 @@ public class EngineModel
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}		
 		
-		System.out.println("Current velocity: " + currentVelocity);
-		System.out.println("Current deltaT: " + deltaT);
+		//System.out.println("Current velocity: " + currentVelocity);
+		//System.out.println("Current deltaT: " + deltaT);
 		return currentVelocity;
 	}
 

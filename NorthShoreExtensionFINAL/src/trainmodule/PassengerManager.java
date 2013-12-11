@@ -69,5 +69,6 @@ public class PassengerManager
 	public void clearPassengers()
 	{
 		passengerCount = 1;
+		totalPassengerMass = passengerCount * PASSENGER_MASS;
 	}
 }

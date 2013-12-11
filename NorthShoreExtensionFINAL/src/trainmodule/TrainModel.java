@@ -25,7 +25,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;*/
 
+import nse.TransitSystemGui;
+import javafx.application.Application;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.stage.Stage;
 
 /**
  * This class simulates the train model
@@ -35,6 +38,7 @@ public class TrainModel
 	public static final double TRAIN_MASS = 37103.9;	//This variable contains the train mass			
 	public static final double LENGTH = 32.2;			//This variable contains the train LENGTH
 	public static ViewController vc;				//This holds the view controller
+	public static boolean demo = false;
 	
 	private DoorController doors;					//This holds the door controller
 	private LightController lights;					//This holds the light controller
@@ -59,7 +63,10 @@ public class TrainModel
 	 */
 	public static void main(String args[])
 	{
-		TrainView.createGUI();	
+		demo = true;
+		
+		TrainView tv = new TrainView();
+		tv.createGUI();
 	}
 	
 	/**
@@ -145,6 +152,14 @@ public class TrainModel
     {    	
     	double speed;
     	
+    	if (doors.getState())
+    	{
+    		//throw new Exception("");
+    		System.out.println("The doors are still open. Train wont move until doors are closed");
+    		return this.getVelocity();
+ 
+    	}
+    	
     	if (!eBrake)
     		speed = engine.calculateSetpoint(d, (TRAIN_MASS + passengers.getTotalPassengerMass()));
     	else
@@ -185,9 +200,13 @@ public class TrainModel
     private void updateG()
     {
     	if (vc != null)
+    	{
     		vc.updateGUI();
+    	}
     	else
-    		System.out.println("No view controller");
+    	{
+    		//System.out.println("No view controller");
+    	}
     }
     
     /**
@@ -207,6 +226,14 @@ public class TrainModel
     {
 		return speed * 2.23694;
 	}
+    
+    /**
+	 * This method returns the temperature of the train
+	 */
+    public double getPassengerMass()
+	{
+        return passengers.getTotalPassengerMass();
+    }
 
 	/**
 	 * This method returns the temperature of the train
