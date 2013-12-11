@@ -37,13 +37,9 @@
     <Label layoutX="14.0" layoutY="331.0" text="Signal Failure:" />
     <Button layoutX="110.0" layoutY="358.0" mnemonicParsing="false" onMousePressed="#fixAllFailures" prefWidth="113.0" text="Fix All Failures" />
     <Label layoutX="14.0" layoutY="360.0" text="Mainentance:" />
-    <Button layoutX="530.0" layoutY="274.0" mnemonicParsing="false" prefWidth="168.0" text="Engage Emergency Brake" />
+    <Button layoutX="522.0" layoutY="274.0" mnemonicParsing="false" prefWidth="177.0" text="Engage Emergency Brake" />
     <Label layoutX="448.0" layoutY="275.0" text="Passenger:" />
-    <Label layoutX="449.0" layoutY="361.0" text="Next Stop:" />
-    <TextField fx:id="nextStop" editable="false" layoutX="531.0" layoutY="360.0" prefWidth="168.0" />
-    <Label layoutX="449.0" layoutY="334.0" text="Current Stop:" />
-    <TextField fx:id="currentStop" editable="false" layoutX="531.0" layoutY="333.0" prefWidth="168.0" />
     <ComboBox fx:id="trainChoice" layoutX="357.0" layoutY="239.0" onHidden="#currentTrain" prefHeight="21.0" prefWidth="98.9998779296875" />
-    <Button layoutX="531.0" layoutY="299.0" mnemonicParsing="false" prefWidth="168.0" text="Disengage Emergency Brake" />
+    <Button layoutX="521.0" layoutY="303.0" mnemonicParsing="false" prefWidth="177.0" text="Disengage Emergency Brake" />
   </children>
 </AnchorPane>
