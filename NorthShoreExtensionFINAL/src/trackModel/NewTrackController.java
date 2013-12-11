@@ -1,4 +1,5 @@
 package trackModel;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -47,11 +48,25 @@ public class NewTrackController {
     @FXML
     void ImportFile(MouseEvent event) {
     	
-    	//System.out.println(textField.getText());
+    	String file = textField.getText();
+    	int result=InternalImport(file);
+    	if(result == 1){
+    		TrackMainController.trackLineList.setItems(Track.trackListData);
+    		Stage stage = (Stage)CreateNewTrackButton.getScene().getWindow();
+        	stage.close();
+    	}
+    	else{
+    		FileNotFoundLabel.setVisible(true);	
+    	}
+    	
+    	
+    }
+    
+    public int InternalImport(String text){
     	TrackObject trckOb = new TrackObject();
     	String trackLineColor=null;
     	try {
-			Scanner fileScan = new Scanner(new File(textField.getText()));
+			Scanner fileScan = new Scanner(new File(text));
 			
 			
 			String linetwo = fileScan.nextLine();
@@ -82,17 +97,13 @@ public class NewTrackController {
 			fileScan.close();
 			Track.trackArray.put(trckOb.getLine(), trckOb);
 			Track.trackListData.add(trackLineColor);
-			TrackMainController.trackLineList.setItems(Track.trackListData);
-			Stage stage = (Stage)CreateNewTrackButton.getScene().getWindow();
-	    	stage.close();
+			return 1;
 		} 
 		
 		catch (FileNotFoundException e) {
-			FileNotFoundLabel.setVisible(true);
+			return 0;
 			
-		}
-    	
-    	
+		}	
     }
     
     public void ImportFile(String filename)
