@@ -16,6 +16,8 @@ public class Route
 	private LinkedList<Block> blockList;
 	private boolean lastBlockForward;		// Direction of last block
 	
+	private final boolean DEBUG = false;
+	
 	/**
 	 * Route is initialized with the train and the track
 	 * @param train
@@ -73,7 +75,8 @@ public class Route
 		// Add blocks to the list until we hit the station
 		while (!lastBlock.isStation() || !lastBlock.getStationName().equals(station))
 		{
-			//System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
+			if (DEBUG)
+				System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
 			
 			int[] possibleNextBlocks;
 			Double[] coordinates = lastBlock.getCoordinates();
@@ -84,6 +87,7 @@ public class Route
 			if (!lastBlock.isBiDirectional() || lastBlockForward)
 			{
 				possibleNextBlocks = lastBlock.getPossibleNextBlocks();
+				endCoordinates[0] = coordinates[2];
 				endCoordinates[1] = coordinates[3];
 			}
 			else
@@ -134,6 +138,11 @@ public class Route
 			
 			// Figure out direction of next block
 			coordinates = nextBlock.getCoordinates();
+			if (DEBUG)
+			{
+				System.out.println("End coordinates: " + endCoordinates[0] + " " + endCoordinates[1]);
+				System.out.println("Next start coordinates: " + coordinates[0] + coordinates[1]);
+			}
 			if (coordinates[0].equals(endCoordinates[0]) && coordinates[1].equals(endCoordinates[1]))
 				lastBlockForward = true;
 			else

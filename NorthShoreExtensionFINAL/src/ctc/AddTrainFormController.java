@@ -13,6 +13,8 @@ public class AddTrainFormController extends FormController
 	// Keeps track of all of the trains
 	private static int trainId = 0;
 	
+	private static final boolean DEBUG = true;
+	
 	// GUI stuff
 	@FXML private TextField trainNameInput; 
 	
@@ -54,6 +56,8 @@ public class AddTrainFormController extends FormController
 			
 			// Add to CTC's train database
 			ctc.trains.put(trainName, trainId);
+			if (DEBUG)
+				System.out.println("Added train: " + trainId);
 			
 			trainId++;
 			return true;
