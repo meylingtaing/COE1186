@@ -28,9 +28,9 @@
             </Label>
             <Label ellipsisString="..." font="$x2" layoutX="51.0" layoutY="37.0" prefHeight="43.0" prefWidth="26.0" text="Track &#10;Circuit &#10;Failure" textAlignment="CENTER" textOverrun="ELLIPSIS" />
             <Label font="$x2" layoutX="84.0" layoutY="48.0" text="Power Failure" />
-            <Button id="BreakRailButton" fx:id="breakRailButton" layoutX="5.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#BreakRailFunction" prefWidth="118.0" text="Break Rail" textAlignment="CENTER" />
-            <Button fx:id="breakTrackCircuitButton" layoutX="5.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#BreakTrackCircuitFunction" text="Break Track Circuit" textAlignment="CENTER" />
-            <Button fx:id="CutPowerButton" layoutX="5.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#CutPowerFunction" prefWidth="118.0" text="Cut Power" textAlignment="CENTER" />
+            <Button id="BreakRailButton" fx:id="breakRailButton" disable="true" layoutX="5.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#BreakRailFunction" prefWidth="118.0" text="Break Rail" textAlignment="CENTER" />
+            <Button fx:id="breakTrackCircuitButton" disable="true" layoutX="5.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#BreakTrackCircuitFunction" text="Break Track Circuit" textAlignment="CENTER" />
+            <Button fx:id="CutPowerButton" disable="true" layoutX="5.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#CutPowerFunction" prefWidth="118.0" text="Cut Power" textAlignment="CENTER" />
             <Button id="" fx:id="inputTrackButton" layoutX="6.0" layoutY="305.0" mnemonicParsing="false" onMouseClicked="#inputTrackFunction" prefWidth="98.99990000000253" text="Input Track" />
             <Button fx:id="DeleteTrackButton" disable="true" layoutX="7.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#DeleteTrackFunction" prefWidth="98.99990844726562" text="Delete Track" />
             <Button fx:id="queryBlockIDButton" disable="true" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#QueryBlockIdFunction" text="Query Block ID" />
@@ -41,7 +41,27 @@
             <Rectangle id="brokenRailSquare" fx:id="BrokenRailRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
           </children>
         </AnchorPane>
-        <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="364.0" />
+        <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="364.0">
+          <children>
+            <TitledPane fx:id="breakRailWindow" animated="false" layoutX="48.0" layoutY="67.0" text="Broken Rail" visible="false">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" visible="true">
+                  <children>
+                    <Label layoutX="14.0" layoutY="22.0" text="Break Track Block:" />
+                    <TextField fx:id="breakBlockIdText" layoutX="14.0" layoutY="38.0" prefWidth="69.0" />
+                    <Button fx:id="BreakButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#BreakWithId" text="Break" />
+                    <Button id="BreakButton" fx:id="cancelBreakTrackButton" layoutX="75.0" layoutY="70.0" mnemonicParsing="false" onMouseClicked="#CloseBrokenRailWindow" text="Cancel" />
+                    <Label fx:id="blockDNElabel" layoutX="21.0" layoutY="108.0" prefHeight="60.0" prefWidth="112.0" text="Block does not exist or track selected on GUI does not exist. Try again." visible="false" wrapText="true">
+                      <font>
+                        <Font size="10.0" />
+                      </font>
+                    </Label>
+                  </children>
+                </AnchorPane>
+              </content>
+            </TitledPane>
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
   </children>

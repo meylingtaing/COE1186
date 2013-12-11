@@ -13,11 +13,11 @@ import javafx.stage.Stage;
 public class Track extends Application {
 	protected static Stage trackStage;
 	public static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
-	protected static ObservableList<String> trackListData;
+	protected static ObservableList<String> trackListData = FXCollections.observableArrayList();
 
 	//main program
 	public static void main(String[] args){
-		trackListData = FXCollections.observableArrayList();
+		
 		Application.launch(Track.class, args);
 	}
 	
