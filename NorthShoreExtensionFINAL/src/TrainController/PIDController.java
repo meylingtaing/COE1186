@@ -76,7 +76,7 @@ public class PIDController {
 		int fpsOut = 0;
 		int iteration = 0;
 		
-		trainmodule.TrainModel model = new trainmodule.TrainModel(1 / loopsPS, 72, "engineer");
+		trainmodule.TrainModel model = new trainmodule.TrainModel(1 / loopsPS, 72, "engineer", trainmodule.TrainModel.idCreator++);
 		PIDController controller = new PIDController(37103.9);
 		Double speed = 0.0;
 		Double speedSetpoint = 50.0;
