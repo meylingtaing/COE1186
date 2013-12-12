@@ -22,7 +22,7 @@ public class PIDController {
 		this.power1 = 0.0;
 		this.power2 = 0.0;
 		
-		this.Kp = mass/1000;
+		this.Kp = mass/500;
 		this.Ki = 0.0;
 		this.Kd = 0.0;
 	}
@@ -47,7 +47,7 @@ public class PIDController {
 	
 	public Double getOutput() {
 		Ki = Kp / 10; //power1 - power2;
-		Double output = Kp*getError() + Ki*getIntegral(); // + Kd*getDerivative();
+		Double output = Kp*getError();// + Ki*getIntegral(); // + Kd*getDerivative();
 		if (output >= 120000.0) {
 			output = 120000.0;
 		} else if (output < 0)

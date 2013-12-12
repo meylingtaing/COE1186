@@ -19,6 +19,8 @@ public class TrainController implements Runnable {
 	public Double speed;
 	public Double authoritySetpointMoving;
 	public int authoritySetpointFixed;
+	public Double authorityFixedDistance;
+	public Double distanceIntoBlock;
 	public trackModel.Block currentBlock;
 	public trackModel.Block nextBlock;
 	public Boolean doorsOpen;
@@ -151,7 +153,7 @@ public class TrainController implements Runnable {
 	
 	public Double setSpeedSetpoint(Double newSpeed) {
 		if(newSpeed >= 0) {
-			speedSetpoint = newSpeed;
+			speedSetpoint = newSpeed / 2.23694;
 		}
 		System.out.println("[Train Controller]: Speed Setpoint now: " + speedSetpoint);
 		return speedSetpoint;
@@ -159,16 +161,48 @@ public class TrainController implements Runnable {
 	
 	public void cruiseControl(Double delta) {
 		
-		// Updates train model with delta T
+		// Bug in speed limit, won't let it move
+		//currentBlock = nse.MainController.transitSystem.trainPositions.get(this.id).getCurrBlock();
 		model.SetDeltaT(delta);
+		//model.SetSpeedLimit(currentBlock.getSpeedLimit());
 		
-		// Sets power and updates it based on the current speedd
+		
+		// Sets power and updates it based on the current speed
 		speed = model.setSetpoint(powerSetpoint);
 		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta);
-		System.out.println("Power Setpoint: " + powerSetpoint + "\tSpeed: " + speed);
+		System.out.println("Power Setpoint: " + powerSetpoint + "\tSpeed: " + speed*2.23694 +"mph");
 		
+		if(speed - speedSetpoint > 3 ) {
+			this.brakes(1.0);
+		}
+		
+		
+		/*
+		 * Beginning implementation of authority maintaining
+		 * 
 		currentBlock = nse.MainController.transitSystem.trainPositions.get(this.id).getCurrBlock();
-		//nextBlock = nse.MainController.transitSystem.trainPositions.get(this.id).getCurrBlock().getNextBlockId();
+		if(nse.MainController.transitSystem.routeList.get(this.id).getBlockList().size() > 1) {
+			nextBlock = nse.MainController.transitSystem.routeList.get(this.id).getBlockList().get(1);
+		} else {
+			nextBlock = null;
+		}
+		
+		
+		distanceIntoBlock += speed*delta;
+		if(distanceIntoBlock > currentBlock.getLength()) {
+			distanceIntoBlock = distanceIntoBlock - currentBlock.getLength();
+		}
+		
+		// Add up next current and next block's length
+		Double distanceAhead = currentBlock.getLength();
+		if(nextBlock != null) { 
+			distanceAhead += nextBlock.getLength(); 
+		}
+		// Subtract the length you have traveled into the current block
+		distanceAhead -= distanceIntoBlock;
+		
+		*/
+		
 
 	}
 	
