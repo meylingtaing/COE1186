@@ -92,7 +92,7 @@ public class TrainModel
      */
 	public String DecimalConverter(double d)
 	{
-		DecimalFormat df = new DecimalFormat("#.##");
+		DecimalFormat df = new DecimalFormat("#.###");
 		return df.format(d);
 	}
     
@@ -202,7 +202,7 @@ public class TrainModel
 	}
     
     /**
-	 * This method returns the temperature of the train
+	 * This method returns the passenger mass
 	 */
     public double getPassengerMass()
 	{
@@ -214,7 +214,7 @@ public class TrainModel
 	 */
     public String getTemp()
 	{
-        return temperature.getTrainTemperature() + " F";
+        return DecimalConverter(temperature.getTrainTemperature()) + " F";
     }
     
     /**
