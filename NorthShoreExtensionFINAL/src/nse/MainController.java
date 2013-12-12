@@ -16,6 +16,7 @@ public class MainController {
 	
 	public void initialize()
 	{
+		
 		myThread.start();
 		transitSystem.simulated = false;
 		simulatedMain = false;

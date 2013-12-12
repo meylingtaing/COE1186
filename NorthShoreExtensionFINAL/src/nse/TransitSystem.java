@@ -221,8 +221,8 @@ public class TransitSystem implements Runnable
 		
 		if(trackName.compareToIgnoreCase("greenline") == 0)
 		{
-			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , MainController.transitSystem);
-			System.out.println("In add track: " + MainController.transitSystem);
+			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , this);
+			System.out.println("In add track: " + this);
 			greenLinePlcs = greenPlcIni.initialize();
 		}
 	}
