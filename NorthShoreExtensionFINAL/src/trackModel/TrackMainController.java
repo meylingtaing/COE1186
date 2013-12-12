@@ -1,3 +1,12 @@
+/**
+ * On Track Trainwreck
+ * TrackMainController.java
+ * Purpose: Controls the main GUI for the track model
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 
 
@@ -26,8 +35,8 @@ import javafx.scene.control.ListView;
 
 
 public class TrackMainController {
-
-	 @FXML
+		//GUI variables
+	    @FXML
 	    private ResourceBundle resources;
 
 	    @FXML
@@ -90,9 +99,14 @@ public class TrackMainController {
 	    @FXML
 	    protected static ListView<String> trackLineList;
 
-	    private int internalBrokenRailID;
-	    private String internalBrokenRailLine;
+	    private int internalBrokenRailID; //holds current broken block
+	    private String internalBrokenRailLine; //line of current broken block
 
+	    /**
+	     * GUI function that is called when user clicks break rail button, breaks up window to enter
+	     * a block id to break
+	     * @param event
+	     */
 	    @FXML
 	    void BreakRailFunction(MouseEvent event) {
 	    	blockDNElabel.setVisible(false);
@@ -113,6 +127,11 @@ public class TrackMainController {
 	    	
 	    }
 
+	    /**
+	     * GUI function that is called when break track circuit button is called
+	     * toggles status indicators appropriately 
+	     * @param event
+	     */
 	    @FXML
 	    void BreakTrackCircuitFunction(MouseEvent event) {
 	    	if(breakTrackCircuitButton.getText().equals("Broken Circuit Fixed")){
@@ -127,6 +146,11 @@ public class TrackMainController {
 	    	}
 	    }
 	    
+	    /**
+	     * window that is brought when BreakRailFunction is called
+	     * handles mouse events for when user enters a block id
+	     * @param event
+	     */
 	    @FXML
 	    void BreakWithId(MouseEvent event) {
 	    	int id= Integer.parseInt(breakBlockIdText.getText());
@@ -144,6 +168,13 @@ public class TrackMainController {
 	    	}
 	    }
 	    
+	    /**
+	     * internal method that is called once user enters a block id to break
+	     * 
+	     * @param id -> id of block to break
+	     * @param line ->track line block is on
+	     * @return ->reflects success/failure
+	     */
 	    public int internalBreakWithId(int id, String line){
 	    	Block b;	
 	    	try {
@@ -160,11 +191,20 @@ public class TrackMainController {
 			}
 	    }
 
+	    /**
+	     * closes broken rail window
+	     * @param event
+	     */
 	    @FXML
 	    void CloseBrokenRailWindow(MouseEvent event) {
 	    	breakRailWindow.setVisible(false);
 	    }
 	    
+	    /**
+	     * GUI function called when cut power button is clicked
+	     * toggles status indicators appropriately
+	     * @param event
+	     */
 	    @FXML
 	    void CutPowerFunction(MouseEvent event) {
 	    	if(CutPowerButton.getText().equals("Power Restored")){
@@ -179,7 +219,13 @@ public class TrackMainController {
 	    	}
 	    	
 	    }
-
+	    
+	    /**
+	     * GUI handler called when delete track button is clicked
+	     * takes input from GUI to select which track to delete and 
+	     * sends to internalDeleteTrack
+	     * @param event
+	     */
 	    @FXML
 	    void DeleteTrackFunction(MouseEvent event) {
 	    	int trackToDeleteLine= trackLineList.getSelectionModel().getSelectedIndex();
@@ -200,12 +246,23 @@ public class TrackMainController {
 	    	
 	    }
 	    
+	    /**
+	     * Internal delete function
+	     * @param line ->line to delete
+	     * @param Num ->index to delete from trackArray
+	     */
 	    public void internalDeleteTrack(String line, int Num){
 	    	Track.trackListData.remove(Num);
 	    	
 	    	Track.trackArray.remove(line);
 	    }
 
+	    /**
+	     * GUI function to handle when user clicks query block by id button
+	     * opens new stage from QueryBlock.fxml
+	     * and passes control to ChildQueryController.java
+	     * @param event
+	     */
 	    @FXML
 	    void QueryBlockIdFunction(MouseEvent event) {
 	    	Stage dialog = new Stage();
@@ -226,6 +283,11 @@ public class TrackMainController {
 	    	
 	    }
 
+	    /**
+	     * GUI function that handles when user clicks new track button
+	     * opens newTrackAlertBox.fxml and passes control to NewTrackController.java
+	     * @param event
+	     */
 	    @FXML
 	    void inputTrackFunction(MouseEvent event) {
 	    	
