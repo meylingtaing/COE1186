@@ -563,5 +563,11 @@ public class TrainModel
     	engine.SetDeltaT(d);
     }
     
-    
+    /**
+   	 * This method sets the current blocks speedLimit
+   	 */
+    public void SetSpeedLimit(double d)
+    {
+    	engine.SetSpeedLimit(d);
+    }
 }

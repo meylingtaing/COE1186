@@ -38,6 +38,7 @@ public class EngineModel
 	//private boolean eBrake;				//Holds the emergency brake status (not pulled = false, pulled = true)
 	private double setpoint;			//The current setpoint power
 	private double deltaT;				//The time step (seconds)
+	private double speedLimit;			//Holds the current train number
 	private int trainNum;				//Holds the current train number
 	
 	/**
@@ -53,6 +54,7 @@ public class EngineModel
 		brakeFailure = false;
 		deltaT = time;
 		trainNum = id;
+		speedLimit = MAX_SPEED;
 		//lastPower = 0;
 		//deltaT = 0.2;//###################################TAKE THIS OUT#################
 	}
@@ -236,12 +238,12 @@ public class EngineModel
 		{
 			currentVelocity = 0;
 		}
-		/*else if (currentVelocity > speedLimit)
+		else if (currentVelocity > speedLimit)
 		{
-			/*currentVelocity = speedLimit;
+			currentVelocity = speedLimit;
 			System.out.println("Speed Limit: " + speedLimit);
 			System.out.println("Current Speed: " + currentVelocity);
-		}*/
+		}
 		else if (currentVelocity > MAX_SPEED)
 		{
 			currentVelocity = MAX_SPEED;
@@ -323,5 +325,23 @@ public class EngineModel
     public void SetDeltaT(double d)
     {
     	deltaT = d;
+    }
+    
+    /**
+   	 * This method sets the current blocks speedLimit
+   	 */
+    public void SetSpeedLimit(double d)
+    {
+    	if (speedLimit > MAX_SPEED)
+    	{
+    		speedLimit = MAX_SPEED;
+    	}
+    	else if (speedLimit < 0)
+    	{
+    		speedLimit = 0;
+    	}
+    	{
+    		speedLimit = d;
+    	}
     }
 }
