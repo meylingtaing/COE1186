@@ -49,7 +49,7 @@ public class CTCController
 	private String removeTrainForm = "removeTrainForm.fxml";
 	private String routeTrainForm = "routeTrainForm.fxml";
 	private String setpointForm = "suggestSetptForm.fxml";
-	private int shrinkDisplay = 6;
+	private int shrinkDisplay = 9;
 	
 	/**
 	 * Sets the CTC office model that we are controlling
