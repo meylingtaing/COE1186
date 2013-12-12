@@ -20,7 +20,7 @@
             <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Temperature" fx:id="tempColumn" />
             <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="75.0" text="Lights" fx:id="lightColumn" />
             <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="75.0" text="Doors" fx:id="doorColumn" />
-            <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="153.0" text="Failure" fx:id="failColumn" />
+            <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="151.0" text="Failure" fx:id="failColumn" />
           </columns>
         </TableView>
       </children>

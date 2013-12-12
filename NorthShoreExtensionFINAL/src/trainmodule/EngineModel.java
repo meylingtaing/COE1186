@@ -316,4 +316,12 @@ public class EngineModel
     {
     	return deltaT;
     }
+    
+    /**
+   	 * This method sets delta t
+   	 */
+    public void SetDeltaT(double d)
+    {
+    	deltaT = d;
+    }
 }

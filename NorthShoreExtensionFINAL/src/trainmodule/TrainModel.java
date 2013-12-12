@@ -554,4 +554,14 @@ public class TrainModel
     	
     	return passengers.getPassengerCount();
     }
+    
+    /**
+  	 * This method sets the delta t
+  	 */
+    public void SetDeltaT(double d)
+    {
+    	engine.SetDeltaT(d);
+    }
+    
+    
 }
