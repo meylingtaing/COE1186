@@ -15,7 +15,7 @@
 	<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
 	<Text text="Train: " GridPane.rowIndex="0" GridPane.columnIndex="0" />
 	<ComboBox fx:id="trainListBox"  GridPane.rowIndex="0" GridPane.columnIndex="1" />
-	<Text text="Setpoint: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
+	<Text text="Speed: " GridPane.rowIndex="1" GridPane.columnIndex="0" />
 	<TextField fx:id="setpointInput" GridPane.rowIndex="1" GridPane.columnIndex="1" onKeyReleased="#enter" />
 	<Text text="mph" GridPane.rowIndex="1" GridPane.columnIndex="2" />
 	<Text text="Authority: "  GridPane.rowIndex="2" GridPane.columnIndex="0" />
