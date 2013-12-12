@@ -222,7 +222,7 @@ public class TransitSystem implements Runnable
 		if(trackName.compareToIgnoreCase("greenline") == 0)
 		{
 			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , this);
-			System.out.println("In add track: " + this);
+			//System.out.println("In add track: " + this);
 			greenLinePlcs = greenPlcIni.initialize();
 		}
 	}
@@ -369,7 +369,7 @@ public class TransitSystem implements Runnable
 			//B.)The train was not found in any PLC (Shouldn't happen)
 		
 		// TODO: THIS SHOULD REALLY BE PASSED TO THE TRACK CONTROLLER FIRST
-		trains.get(trainId).setSpeedSetpoint(setpoint);
+		//trains.get(trainId).setSpeedSetpoint(setpoint);
 	}
 	
 	/**
@@ -393,7 +393,7 @@ public class TransitSystem implements Runnable
 		//If retVal == false The train was Not Found on a PLC!
 		
 		// TODO: I feel like this isn't getting to train controller as well so...
-		trains.get(trainId).setAuthorityFixed(blocks);
+		//trains.get(trainId).setAuthorityFixed(blocks);
 	}
 	
 	/**
@@ -435,20 +435,30 @@ public class TransitSystem implements Runnable
                 }
 				
 				Thread.sleep(1000);
-				for (TrackController p : greenLinePlcs)
+				for (int i = 0; i < tickRate; i++)
 				{
-					p.handoff();
-					p.checkSwitchStatus();
-					p.calculateFixedBlockAuthority();
-					p.calculateSignalStates();
+					for (TrackController p : greenLinePlcs)
+					{
+						p.handoff();
+						p.checkSwitchStatus();
+						p.calculateFixedBlockAuthority();
+						p.calculateSignalStates();
+					}
+					for (TrainController train : trains.values())
+					{
+						if (trainPositions.get(train.model.getTrainID()) != null)
+						{
+							train.cruiseControl(.2);
+						}
+					}
 				}
+				
 				for (TrainController train : trains.values())
 				{
 					//System.out.println(train.getModel().getTrainID());
 					//Thread.sleep(500);
 					if (trainPositions.get(train.model.getTrainID()) != null)
 					{
-						train.cruiseControl(tickRate);
 						System.out.println("Train " + train.model.getTrainID() + " position: ");
 						System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
 						System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());

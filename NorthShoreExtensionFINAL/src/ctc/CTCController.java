@@ -179,6 +179,29 @@ public class CTCController
 					strokeStyle += "-fx-stroke-dash-array: 0.2 4.0;";
 				}
 				
+				if (block.isCrossing())
+				{
+					
+					double x = line.getStartX();
+					double y = line.getStartY();
+					String crossState = "";
+					
+					if (block.getCrossingSignalState() == 1)
+						crossState = "ON";
+					else if (block.getCrossingSignalState() == 0)
+						crossState = "OFF";
+					
+					x += 10;
+					y += 20;
+					// System.out.println("Added railway crossing at " + x + " " + y);
+					Text crossText = new Text("x " + crossState);
+					crossText.setX(x);
+					crossText.setY(y);
+					crossText.setStyle("-fx-font-size: 24px; -fx-fill: #CCCCCC;");
+					displayBox.getChildren().add(crossText);
+					
+				}
+				
 				// Display line
 				line.setStyle(strokeStyle);
 				line.setVisible(true);
@@ -322,6 +345,7 @@ public class CTCController
 					scheduleText.setPrefRowCount(5);
 					scheduleText.setEditable(false);
 					
+					
 					// Add everything and display
 					infoBox.getChildren().add(location);
 					infoBox.getChildren().add(new Text("Schedule with Dwell Times"));
@@ -332,6 +356,7 @@ public class CTCController
 			else if (selectedTrack != null)
 			{
 				selectedName.setText("Track: " + selectedTrack);
+				
 				selectedName.setVisible(true);
 			}
 			else
