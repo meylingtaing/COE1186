@@ -13,7 +13,7 @@ public class AddTrainFormController extends FormController
 	// Keeps track of all of the trains
 	private static int trainId = 1;
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	// GUI stuff
 	@FXML private TextField trainNameInput; 

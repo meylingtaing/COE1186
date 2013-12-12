@@ -30,6 +30,7 @@
 		<Button fx:id="addTrainButton" text="Add train" onAction="#displayPopup" />
 		<Button fx:id="removeTrainButton" text="Remove train" onAction="#displayPopup" />
 		<Button fx:id="routeTrainButton" text="Route train" onAction="#displayPopup" />
+		<Button fx:id="scheduleTrainButton" text="Schedule train" onAction="#displayPopup" />
 		<Button fx:id="suggestSetptButton" text="Suggest Setpoint/Authority" onAction="#displayPopup" />
 		<Button fx:id="navigateMainButton" text="Back to main" onAction="#navigate" />
 	</HBox>

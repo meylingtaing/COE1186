@@ -22,6 +22,8 @@ public class AddTrackFormController extends FormController
 	@FXML private TextField trackCsvInput, trackNameInput;
 	@FXML private ToggleGroup toggleColors;
 	
+	private static boolean DEBUG = false;
+	
 	/**
 	 * Grabs inputs and passes them to addTrack()
 	 */
@@ -94,12 +96,15 @@ public class AddTrackFormController extends FormController
 		catch (FileNotFoundException e) 
 		{
 			System.err.println("Can't load track file");
+			if (DEBUG)
+				e.printStackTrace();
 			return false;
 		}
 		catch (Exception e)
 		{
 			System.err.println("Bad file.");
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return false;
 		}
 		return true;

@@ -16,9 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -36,7 +33,7 @@ public class CTCController
 	// GUI related fields
 	@FXML protected Button editTracksButton, navigateMainButton, addTrackButton,
 	removeTrackButton, maintenanceButton, editRoutesButton, addTrainButton,
-	removeTrainButton, routeTrainButton, suggestSetptButton;
+	removeTrainButton, routeTrainButton, suggestSetptButton, scheduleTrainButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox trackLegendBox, trainLegendBox;
 	private String trackGui = "CTCTrackView.fxml";
@@ -49,6 +46,7 @@ public class CTCController
 	private String removeTrainForm = "removeTrainForm.fxml";
 	private String routeTrainForm = "routeTrainForm.fxml";
 	private String setpointForm = "suggestSetptForm.fxml";
+	private String scheduleForm = "scheduleTrainForm.fxml";
 	private int shrinkDisplay = 9;
 	
 	/**
@@ -294,6 +292,11 @@ public class CTCController
 		{
 			fxmlFile = setpointForm;
 			title = "Suggest Setpoint and Authority";
+		}
+		else if (clickedButton == scheduleTrainButton)
+		{
+			fxmlFile = scheduleForm;
+			title = "Schedule Train";
 		}
 		
 		try 
