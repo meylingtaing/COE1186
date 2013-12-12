@@ -3,4 +3,3 @@
 TRACK,greenline,lime,greenline.csv
 # Add trains
 TRAIN,Train A
-TRAIN,Train B

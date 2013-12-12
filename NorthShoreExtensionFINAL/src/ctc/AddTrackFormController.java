@@ -26,7 +26,7 @@ public class AddTrackFormController extends FormController
 	 * Grabs inputs and passes them to addTrack()
 	 */
 	@Override
-	protected void submit() 
+	@FXML protected void submit() 
 	{
 		
 		String trackCsv = trackCsvInput.getText();
@@ -43,6 +43,7 @@ public class AddTrackFormController extends FormController
 			// Update displays
 			ctcOffice.ctcController.displayTrack();
 			ctcOffice.ctcController.displayLegend();
+			ctcOffice.ctcStage.sizeToScene();
 		}
 		else
 			errorMessage.setVisible(true);

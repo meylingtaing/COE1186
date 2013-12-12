@@ -388,7 +388,7 @@ public class Block {
 	public int[] getPossiblePrevBlocks()
 	{
 		// change this for redline
-		int[] prev = {SecondNextBlockId, -1};
+		int[] prev = {SecondNextBlockId, thirdNextBlockId};
 		return prev;
 	}
 	

@@ -23,6 +23,7 @@ public class TrainPosition {
 		this.currTrack = currTrack;
 		forward = true;
 		distanceTraveled = 0;
+		currBlock.setTrainDetected(true);
 	}
 	
 	public void setRoute(Route route)

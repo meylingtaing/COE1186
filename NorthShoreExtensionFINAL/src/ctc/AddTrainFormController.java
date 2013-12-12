@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class AddTrainFormController extends FormController 
 {
 	// Keeps track of all of the trains
-	private static int trainId = 0;
+	private static int trainId = 1;
 	
 	private static final boolean DEBUG = true;
 	
@@ -50,6 +50,10 @@ public class AddTrainFormController extends FormController
 		try
 		{
 			TrainController newTrain = new TrainController(trainId);
+			if (DEBUG)
+			{
+				System.out.println(newTrain.getModel().getTrainID());
+			}
 			
 			// Add train to transit system
 			ctc.transitSystem.ctcAddTrain(newTrain);
