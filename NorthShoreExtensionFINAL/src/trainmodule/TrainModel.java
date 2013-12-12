@@ -14,24 +14,9 @@ package trainmodule;
  * and light controller for tunnel.
 */
 
-/*import java.util.*;
-
-import javafx.application.Application;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;*/
-
 import java.text.DecimalFormat;
-
-import nse.TransitSystemGui;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.stage.Stage;
 
 /**
  * This class simulates the train model
@@ -41,7 +26,7 @@ public class TrainModel
 	public static final double TRAIN_MASS = 37103.9;	//This variable contains the train mass			
 	public static final double LENGTH = 32.2;			//This variable contains the train LENGTH
 	public static ViewController vc;				//This holds the view controller
-	public static boolean demo = false;
+	public static boolean demo = false;				//Alerts the system that this is in debug mode
 	
 	private DoorController doors;					//This holds the door controller
 	private LightController lights;					//This holds the light controller
@@ -59,7 +44,7 @@ public class TrainModel
 	
 	//TABLE COLUMN VARIABLES
 	private SimpleIntegerProperty trainID;			//Holds the train ID
-	private int trainIdentitiy;
+	private int trainIdentitiy;						//Holds another train identifier
 	
 	/**
 	 * This is the main to run the train model individually
@@ -137,7 +122,7 @@ public class TrainModel
      */
 	public String DecimalConverter(double d)
 	{
-		DecimalFormat df = new DecimalFormat("#.#####");
+		DecimalFormat df = new DecimalFormat("#.##");
 		return df.format(d);
 	}
     
@@ -168,8 +153,7 @@ public class TrainModel
     	{
     		//throw new Exception("");
     		System.out.println("The doors are still open. Train wont move until doors are closed");
-    		return this.getVelocity();
- 
+    		return this.getVelocity(); 
     	}
     	
     	if (!eBrake)

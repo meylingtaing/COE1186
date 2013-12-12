@@ -37,9 +37,9 @@
     <Label layoutX="14.0" layoutY="331.0" text="Signal Failure:" />
     <Button layoutX="110.0" layoutY="358.0" mnemonicParsing="false" onMousePressed="#fixAllFailures" prefWidth="113.0" text="Fix All Failures" />
     <Label layoutX="14.0" layoutY="360.0" text="Mainentance:" />
-    <Button layoutX="522.0" layoutY="274.0" mnemonicParsing="false" prefWidth="177.0" text="Engage Emergency Brake" />
+    <Button layoutX="522.0" layoutY="274.0" mnemonicParsing="false" onMouseClicked="#engageEBrake" prefWidth="177.0" text="Engage Emergency Brake" />
     <Label layoutX="448.0" layoutY="275.0" text="Passenger:" />
     <ComboBox fx:id="trainChoice" layoutX="357.0" layoutY="239.0" onHidden="#currentTrain" prefHeight="21.0" prefWidth="98.9998779296875" />
-    <Button layoutX="521.0" layoutY="303.0" mnemonicParsing="false" prefWidth="177.0" text="Disengage Emergency Brake" />
+    <Button layoutX="521.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#disengageEBrake" prefWidth="177.0" text="Disengage Emergency Brake" />
   </children>
 </AnchorPane>

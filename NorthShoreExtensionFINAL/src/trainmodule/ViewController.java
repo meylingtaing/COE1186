@@ -10,17 +10,9 @@ package trainmodule;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-//import javafx.concurrent.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -45,37 +37,48 @@ public class ViewController
     @FXML 
     private TextField currentStop;			//This holds the currentStop
 
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableView trainTable;			//This is the table that contains the trains and associated information
        
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn idColumn;			//This is the id column of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn setColumn;			//This is the setpoint column of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn speedColumn;		//This is the speed column  of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn accColumn;			//This is the acceleration column  of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn passColumn;			//This is the passenger column  of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn tempColumn;			//This is the temperature column of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn doorColumn;			//This is the doors column  of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
 	    private TableColumn lightColumn;	//This is the light column  of the table
 	    
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private TableColumn failColumn;			//This is the failure column  of the table
     
-    @FXML 
+    @SuppressWarnings("rawtypes")
+	@FXML 
     private ComboBox trainChoice;			//This is the train choice selector
 
     private ObservableList<TrainModel> data;
@@ -87,7 +90,8 @@ public class ViewController
     /**
 	 * This method initializes the window
 	 */	
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     void initialize()
     {   
     	//Sets the view controller for the train model
@@ -159,7 +163,8 @@ public class ViewController
     /**
 	 * This method updates the GUI by refreshing the table, selector, etc. values
 	 */
-    public void updateGUI()
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void updateGUI()
     {     
     	if (TrainModel.demo)
     	{   		
