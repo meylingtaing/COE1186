@@ -18,7 +18,7 @@ import nse.MainController;
 public class EngineModel
 {	
 	public static final double MAX_GRADIENT = 0.60;						//The max gradient (percentage) the train can handle (in the spec)
-	public static final double MAX_SPEED = 70000.0;						//The max speed (m/s) the train can go (in the spec)
+	public static final double MAX_SPEED = 19.4444;						//The max speed (m/s) the train can go (in the spec)
 	public static final double MEDIUM_ACCELERATION = 0.5;				//A comfortable acceleration (m/s^2) speed (in the spec)
 	public static final double TOTAL_MAX_POWER = 120000;					//The max power (watt) input the train can handle (in the spec)
 	public static final double MEDIUM_DECELERATION = 1.2;				//A comfortable braking deceleration (m/s^2) (in the spec)
@@ -26,16 +26,16 @@ public class EngineModel
 	public static final double GRAVITY = 9.8067;						//The gravitational acceleration constant (m/s^2) (in the spec)
 	public static final double FRICTION_COEFFICIENT = 0.1;				//The kinetic frictional (unitless) constant (in the spec)
 	public static final double STATIC_FRICTION_COEFFICIENT = 0.5;		//The static frictional (unitless) constant (in the spec)
-	public static final double FRICTION = 2.6667 * Math.pow(10, -2);	//The actual frictional acceleration (m/s^2) for the train
+	public static final double FRICTION = 0.07433;						//The actual frictional acceleration (m/s^2) for the train
 	
-	private double maxPowerChange;
+	//private double maxPowerChange;
 	private double maxPower;			//The max power (watt) increase in a time step		
-	private double lastPower;			//The power (watt) input in a previous time step
+	//private double lastPower;			//The power (watt) input in a previous time step
 	private double currentVelocity;		//The current velocity (m/s) the train is traveling
 	private double currentGradient;		//The current slope (percentage)
 	private boolean engineFailure;		//Holds the engine status (functional = false, broken = true)
 	private boolean brakeFailure;		//Holds the brake status (functional = false, broken = true)
-	private boolean eBrake;				//Holds the emergency brake status (not pulled = false, pulled = true)
+	//private boolean eBrake;				//Holds the emergency brake status (not pulled = false, pulled = true)
 	private double setpoint;			//The current setpoint power
 	private double deltaT;				//The time step (seconds)
 	private int trainNum;				//Holds the current train number
@@ -45,7 +45,7 @@ public class EngineModel
 	 */
 	public EngineModel(double time, int id)
 	{
-		eBrake = false;
+		//eBrake = false;
 		setpoint = 0;
 		currentVelocity = 0;
 		currentGradient = 0;
@@ -53,8 +53,8 @@ public class EngineModel
 		brakeFailure = false;
 		deltaT = time;
 		trainNum = id;
-		lastPower = 0;
-		deltaT = 0.2;
+		//lastPower = 0;
+		deltaT = 0.2;//###################################TAKE THIS OUT#################
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class EngineModel
 			load = 0;
 		}			
 		
-		currentVelocity = currentVelocity - 0.01433 * deltaT - load * (MEDIUM_DECELERATION - slopeAccel) * deltaT;
+		currentVelocity = currentVelocity - FRICTION * deltaT - load * (MEDIUM_DECELERATION - slopeAccel) * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -134,7 +134,7 @@ public class EngineModel
 		
 		setpoint = 0;	
 		
-		currentVelocity = currentVelocity - 0.01433 * deltaT - (EMERGENCY_DECELERATION - slopeAccel) * deltaT;
+		currentVelocity = currentVelocity - FRICTION * deltaT - (EMERGENCY_DECELERATION - slopeAccel) * deltaT;
 		
 		if (currentVelocity < 0)
 		{
@@ -154,11 +154,14 @@ public class EngineModel
 	 * This method calculates the speed after the setpoint power is given
 	 */	
 	public double calculateSetpoint(double power, double mass)
-	{
-		//Gets the current block slope
+	{	
+		double speedLimit = MAX_SPEED;
+		
+		//Gets the current block slope and speed limit
 		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();//43.496
+			speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
 		}
 		
 		double angle = Math.atan(currentGradient / 100);
@@ -180,7 +183,7 @@ public class EngineModel
 		if (engineFailure)
 		{
 			power = 0;
-			currentVelocity = currentVelocity - 0.01433 * deltaT;
+			currentVelocity = currentVelocity - FRICTION * deltaT;
 			
 			if (currentVelocity < 0)
 			{
@@ -188,7 +191,7 @@ public class EngineModel
 			}
 			
 			setpoint = 0;
-			lastPower = 0;
+			//lastPower = 0;
 			return currentVelocity;
 		}
 
@@ -211,19 +214,24 @@ public class EngineModel
 		
 		//This calculates the velocity
 		double veloc = Math.sqrt((2 * power * deltaT) / (mass));
-		currentVelocity = currentVelocity + veloc - 0.01433 * deltaT;
+		currentVelocity = currentVelocity + veloc - FRICTION * deltaT;
 		setpoint = power;
 		
 		if (currentVelocity < 0)
 		{
 			currentVelocity = 0;
 		}
+		else if (currentVelocity > speedLimit)
+		{
+			/*currentVelocity = speedLimit;
+			System.out.println("Speed Limit: " + speedLimit);
+			System.out.println("Current Speed: " + currentVelocity);*/
+		}
 		else if (currentVelocity > MAX_SPEED)
 		{
-			return MAX_SPEED;
-		}
+			currentVelocity = MAX_SPEED;
+		}		
 		
-		// TODO fix integrating this deltaT stuff
 		//Signals the distance traveled by the train
 		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
