@@ -1,3 +1,13 @@
+/**
+ * On Track Trainwreck
+ * Block.java
+ * Purpose:objects created within a track object to hold information
+ * from a CVS file for each block
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 
 import trackController.Switch;

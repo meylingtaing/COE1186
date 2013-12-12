@@ -1,3 +1,13 @@
+/**
+ * On Track Trainwreck
+ * NewTrackController.java
+ * Purpose: Controls the GUI for inputting a new CVS file and reading in all
+ * the blocks
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 
 import java.io.File;
@@ -38,13 +48,21 @@ public class NewTrackController {
     private TextField textField;
 
     
-
+    /**cancel button is clicked, window closes
+     * 
+     * @param MouseEvent event
+     */
     @FXML
     void CancelNewTrackAlert(MouseEvent event) {
     	Stage stage = (Stage)CreateNewTrackButton.getScene().getWindow();
     	stage.close();
     }
 
+    /**when import button is clicked, text field is read in and from ImportFile
+    *  will be passed to internalImport
+    *  
+    *  @param MouseEvent event
+    **/
     @FXML
     void ImportFile(MouseEvent event) {
     	
@@ -62,6 +80,12 @@ public class NewTrackController {
     	
     }
     
+    /**internal method to read in file, used for JUnit tests also
+    * creates a track object
+    * 
+    * @param String test -->file name
+    * @return an int value to indicate success or failure
+    */
     public int InternalImport(String text){
     	TrackObject trckOb = new TrackObject();
     	String trackLineColor=null;
@@ -106,6 +130,11 @@ public class NewTrackController {
 		}	
     }
     
+    /**
+     * method for CTC to use for debugging
+     * 
+     * @param filename ->name of file to read in
+     */
     public void ImportFile(String filename)
     {
     	TrackObject trckOb = new TrackObject();

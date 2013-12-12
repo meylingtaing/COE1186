@@ -1,3 +1,13 @@
+/**
+ * On Track Trainwreck
+ * ChildQueryController.java
+ * Purpose: Controls the GUI to interface with querying for a block by ID.
+ * Returns stats by block
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 
 
@@ -75,7 +85,11 @@ public class ChildQueryController {
 	@FXML
 	private Label undergroundInfoField;
 
-
+	
+	/**when query button is clicked, returns block information, handles errors
+     * 
+     * @param MouseEvent event
+     */
 	@FXML
 	void getBlockInfo(MouseEvent event) {
 		String trackLine = trackLineField.getText();

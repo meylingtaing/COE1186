@@ -1,3 +1,12 @@
+/**
+ * On Track Trainwreck
+ * TestTrackWhole.java
+ * Purpose: JUnit tests for different functions throughout the Track Model system
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 import static org.junit.Assert.*;
 
@@ -17,6 +26,9 @@ public class TestTrackWhole{
 	ChildQueryController cqcTester;
 	TrackMainController tmcTester;
 	
+	/**
+	 *initializes objects used for tests, run before each test 
+	 */
 	@Before
 	public void initialize(){
 		String[] args = new String[0];
@@ -26,7 +38,10 @@ public class TestTrackWhole{
 		tmcTester = new TrackMainController();
 	}
 	
-	//testing bad input for new track file
+	/**
+	 * testing bad input for new track file
+	 * 
+	 */
 	@Test
 	public void testBadInputTrack() {
 		tearDown();
@@ -35,7 +50,10 @@ public class TestTrackWhole{
 		assertNull(Track.trackArray.get("Green"));		
 	}
 	
-	//testing correct input for new track file
+	/**
+	 * testing correct input for new track file
+	 * 
+	 */
 	@Test
 	public void testInputTrack() {
 		
@@ -44,14 +62,22 @@ public class TestTrackWhole{
 		//tearDown();
 	}
 	
-	//testing querying an existing block
+	
+	/**
+	 * testing querying an existing block
+	 * 
+	 */
 	@Test
 	public void testQueryBlock(){
 		
 		assertEquals(Track.trackArray.get("Green").getBlock(15).getSpeedLimit(), 70);
 	}
 	
-	//test breaking block by id
+	
+	/**
+	 * test breaking block by id
+	 * 
+	 */
 	@Test
 	public void testBreakById(){
 		testInputTrack();
@@ -62,7 +88,11 @@ public class TestTrackWhole{
 		tearDown();
 	}
 	
-	//testing deleting an existing track
+	
+	/**
+	 * testing deleting an existing track
+	 * 
+	 */
 	@Test
 	public void testDeleteTrack(){
 		int trackListSize = Track.trackListData.size();
@@ -73,6 +103,10 @@ public class TestTrackWhole{
 		assertNull(Track.trackArray.get(line));
 	}
 	
+	/**
+	 * teardown method to run after each test to reinitialize objects
+	 * 
+	 */
 	@After
 	public void tearDown(){
 		tracktester=null;

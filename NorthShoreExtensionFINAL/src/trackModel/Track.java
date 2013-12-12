@@ -1,3 +1,13 @@
+/**
+ * On Track Trainwreck
+ * Track.java
+ * Purpose: holds main program to start application for Track Model GUI
+ * hold static variables that are accessed throughout project
+ * 
+ * @author Sarah Bunke
+ * @version 2.0 12/12/13
+ * 
+ */
 package trackModel;
 
 import java.util.Hashtable;
@@ -11,17 +21,23 @@ import javafx.stage.Stage;
 
 
 public class Track extends Application {
-	protected static Stage trackStage;
-	public static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>();
-	protected static ObservableList<String> trackListData = FXCollections.observableArrayList();
+	//static variables used throughout track model
+	protected static Stage trackStage; //holds main GUI
+	public static Hashtable<String, TrackObject> trackArray = new Hashtable<String, TrackObject>(); //holds track objects which contrain block DB's
+	protected static ObservableList<String> trackListData = FXCollections.observableArrayList(); //contains list of current tracks
 
-	//main program
+	/**
+	 * Main program to start application
+	 * @param args
+	 */
 	public static void main(String[] args){
 		
 		Application.launch(Track.class, args);
 	}
 	
-	//Start function to open main GUI
+	/**
+	 * override method that is called to open GUI
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
