@@ -157,7 +157,7 @@ public class ViewController
 	 */
     public void addTrain(/*ctc.Route r,*/ double t, String c)
     {
-    	data.add(new TrainModel(0.2, /*r,*/ t, c));
+    	//data.add(new TrainModel(0.2, /*r,*/ t, c));
     }
     
     /**

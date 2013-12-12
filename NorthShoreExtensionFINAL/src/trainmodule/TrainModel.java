@@ -8,12 +8,6 @@
 
 package trainmodule;
 
-/*TODO The train model shall accept input from the train controller regarding the setpoint 
- * speed command, brake command, speed limit, acceleration limit, deceleration limit, route 
- * information, temperature control, door open, door close, transponder input, track circuit input, 
- * and light controller for tunnel.
-*/
-
 import java.text.DecimalFormat;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -27,6 +21,7 @@ public class TrainModel
 	public static final double LENGTH = 32.2;			//This variable contains the train LENGTH
 	public static ViewController vc;				//This holds the view controller
 	public static boolean demo = false;				//Alerts the system that this is in debug mode
+	public static int idCreator = 400;				//Helps create train ID's
 	
 	private DoorController doors;					//This holds the door controller
 	private LightController lights;					//This holds the light controller
@@ -57,30 +52,7 @@ public class TrainModel
 		tv.createGUI();
 	}
 	
-	/**
-	 * This a simple train constructor
-	 */
-	public TrainModel(int id)
-	{
-		trainIdentitiy = id;
-		this.trainID = new SimpleIntegerProperty(id);
-		doors = new DoorController();
-		lights= new LightController();
-		passengers = new PassengerManager();
-		engine = new EngineModel(0.1, trainIdentitiy);
-		temperature = new TemperatureController(72);
-		failure = new TrainFailure();
-		conductor = "engineer";
-	}
 	
-	
-	/**
-	 * This another basic train constructor
-	 */
-	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer)
-	{
-		this(tick, t, engineer, 0);
-	}
 	
 	/**
 	 * This the advanced train constructor
