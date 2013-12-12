@@ -423,4 +423,28 @@ public class ViewController
 		else
 			System.out.println("No selection");
     }
+    
+    /**
+   	 * This method allows for passenger movement
+   	 */
+    public void PassengerTransaction()
+    {
+    	if (selectedTrain != null)
+    	{
+    		selectedTrain.updatePassengers();
+    		updateGUI();
+    	}
+    }
+    
+    /**
+   	 * This method clears all passengers off of the train except for the engineer
+   	 */
+    public void PassengerClear()
+    {
+    	if (selectedTrain != null)
+    	{
+    		selectedTrain.clearPassengers();
+    		updateGUI();
+    	}
+    }
 }
