@@ -379,6 +379,16 @@ public class TrainModel
     public void turnLightsOn()
     {
     	lights.turnLightsOn();
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -387,6 +397,16 @@ public class TrainModel
     public void turnLightsOff()
     {
     	lights.turnLightsOff();
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -405,6 +425,16 @@ public class TrainModel
     	if (engine.getSpeed() <= 0)
     	{
     		doors.openDoors();
+    		
+    		if (vc != null)
+        	{
+        		Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                    	updateG();	//Updates GUI
+                    }
+               });
+        	} 
     	}
     }
     
@@ -414,6 +444,16 @@ public class TrainModel
     public void closeDoors()
     {
         doors.closeDoors();
+        
+        if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -438,6 +478,16 @@ public class TrainModel
     public void pullEBrake()
     {
     	eBrake = true;
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -446,6 +496,16 @@ public class TrainModel
     public void releaseEBrake()
     {
     	eBrake = false;
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -461,14 +521,27 @@ public class TrainModel
   	 */
     public int updatePassengers()
     {
+    	int pass = 0;    	
     	if (doors.getState() && engine.getSpeed() <= 0)
     	{
-    		return passengers.updatePassengers();
+    		pass = passengers.updatePassengers();
     	}
     	else
     	{
-    		return passengers.getPassengerCount();
+    		pass = passengers.getPassengerCount();
     	}
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
+    	
+    	return pass;
     }
     
     /**

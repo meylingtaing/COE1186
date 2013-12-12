@@ -170,7 +170,7 @@ public class ViewController
     	{   		
     		for (TrainModel tm : data)
     		{    		
-        		System.out.println("Train added: " + tm.getTrainID());
+        		//System.out.println("Train added: " + tm.getTrainID());
     		}
     	}
     	else
@@ -208,7 +208,7 @@ public class ViewController
     	((TableColumn)(trainTable.getColumns()).get(0)).setVisible(false);
     	((TableColumn)(trainTable.getColumns()).get(0)).setVisible(true);
     	
-    	System.out.println("GUI REFRESH");
+    	//System.out.println("GUI REFRESH");
     }
     
     /**
