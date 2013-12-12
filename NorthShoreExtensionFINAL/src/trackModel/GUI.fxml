@@ -39,6 +39,7 @@
             <Rectangle id="brokenRailSquare" fx:id="BrokenPowerRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="86.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
             <Rectangle id="brokenRailSquare" fx:id="BrokenCircuitRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="51.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
             <Rectangle id="brokenRailSquare" fx:id="BrokenRailRed" arcHeight="5.0" arcWidth="5.0" fill="RED" height="23.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="22.0" />
+            <Button fx:id="trackStatsButton" disable="true" layoutX="73.0" layoutY="236.0" mnemonicParsing="false" onMouseClicked="#trackStatsMethod" text="TrackStats" />
           </children>
         </AnchorPane>
         <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="364.0">
@@ -60,6 +61,21 @@
                 </AnchorPane>
               </content>
             </TitledPane>
+            <Pane fx:id="trackStatsWind" layoutX="46.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+              <children>
+                <Label layoutX="14.0" layoutY="14.0" text="Green Line" />
+                <Label layoutX="14.0" layoutY="84.0" text="Red Line" />
+                <Label layoutX="28.0" layoutY="30.0" text="Power Down:" />
+                <Label layoutX="28.0" layoutY="58.0" text="Circuit Down:" />
+                <Label layoutX="28.0" layoutY="100.0" text="Power Down:" />
+                <Label layoutX="28.0" layoutY="125.0" text="Circuit Down:" />
+                <Label id="powerDownLabel" fx:id="GreenpowerDownLabel" layoutX="101.0" layoutY="30.0" text="label" visible="true" />
+                <Label fx:id="GreenCircuitDownLabel" layoutX="100.0" layoutY="58.0" text="label" visible="true" />
+                <Label id="RedCircuitDownLabel" fx:id="RedPowerDownLabel" layoutX="100.0" layoutY="100.0" text="label" visible="true" />
+                <Label fx:id="RedCircuitDownLabel" layoutX="100.0" layoutY="125.0" text="label" visible="true" />
+                <Button fx:id="doneButton" layoutX="98.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#closeTrackStats" text="Done" />
+              </children>
+            </Pane>
           </children>
         </AnchorPane>
       </items>

@@ -51,11 +51,9 @@ public class TrainModel
 		TrainView tv = new TrainView();
 		tv.createGUI();
 	}
-	
-	
-	
+		
 	/**
-	 * This the advanced train constructor
+	 * This the main train constructor
 	 */
 	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer, int id)
 	{
@@ -379,6 +377,16 @@ public class TrainModel
     public void turnLightsOn()
     {
     	lights.turnLightsOn();
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -387,6 +395,16 @@ public class TrainModel
     public void turnLightsOff()
     {
     	lights.turnLightsOff();
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -405,6 +423,16 @@ public class TrainModel
     	if (engine.getSpeed() <= 0)
     	{
     		doors.openDoors();
+    		
+    		if (vc != null)
+        	{
+        		Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                    	updateG();	//Updates GUI
+                    }
+               });
+        	} 
     	}
     }
     
@@ -414,6 +442,16 @@ public class TrainModel
     public void closeDoors()
     {
         doors.closeDoors();
+        
+        if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -438,6 +476,16 @@ public class TrainModel
     public void pullEBrake()
     {
     	eBrake = true;
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -446,6 +494,16 @@ public class TrainModel
     public void releaseEBrake()
     {
     	eBrake = false;
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
     }
     
     /**
@@ -461,14 +519,27 @@ public class TrainModel
   	 */
     public int updatePassengers()
     {
+    	int pass = 0;    	
     	if (doors.getState() && engine.getSpeed() <= 0)
     	{
-    		return passengers.updatePassengers();
+    		pass = passengers.updatePassengers();
     	}
     	else
     	{
-    		return passengers.getPassengerCount();
+    		pass = passengers.getPassengerCount();
     	}
+    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	} 
+    	
+    	return pass;
     }
     
     /**

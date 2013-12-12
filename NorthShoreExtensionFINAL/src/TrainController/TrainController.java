@@ -79,7 +79,7 @@ public class TrainController implements Runnable {
 	}
 
 	public TrainController(int id) {
-		model = new trainmodule.TrainModel(1 / loopsPS, /*null,*/ 70.2, "???", id);
+		model = new trainmodule.TrainModel(0.2, /*null,*/ 70.2, "???", id);
 		pidc = new PIDController(37103.9);
 		//route = new ctc.Route();
 		gps = new GPS();
