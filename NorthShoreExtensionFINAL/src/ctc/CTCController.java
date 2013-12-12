@@ -154,6 +154,12 @@ public class CTCController
 					strokeStyle = "-fx-stroke: " + track.getColor() + ";";
 				}
 				
+				// Display train if detected
+				if (block.isTrainDetected())
+				{
+					strokeStyle = "-fx-stroke: #CC33FF; -fx-stroke-width: 3px;";
+				}
+				
 				// Determine if block is closed for maintenance
 				if (block.isClosed())
 				{

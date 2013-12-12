@@ -115,7 +115,7 @@ public class TransitSystem implements Runnable
 		}
 	}
 	
-	/*
+	//*
 	public TransitSystem(int tickRate)
 	{
 		this.tickRate = tickRate;
@@ -367,6 +367,7 @@ public class TransitSystem implements Runnable
 			//A.)Not safe for the current block
 			//B.)The train was not found in any PLC (Shouldn't happen)
 		
+		// TODO: THIS SHOULD REALLY BE PASSED TO THE TRACK CONTROLLER FIRST
 		trains.get(trainId).setSpeedSetpoint(setpoint);
 	}
 	
@@ -389,6 +390,9 @@ public class TransitSystem implements Runnable
 		}
 		
 		//If retVal == false The train was Not Found on a PLC!
+		
+		// TODO: I feel like this isn't getting to train controller as well so...
+		trains.get(trainId).setAuthorityFixed(blocks);
 	}
 	
 	/**
@@ -429,7 +433,7 @@ public class TransitSystem implements Runnable
                         wait();
                 }
 				
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				for (TrainController train : trains.values())
 				{
 					//System.out.println(train.getModel().getTrainID());
@@ -452,14 +456,13 @@ public class TransitSystem implements Runnable
 					 * suggested authorities between Track Controllers
 					 */
 					
-					/*
+					//*
 					Platform.runLater(new Runnable() {
 					    public void run() {
-					        //ctc.ctcController.displayTrains();
+					        ctc.ctcController.displayTrack();
 					    }
 					});
 					//*/
-					Thread.sleep(500);
 				}
 			}
 			catch (Exception e)

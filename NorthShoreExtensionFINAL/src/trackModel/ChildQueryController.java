@@ -1,4 +1,6 @@
 package trackModel;
+
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -31,6 +33,9 @@ public class ChildQueryController {
 
 	@FXML
 	private Label StationInfoField;
+	
+	@FXML
+    private Label blockIDRangeErrorLabel;
 
 	@FXML
 	private Button childQueryButton;
@@ -63,29 +68,40 @@ public class ChildQueryController {
 	@FXML
 	void getBlockInfo(MouseEvent event) {
 		String trackLine = trackLineField.getText();
-		int blockNum = Integer.parseInt(BlockNumberField.getText());
+		String blockNumString = BlockNumberField.getText();
+		int blockNum;
 
-		if(!Track.trackListData.contains(trackLine)){
+		if(!Track.trackListData.contains(trackLine) || trackLine.equals("") || blockNumString.equals("")){
 			trackDNELabel.setVisible(true);
+			BlockInfoPane.setVisible(false);
 
 		}
 		else{
 			trackDNELabel.setVisible(false);
+			blockNum = Integer.parseInt(blockNumString);
 			TrackObject currTrack = Track.trackArray.get(trackLine);
-			Block desiredBlock = currTrack.getBlock(blockNum);
+			try{
+				Block desiredBlock = currTrack.getBlock(blockNum);
+				blockIDRangeErrorLabel.setVisible(false);
+				BlockNumberInfoField.setText(Integer.toString(blockNum));
+				SpeedLimitInfoField.setText(Integer.toString(desiredBlock.getSpeedLimit()));
+				gradeInfofield.setText(Double.toString(desiredBlock.getGrade()));
+				StationInfoField.setText(Boolean.toString(desiredBlock.isStation()));
+				railwayCrossingField.setText(Boolean.toString(desiredBlock.isCrossing()));
+				siwtchInfoField.setText(Boolean.toString(desiredBlock.isSwitchBoo()));
+				undergroundInfoField.setText(Boolean.toString(desiredBlock.isUnderground()));
+				lengthInfoField.setText(Double.toString(desiredBlock.getLength()));
+				sectionInfoField.setText(desiredBlock.getSection());
 
-			BlockNumberInfoField.setText(Integer.toString(blockNum));
-			SpeedLimitInfoField.setText(Integer.toString(desiredBlock.getSpeedLimit()));
-			gradeInfofield.setText(Double.toString(desiredBlock.getGrade()));
-			StationInfoField.setText(Boolean.toString(desiredBlock.isStation()));
-			railwayCrossingField.setText(Boolean.toString(desiredBlock.isCrossing()));
-			siwtchInfoField.setText(Boolean.toString(desiredBlock.isSwitchBoo()));
-			undergroundInfoField.setText(Boolean.toString(desiredBlock.isUnderground()));
-			lengthInfoField.setText(Double.toString(desiredBlock.getLength()));
-			sectionInfoField.setText(desiredBlock.getSection());
 
-
-			BlockInfoPane.setVisible(true);
+				BlockInfoPane.setVisible(true);
+			}catch(NullPointerException e){
+				BlockInfoPane.setVisible(false);
+				blockIDRangeErrorLabel.setVisible(true);
+				
+			}
+			
+			
 		}
 
 	}
@@ -106,7 +122,7 @@ public class ChildQueryController {
         assert trackDNELabel != null : "fx:id=\"trackDNELabel\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert trackLineField != null : "fx:id=\"trackLineField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert undergroundInfoField != null : "fx:id=\"undergroundInfoField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
-
+        assert blockIDRangeErrorLabel != null : "fx:id=\"blockIDRangeErrorLabel\" was not injected: check your FXML file 'QueryBlock.fxml'.";
 
     }
 
