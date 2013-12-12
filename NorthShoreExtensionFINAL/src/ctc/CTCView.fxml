@@ -28,7 +28,7 @@
 		</right>
 	</BorderPane>
 	<Text fx:id="selectedName" styleClass="infoLabel" visible="false" />
-	<VBox fx:id="infoBox" styleClass="infoText" spacing="10" />
+	<VBox fx:id="infoBox" styleClass="infoText" spacing="5" />
 	<HBox fx:id="buttonContainer" spacing="10" >
 		<padding><Insets right="10" left="10"/></padding>
 		<Button fx:id="editTracksButton" onAction="#navigate" text="Edit Tracks" />

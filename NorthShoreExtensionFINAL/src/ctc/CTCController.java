@@ -6,6 +6,8 @@
 package ctc;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Hashtable;
 
 import trackModel.Block;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -287,7 +290,7 @@ public class CTCController
 			infoBox.getChildren().clear();
 			if (selectedTrain != null)
 			{
-				System.out.println("Selected train: " + selectedTrain);
+				//System.out.println("Selected train: " + selectedTrain);
 				String[] parts = selectedTrain.split(" ");
 				// Train id
 				int trainId = ctcOffice.trains.get(parts[1]);
@@ -298,8 +301,28 @@ public class CTCController
 				int currBlock = ctcOffice.transitSystem.trainPositions.get(trainId).getCurrBlock().getBlockId();
 				Text location = new Text("Position: Block " + currBlock);
 				
+				// Add schedule
+				Route route = ctcOffice.routes.get(parts[1]);
+				Hashtable<Integer, Double> schedule = route.getSchedule();
+				StringBuilder scheduleStr = new StringBuilder();
+				
+				for (Block block : route.getBlockList())
+				{
+					if (block.isStation())
+					{
+						double dwell = schedule.get(block.getBlockId());
+						scheduleStr.append(block.getBlockId() + " " + block.getStationName() + ": " + dwell + "mins\n");
+					}
+				}
+				
+				TextArea scheduleText = new TextArea(scheduleStr.toString());
+				scheduleText.setPrefRowCount(5);
+				scheduleText.setEditable(false);
+				
 				// Add everything and display
 				infoBox.getChildren().add(location);
+				infoBox.getChildren().add(new Text("Schedule with Dwell Times"));
+				infoBox.getChildren().add(scheduleText);
 				selectedName.setVisible(true);
 			}
 			else if (selectedTrack != null)

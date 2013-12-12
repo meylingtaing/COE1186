@@ -16,10 +16,10 @@ public class Route
 	private TrackObject track;
 	private LinkedList<Block> blockList;
 	private boolean lastBlockForward;		// Direction of last block
-	private Hashtable<Integer, Integer> dwellTimes; // Block ID, dwell in secs
+	private Hashtable<Integer, Double> dwellTimes; // Block ID, dwell in secs
 	
 	private final boolean DEBUG = false;
-	private int defaultDwellTime = 60;
+	private double defaultDwellTime = 1.0;
 	
 	/**
 	 * Route is initialized with the train and the track
@@ -32,7 +32,7 @@ public class Route
 		this.track = track;
 		
 		this.blockList = new LinkedList<Block>();
-		this.dwellTimes = new Hashtable<Integer, Integer>();
+		this.dwellTimes = new Hashtable<Integer, Double>();
 		
 		// Add first block
 		blockList.add(track.getBlock(0));
@@ -167,17 +167,27 @@ public class Route
 	/**
 	 * Update the station dwell time
 	 */
+	/*
 	public void setDwellTime(int blockId, double min)
 	{
 		setDwellTime(blockId, (int)min*60);
 	}
+	//*/
 	
 	/**
 	 * Update the station dwell time in seconds
 	 */
-	public void setDwellTime(int blockId, int dwellTime)
+	public void setDwellTime(int blockId, double dwellTime)
 	{
 		dwellTimes.put(blockId, dwellTime);
+	}
+	
+	/**
+	 * Get the dwell times
+	 */
+	public Hashtable<Integer, Double> getSchedule()
+	{
+		return dwellTimes;
 	}
 	
 	/**
@@ -185,8 +195,9 @@ public class Route
 	 */
 	public void removeBlock()
 	{
-		// TODO: what if there is only one block left?
-		blockList.removeFirst();
+		// Not removing if only one block left...
+		if (blockList.size() > 1)
+			blockList.removeFirst();
 	}
 	
 	/**
