@@ -351,4 +351,76 @@ public class ViewController
 		else
 			System.out.println("No selection");
     }
+    
+    /**
+   	 * This method heats the train
+   	 */
+    public void HeatTrain()
+    {
+    	if (selectedTrain != null)
+    	{
+	    	selectedTrain.heatTrain();
+	    	updateGUI();
+	    }
+		else
+			System.out.println("No selection");
+    }
+    
+    /**
+   	 * This method cools off the train
+   	 */
+    public void CoolTrain()
+    {
+    	if (selectedTrain != null)
+    	{
+	    	selectedTrain.coolTrain();
+	    	updateGUI();
+	    }
+		else
+			System.out.println("No selection");
+    }
+    
+    /**
+   	 * This method turns on the train lights
+   	 */
+    public void ToggleLights()
+    {
+    	if (selectedTrain != null)
+    	{
+    		if (selectedTrain.getLightState())
+    		{
+    			selectedTrain.turnLightsOff();
+    		}
+    		else
+    		{
+    			selectedTrain.turnLightsOn();
+    		}
+    		
+	    	updateGUI();
+	    }
+		else
+			System.out.println("No selection");
+    }
+    
+    /**
+   	 * This method opens and closes the doors
+   	 */
+    public void ToggleDoors()
+    {
+    	if (selectedTrain != null)
+    	{
+    		if (selectedTrain.getDoorState())
+    		{
+    			selectedTrain.closeDoors();
+    		}
+    		else
+    		{
+    			selectedTrain.openDoors();
+    		}
+    		
+	    	updateGUI();
+	    }
+		else
+			System.out.println("No selection");
+    }
 }
