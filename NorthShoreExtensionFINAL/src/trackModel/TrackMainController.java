@@ -130,27 +130,35 @@ public class TrackMainController {
 	    @FXML
 	    void BreakWithId(MouseEvent event) {
 	    	int id= Integer.parseInt(breakBlockIdText.getText());
+	    	String line = trackLineList.getSelectionModel().getSelectedItem();
+	    	int result = internalBreakWithId(id, line);
+	    	if(result==1){
+	    		BrokenRailBlock.setVisible(false);
+	    		BrokenRailRed.setVisible(true);
+	    		breakRailButton.setText("Broken Rail Fixed");	
 	    	
-	    	Block b;
-	    		
-	    	
+	    		breakRailWindow.setVisible(false);
+	    	}
+	    	else{
+	    		blockDNElabel.setVisible(true);
+	    	}
+	    }
+	    
+	    public int internalBreakWithId(int id, String line){
+	    	Block b;	
 	    	try {
-	    		String line = trackLineList.getSelectionModel().getSelectedItem();
 	        	internalBrokenRailLine=line;
 	    	
 	    		b=Track.trackArray.get(line).getBlock(id);
 	    		b.setClosed(true);
 	    		internalBrokenRailID=id;
 	    		
-	    		BrokenRailBlock.setVisible(false);
-	    		BrokenRailRed.setVisible(true);
-	    		breakRailButton.setText("Broken Rail Fixed");	
-	    	
-	    		breakRailWindow.setVisible(false);
-
+	    		
+	    		return 1;
 
 			} catch (Exception ex) {
-				blockDNElabel.setVisible(true);
+				return 0;
+				
 			}
 	    }
 

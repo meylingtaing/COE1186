@@ -1,5 +1,7 @@
 package trackModel;
 
+import trackController.Switch;
+
 public class Block {
 	
 	private String section;
@@ -34,6 +36,8 @@ public class Block {
 	private boolean closed;
 	private int signalState;
 	private int crossingSigState;
+	private Switch blockSwitch;
+	
 	
 	private Block authorityEnterBlock;
 	private Block authorityExitBlock;
@@ -78,6 +82,7 @@ public class Block {
 		switchFromYard = false;
 		signalState = 1;
 		crossingSigState = 0;
+		blockSwitch = null;
 		
 		trainDetected=false;
 		
@@ -108,6 +113,13 @@ public class Block {
 		
 	}
 	
+	public void setBlockSwitch(Switch s){
+		blockSwitch = s;
+	}
+	
+	public Switch getBlockSwitch(){
+		return blockSwitch;
+	}
 	public String getTrackLine(){
 		return line;
 	}

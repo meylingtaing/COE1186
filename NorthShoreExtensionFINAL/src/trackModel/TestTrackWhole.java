@@ -15,6 +15,7 @@ public class TestTrackWhole{
 	NewTrackController ntcTester;
 	ChildQueryController cqcTester;
 	TrackMainController tmcTester;
+	
 	@Before 
 	public void initialize(){
 		String[] args = new String[0];
@@ -23,7 +24,6 @@ public class TestTrackWhole{
 		cqcTester = new ChildQueryController();
 		tmcTester = new TrackMainController();
 	}
-
 	
 	//testing bad input for new track file
 	@Test
@@ -48,6 +48,15 @@ public class TestTrackWhole{
 	public void testQueryBlock(){
 		
 		assertEquals(Track.trackArray.get("Green").getBlock(15).getSpeedLimit(), 70);
+	}
+	
+	//test breaking block by id
+	@Test
+	public void testBreakById(){
+		int bId=10;
+		String line = "Green";
+		tmcTester.internalBreakWithId(bId, line);
+		assertTrue(Track.trackArray.get(line).getBlock(bId).isClosed());
 	}
 	
 	//testing deleting an existing track
