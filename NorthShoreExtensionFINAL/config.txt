@@ -3,3 +3,25 @@
 TRACK,greenline,lime,greenline.csv
 # Add trains
 TRAIN,Train A
+# Add routes
+ROUTE,Train A,greenline,PIONEER
+ROUTE,Train A,greenline,OVERBROOK
+# Add schedules
+SCHEDULE,Train A,2,2.3
+SCHEDULE,Train A,9,2.3
+SCHEDULE,Train A,16,2.4
+SCHEDULE,Train A,22,2.7
+SCHEDULE,Train A,31,2.6
+SCHEDULE,Train A,39,1.9
+SCHEDULE,Train A,48,2.0
+SCHEDULE,Train A,57,2.0
+SCHEDULE,Train A,65,2.2
+SCHEDULE,Train A,73,2.5
+SCHEDULE,Train A,77,2.2
+SCHEDULE,Train A,88,4.4
+SCHEDULE,Train A,96,2.2
+SCHEDULE,Train A,105,2.3
+SCHEDULE,Train A,114,2.4
+SCHEDULE,Train A,123,2.1
+SCHEDULE,Train A,132,2.0
+SCHEDULE,Train A,141,2.0

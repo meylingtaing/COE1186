@@ -100,5 +100,52 @@ public class RouteTrainFormController extends FormController
 		Stage currStage = (Stage) trackListBox.getScene().getWindow();
 		currStage.close();
 	}
+	
+	/**
+	 * Route train outside of CTC gui
+	 * @param selectedTrain
+	 * @param selectedTrack
+	 * @param selectedStation
+	 * @param ctc
+	 * @return
+	 */
+	public static boolean routeTrain(String selectedTrain, String selectedTrack, String selectedStation, CTC ctc)
+	{
+		try
+		{
+			Route route;
+			// Modifying name so it's easier to deal with
+			selectedTrain = selectedTrain.trim();
+			selectedTrain = selectedTrain.replace(" ", "");
+			int trainId = ctc.trains.get(selectedTrain);
+			
+			// If route exists, just update it
+			if (ctc.routes.containsKey(selectedTrain))
+				route = ctc.routes.get(selectedTrain);
+			// Route doesn't exist, make new one
+			else
+			{
+				route = new Route(trainId, ctc.transitSystem.ctcGetTrack(selectedTrack));
+			}
+			
+			route.addStation(selectedStation);
+			
+			// Update route in CTC's route database
+			ctc.routes.put(selectedTrain, route);
+			
+			// Update train position
+			ctc.transitSystem.ctcSetInitialPosition(trainId, selectedTrack);
+			
+			// Send route to track controller
+			ctc.transitSystem.ctcSendRoute(trainId, route);
+			
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error in routing train");
+			return false;
+		}
+	}
 
 }

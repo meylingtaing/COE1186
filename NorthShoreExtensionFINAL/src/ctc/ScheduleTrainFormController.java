@@ -93,9 +93,35 @@ public class ScheduleTrainFormController extends FormController
 	 * @param blockId
 	 * @param dwellTimeMins
 	 */
-	static public void setDwellTime(int trainId, int blockId, double dwellTimeMins, CTC ctc)
+	static public boolean setDwellTime(int trainId, int blockId, double dwellTimeMins, CTC ctc)
 	{
-		ctc.transitSystem.ctcSetDwellTime(trainId, blockId, dwellTimeMins);
+		try
+		{
+			ctc.transitSystem.ctcSetDwellTime(trainId, blockId, dwellTimeMins);
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.out.println("Can't set dwell time");
+			return false;
+		}
+	}
+	
+	/**
+	 * Set dwell time, search for train by string
+	 * @param trainId
+	 * @param blockId
+	 * @param dwellTimeMins
+	 * @param ctc
+	 * @return
+	 */
+	static public boolean setDwellTime(String trainName, int blockId, double dwellTimeMins, CTC ctc)
+	{
+		// Modifying name so it's easier to deal with
+		trainName = trainName.trim();
+		trainName = trainName.replace(" ", "");
+		int trainId = ctc.trains.get(trainName);
+		return setDwellTime(trainId, blockId, dwellTimeMins, ctc);
 	}
 
 }

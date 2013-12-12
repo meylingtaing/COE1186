@@ -26,6 +26,8 @@ import ctc.AddTrackFormController;
 import ctc.AddTrainFormController;
 import ctc.CTC;
 import ctc.Route;
+import ctc.RouteTrainFormController;
+import ctc.ScheduleTrainFormController;
 import nse.MainController;
 
 public class TransitSystem implements Runnable
@@ -49,9 +51,13 @@ public class TransitSystem implements Runnable
 	//public MainController mainController;
 	
 	public TransitSystem()
+	{		
+		this("config.txt");
+	}
+	
+	public TransitSystem(String config)
 	{
-		this(1);
-		
+		configFile = config;
 		loadConfigFile(configFile);
 	}
 	
@@ -77,13 +83,22 @@ public class TransitSystem implements Runnable
 				
 			
 				
-				if(fields[0].contentEquals("TRACK"))
+				if (fields[0].contentEquals("TRACK"))
 				{				
 					AddTrackFormController.addTrack(fields[1], fields[3], fields[2], ctc);
 				}
-				if(fields[0].contentEquals("TRAIN"))
+				else if (fields[0].contentEquals("TRAIN"))
 				{				
 					AddTrainFormController.addTrain(fields[1], ctc);
+				}
+				else if (fields[0].contentEquals("ROUTE"))
+				{
+					RouteTrainFormController.routeTrain(fields[1], fields[2], fields[3], ctc);
+				}
+				else if (fields[0].contentEquals("SCHEDULE"))
+				{
+					ScheduleTrainFormController.setDwellTime(fields[1], 
+							Integer.parseInt(fields[2]), Double.parseDouble(fields[3]), ctc);
 				}
 				else
 				{				
@@ -100,10 +115,12 @@ public class TransitSystem implements Runnable
 		}
 	}
 	
+	/*
 	public TransitSystem(int tickRate)
 	{
 		this.tickRate = tickRate;
 	}
+	//*/
 	
 	public void setSegHandoffFlag(int val)
 	{
@@ -233,7 +250,7 @@ public class TransitSystem implements Runnable
 	{
 		// TODO: I don't know, but maybe TrainController needs to do something here
 		trains.put(train.model.getTrainID(), train);
-		System.out.println(trains.keySet());
+		//System.out.println(trains.keySet());
 	}
 	
 	/**

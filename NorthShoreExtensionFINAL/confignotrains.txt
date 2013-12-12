@@ -1,0 +1,3 @@
+# Add tracks
+# TRACK,trackname,trackcolor,trackfile
+TRACK,greenline,lime,greenline.csv
