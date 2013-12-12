@@ -65,7 +65,10 @@ public class EngineModel
 		//Gets the current block slope
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
+				currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+			}
 		}
 		
 		double angle = Math.atan(currentGradient / 100);
@@ -105,7 +108,10 @@ public class EngineModel
 		//Signals the distance traveled by the train
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
+				MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			}
 		}
 		
 		return currentVelocity;
@@ -119,7 +125,10 @@ public class EngineModel
 		//Gets the current block slope
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
+			}
 		}
 		
 		double angle = Math.atan(currentGradient / 100);
@@ -144,7 +153,10 @@ public class EngineModel
 		//Signals the distance traveled by the train
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
+				MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			}
 		}
 		
 		return currentVelocity;
@@ -160,8 +172,11 @@ public class EngineModel
 		//Gets the current block slope and speed limit
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();//43.496
-			speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
+				currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();//43.496
+				speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
+			}
 		}
 		
 		double angle = Math.atan(currentGradient / 100);
@@ -235,7 +250,10 @@ public class EngineModel
 		//Signals the distance traveled by the train
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
-			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
+			{
+				MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
+			}
 		}		
 		
 		//System.out.println("Current velocity: " + currentVelocity);
