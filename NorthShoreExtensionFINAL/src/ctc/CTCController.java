@@ -36,6 +36,8 @@ public class CTCController
 	removeTrainButton, routeTrainButton, suggestSetptButton, scheduleTrainButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox trackLegendBox, trainLegendBox;
+	protected Label selectedLegend;
+	
 	private String trackGui = "CTCTrackView.fxml";
 	private String mainGui = "CTCView.fxml";
 	private String routeGui = "CTCTrainView.fxml";
@@ -48,6 +50,9 @@ public class CTCController
 	private String setpointForm = "suggestSetptForm.fxml";
 	private String scheduleForm = "scheduleTrainForm.fxml";
 	private int shrinkDisplay = 9;
+	
+	protected String selectedTrack = null;
+	protected String selectedTrain = null;
 	
 	/**
 	 * Sets the CTC office model that we are controlling
@@ -193,6 +198,32 @@ public class CTCController
 			trackSymbol.setStyle(symbolStyle);
 			
 			trackLegendBox.getChildren().add(trackLabel);
+			
+			trackLabel.setOnMouseClicked( new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent event)
+				{
+					Label trackLegend = (Label) event.getSource();
+					trackLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
+					
+					if (selectedLegend == trackLegend)
+					{
+						selectedLegend.setStyle("-fx-border-width: 0px;");
+						selectedLegend = null;
+						selectedTrack = null;
+						selectedTrain = null;
+					}
+					
+					else 
+					{
+						if (selectedLegend != null)
+							selectedLegend.setStyle("-fx-border-width: 0px;");
+						
+						selectedLegend = trackLegend;
+						selectedTrack = trackLegend.getText();
+						selectedTrain = null;
+					}
+				}
+			});
 		}
 		
 		// Display trains on the side
@@ -206,6 +237,32 @@ public class CTCController
 			trainSymbol.setStyle("-fx-fill: #CC33FF;");
 			
 			trainLegendBox.getChildren().add(trainLabel);
+			
+			trainLabel.setOnMouseClicked( new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent event)
+				{
+					Label trainLegend = (Label) event.getSource();
+					trainLegend.setStyle("-fx-border-width: 1px; -fx-border-color: #FFFFFF;");
+					
+					if (selectedLegend == trainLegend)
+					{
+						selectedLegend.setStyle("-fx-border-width: 0px;");
+						selectedLegend = null;
+						selectedTrain = null;
+						selectedTrack = null;
+					}
+					
+					else 
+					{
+						if (selectedLegend != null)
+							selectedLegend.setStyle("-fx-border-width: 0px;");
+						
+						selectedLegend = trainLegend;
+						selectedTrain = trainLegend.getText();
+						selectedTrack = null;
+					}
+				}
+			});
 		}
 	}
 	

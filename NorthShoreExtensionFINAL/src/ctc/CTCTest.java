@@ -81,7 +81,14 @@ public class CTCTest
 		assertEquals("There are two trains in ctc's database", 2, ctc.trains.size());
 		assertEquals("There are two trains in system", 2, ts.trains.size());
 		
-		// Remove trains
-		//ts.ctcRemoveTrain(trainId);
+		// Get the train ID
+		int trainIdA = ctc.trains.get("TestTrain");
+		int trainIdB = ctc.trains.get("");
+		
+		// Remove trains -- yup, this is gonna fail
+		ts.ctcRemoveTrain(trainIdA);
+		assertEquals("There is one train in the system", 1, ts.trains.size());
+		ts.ctcRemoveTrain(trainIdB);
+		assertEquals("There are no trains in the system", 0, ts.trains.size());
 	}
 }

@@ -14,6 +14,8 @@ public class RouteTrainFormController extends FormController
 {
 	@FXML private ComboBox<String> trackListBox, stationListBox, trainListBox;
 	
+	private static boolean DEBUG = true;
+	
 	/**
 	 * Fill dropdowns with information
 	 */
@@ -144,6 +146,8 @@ public class RouteTrainFormController extends FormController
 		catch (Exception e)
 		{
 			System.out.println("Error in routing train");
+			if (DEBUG)
+				e.printStackTrace();
 			return false;
 		}
 	}
