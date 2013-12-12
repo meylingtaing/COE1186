@@ -27,6 +27,7 @@ import javafx.stage.Stage;*/
 
 import nse.TransitSystemGui;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
 
@@ -165,7 +166,12 @@ public class TrainModel
     	else
     		speed = engine.pullEmergencyBrake(TRAIN_MASS + passengers.getTotalPassengerMass());    	
     	
-    	updateG();	//Updates GUI
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	updateG();	//Updates GUI
+            }
+       });    	
     	
     	return speed;
     }

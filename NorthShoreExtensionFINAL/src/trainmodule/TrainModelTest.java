@@ -21,13 +21,7 @@ public class TrainModelTest
 	@Test
 	public void test()
 	{
-		//Tests for correct initialization
-		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
-		assertEquals(train.getTrainID(), 101);
-		assertEquals(train.getConductor(), "bob");
-		assertEquals(train.getDeltaT(), 0.2, 0);
-		System.out.println("The train model initializes properly");
-			
+		TestTrainInitializer();			
 		TestTrainTemperatureController();
 		TestTrainLightController();
 		TestTrainDoorController();
@@ -39,6 +33,17 @@ public class TrainModelTest
 		TestMassEffect();
 		TestTrainLowPower();
 		TestTrainHighPower();
+	}
+	
+	@Test
+	public void TestTrainInitializer()
+	{
+		//Tests for correct initialization
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
+		assertEquals(train.getTrainID(), 101);
+		assertEquals(train.getConductor(), "bob");
+		assertEquals(train.getDeltaT(), 0.2, 0);
+		System.out.println("The train model initializes properly");
 	}
 	
 	@Test
