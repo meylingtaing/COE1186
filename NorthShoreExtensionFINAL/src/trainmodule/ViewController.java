@@ -168,10 +168,10 @@ public class ViewController
     {     
     	if (TrainModel.demo)
     	{   		
-    		for (TrainModel tm : data)
+    		/*for (TrainModel tm : data)
     		{    		
         		//System.out.println("Train added: " + tm.getTrainID());
-    		}
+    		}*/
     	}
     	else
     	{
