@@ -27,8 +27,25 @@ public class TrainModelTest
 		assertEquals(train.getConductor(), "bob");
 		assertEquals(train.getDeltaT(), 0.2, 0);
 		System.out.println("The train model initializes properly");
-		
+			
+		TestTrainTemperatureController();
+		TestTrainLightController();
+		TestTrainDoorController();
+		TestPassengerManager();	
+		TestTrainFailure();
+		TestTrainMovesSafely();
+		TestTrainPhysics();
+		TestTrainBrakeFailure();
+		TestMassEffect();
+		TestTrainLowPower();
+		TestTrainHighPower();
+	}
+	
+	@Test
+	public void TestTrainTemperatureController()
+	{
 		//Tests for correct initial temperature and string output
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);		
 		String temp = train.getTemp();
 		assertEquals(temp, "65.2 F");
 		assertEquals(train.getTemperature(), 65.2, 0);
@@ -41,8 +58,13 @@ public class TrainModelTest
 		train.heatTrain();
 		assertTrue(train.getTemperature() > newTemp);
 		System.out.println("Temperature control is functioning");
-		
+	}
+	
+	@Test
+	public void TestTrainDoorController()
+	{
 		//Checks to see that the doors are initially closed
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);		
 		assertFalse(train.getDoorState());
 		System.out.println("Train doors are initialized properly");
 		
@@ -51,9 +73,14 @@ public class TrainModelTest
 		assertTrue(train.getDoorState());
 		train.closeDoors();
 		assertFalse(train.getDoorState());
-		System.out.println("Doors open and close as expected");
-		
+		System.out.println("Doors open and close as expected");		
+	}
+	
+	@Test
+	public void TestTrainLightController()
+	{
 		//Checks to see that the lights are initially off
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
 		assertFalse(train.getLightState());
 		System.out.println("The lights are initialized correctly");
 		
@@ -63,7 +90,12 @@ public class TrainModelTest
 		train.turnLightsOff();
 		assertFalse(train.getLightState());	
 		System.out.println("The train lights operate properly");
-		
+	}
+	
+	@Test
+	public void TestPassengerManager()
+	{
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
 		//Tests the passenger manager
 		assertEquals(train.getPassengerNumber(), 1);
 		train.openDoors();
@@ -73,20 +105,32 @@ public class TrainModelTest
 			train.updatePassengers();
 			num++;
 		}
-		//Train does not move until the doors are closed
-		train.setSetpoint(1000);
-		assertTrue(train.getVelocity() == 0);
-		//System.out.println("The train does not move unless the doors are closed first");
 		train.closeDoors();
 		assertTrue(train.getPassengerNumber() <= PassengerManager.MAX_PASSENGERS);
 		assertTrue(train.getPassengerNumber() > 1);
-		//System.out.println("It took " + num + " transfers\nPassenger number: " + train.getPassengerNumber());
+		
 		System.out.println("The train updated passengers properly");
 		
 		train.openDoors();
 		assertEquals(train.clearPassengers(), 1);
 		train.closeDoors();
 		System.out.println("Clearing the passengers off the train works");
+	}
+	
+	@Test
+	public void TestTrainMovesSafely()
+	{
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
+		train.openDoors();		
+		train.setSetpoint(1000);
+		//Train does not move until the doors are closed
+		assertTrue(train.getVelocity() == 0);
+	}
+	
+	@Test
+	public void TestTrainFailure()
+	{
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
 		
 		//Tests for initial failure states
 		assertFalse(train.isEngineBroken());
@@ -116,8 +160,13 @@ public class TrainModelTest
 		assertFalse(train.isBrakeBroken());
 		assertFalse(train.isSignalBroken());
 		System.out.println("The train detects failures as designed");
+	}
+	
+	@Test
+	public void TestTrainPhysics()
+	{
+		TrainModel train = new TrainModel(0.2, 65.2, "bob", 101);
 		
-		//TODO create test methods for engine
 		//Tests for correct initial train speed
 		assertEquals(train.getPower(), 0, 0);
 		assertEquals(train.getVelocity(), 0, 0);
@@ -168,57 +217,79 @@ public class TrainModelTest
 		assertTrue(nextPow <= newPow);	
 		assertTrue(nextSpeed < newSpeed);
 		System.out.println("Train emergency brakes work");
+	}
+	
+	@Test
+	public void TestTrainBrakeFailure()
+	{
 		
 		//Tests that brake failure does not allow braking
-		TrainModel train4 = new TrainModel(0.2, 68.1, "John", 133);
-		train4.setSetpoint(500);
-		train4.setSetpoint(500);
-		train4.setSetpoint(500);
-		train4.throwBrakeFailure();
-		train4.pullBrake(0.5);
+		TrainModel train1 = new TrainModel(0.2, 65.2, "susan", 105);
+		train1.setSetpoint(500);
+		train1.setSetpoint(500);
+		train1.setSetpoint(500);
+		train1.pullBrake(0);
 		
-		nextPow = train4.getPower();
-		nextSpeed = train4.getVelocity();
-		assertEquals(nextPow, train.getPower(), 0);	
-		assertEquals(nextSpeed, train.getVelocity(), 0);
+		TrainModel train2 = new TrainModel(0.2, 68.1, "John", 133);
+		train2.setSetpoint(500);
+		train2.setSetpoint(500);
+		train2.setSetpoint(500);
+		train2.throwBrakeFailure();
+		train2.pullBrake(0.5);
+		
+		double nextPow = train2.getPower();
+		double nextSpeed = train2.getVelocity();
+		assertEquals(nextPow, train1.getPower(), 0);	
+		assertEquals(nextSpeed, train1.getVelocity(), 0);
 		System.out.println("When the brakes fail train brakes do not function");
-		
+	}
+	
+	@Test
+	public void TestMassEffect()
+	{
 		//Train engine testing below
-		train3 = new TrainModel(0.2, 64.1, "Steve", 190);
-		train4 = new TrainModel(0.2, 60.8, "Alex", 424);
-		train4.openDoors();
-		while (train4.getPassengerMass() <= train3.getPassengerMass())
+		TrainModel train1 = new TrainModel(0.2, 64.1, "Steve", 190);
+		TrainModel train2 = new TrainModel(0.2, 60.8, "Alex", 424);
+		train2.openDoors();
+		while (train2.getPassengerMass() <= train1.getPassengerMass())
 		{
-			train4.updatePassengers();			
+			train2.updatePassengers();			
 		}		
-		train4.closeDoors();		
-		assertTrue(train3.getPassengerMass() != train4.getPassengerMass());
+		train2.closeDoors();		
+		assertTrue(train1.getPassengerMass() != train2.getPassengerMass());
 		
 		//Tests for heavier trains accelerating at different rates than light trains
 		for (int i = 1; i < 5000; i++)
 		{
-			train3.setSetpoint(i);
-			train4.setSetpoint(i);
+			train1.setSetpoint(i);
+			train2.setSetpoint(i);
 		}
-		assertTrue(train3.getVelocity() > train4.getVelocity());
+		assertTrue(train1.getVelocity() > train2.getVelocity());
 		System.out.println("The lighter train moves faster than the heavier train");
-		
-		//Tests that the train does not accept a negative power
-		train4 = new TrainModel(0.2, 62.2, "Ashley", 300);
-		train4.setSetpoint(-100);
-		assertTrue(train4.getVelocity() == 0);
-		System.out.println("Train does not accept negative power inputs");
+	}
+	
+	@Test
+	public void TestTrainHighPower()
+	{
+		TrainModel train = new TrainModel(0.2, 65.5, "Sandy", 241);
 		
 		//Tests that the train handles power increases too high
-		train4.setSetpoint(50000000);
-		assertTrue(train4.getPower() <= 120000);
+		train.setSetpoint(50000000);
+		assertTrue(train.getPower() <= 120000);
 		System.out.println("Train handles too large of power inputs");
 	}
 	
 	@Test
-	public void testTrainEngine()
+	public void TestTrainLowPower()
 	{
-		TrainModel train = new TrainModel(0.2, 65.5, "Sandy", 241);
+		TrainModel train = new TrainModel(0.2, 65.5, "Brandon", 241);
 		
+		//Tests that the train does not accept a negative power
+		train = new TrainModel(0.2, 62.2, "Ashley", 300);
+		train.setSetpoint(-100);
+		assertTrue(train.getVelocity() == 0);
+		System.out.println("Train does not accept negative power inputs");
 	}
+	
+	
 }
