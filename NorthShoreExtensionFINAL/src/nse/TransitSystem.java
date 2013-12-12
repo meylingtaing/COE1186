@@ -390,6 +390,9 @@ public class TransitSystem implements Runnable
 		}
 		
 		//If retVal == false The train was Not Found on a PLC!
+		
+		// TODO: I feel like this isn't getting to train controller as well so...
+		trains.get(trainId).setAuthorityFixed(blocks);
 	}
 	
 	/**
