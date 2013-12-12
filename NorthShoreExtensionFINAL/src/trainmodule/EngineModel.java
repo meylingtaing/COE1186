@@ -103,7 +103,7 @@ public class EngineModel
 		}
 		
 		//Signals the distance traveled by the train
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}
@@ -117,7 +117,7 @@ public class EngineModel
 	public double pullEmergencyBrake(double mass)
 	{		
 		//Gets the current block slope
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
 		}
@@ -142,7 +142,7 @@ public class EngineModel
 		}
 		
 		//Signals the distance traveled by the train
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}
@@ -156,7 +156,7 @@ public class EngineModel
 	public double calculateSetpoint(double power, double mass)
 	{
 		//Gets the current block slope
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
 		}
@@ -225,7 +225,7 @@ public class EngineModel
 		
 		// TODO fix integrating this deltaT stuff
 		//Signals the distance traveled by the train
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}		

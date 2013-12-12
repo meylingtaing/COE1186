@@ -25,6 +25,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;*/
 
+import java.text.DecimalFormat;
+
 import nse.TransitSystemGui;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -127,9 +129,18 @@ public class TrainModel
 	 */
     public String getSetpoint()
 	{
-        return engine.getSetpoint() + " watts";
+        return DecimalConverter(engine.getSetpoint()) + " watts";
     }
-	
+    
+    /**
+     * This method converts a double into a format that fits the table
+     */
+	public String DecimalConverter(double d)
+	{
+		DecimalFormat df = new DecimalFormat("#.#####");
+		return df.format(d);
+	}
+    
     /**
 	 * This method returns the setpoint of the train
 	 */
@@ -166,12 +177,15 @@ public class TrainModel
     	else
     		speed = engine.pullEmergencyBrake(TRAIN_MASS + passengers.getTotalPassengerMass());    	
     	
-    	Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-            	updateG();	//Updates GUI
-            }
-       });    	
+    	if (vc != null)
+    	{
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	updateG();	//Updates GUI
+                }
+           });
+    	}    	    	
     	
     	return speed;
     }
@@ -221,7 +235,7 @@ public class TrainModel
     public String getSpeed()
 	{
     	double mph = convertToMPH(engine.getSpeed());
-        return mph + " MPH";
+        return DecimalConverter(mph) + " MPH";
     }
     
     /**
