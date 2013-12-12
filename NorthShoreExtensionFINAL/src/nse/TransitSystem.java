@@ -233,6 +233,7 @@ public class TransitSystem implements Runnable
 	{
 		// TODO: I don't know, but maybe TrainController needs to do something here
 		trains.put(train.model.getTrainID(), train);
+		System.out.println(trains.keySet());
 	}
 	
 	/**
@@ -320,7 +321,7 @@ public class TransitSystem implements Runnable
 	{
 		// TODO: fill this in!
 		routeList.put(trainID, route);
-		
+		trainPositions.get(trainID).setRoute(route);
 	}
 	
 	/**
@@ -348,6 +349,8 @@ public class TransitSystem implements Runnable
 		//If set equals zero the suggestion was;
 			//A.)Not safe for the current block
 			//B.)The train was not found in any PLC (Shouldn't happen)
+		
+		trains.get(trainId).setSpeedSetpoint(setpoint);
 	}
 	
 	/**
@@ -399,6 +402,8 @@ public class TransitSystem implements Runnable
 				Thread.sleep(500);
 				for (TrainController train : trains.values())
 				{
+					//System.out.println(train.getModel().getTrainID());
+					//Thread.sleep(500);
 					train.cruiseControl(.2);
 					System.out.println("Train " + train.model.getTrainID() + " position: ");
 					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
@@ -417,16 +422,20 @@ public class TransitSystem implements Runnable
 					 * suggested authorities between Track Controllers
 					 */
 					
+					/*
 					Platform.runLater(new Runnable() {
 					    public void run() {
 					        //ctc.ctcController.displayTrains();
 					    }
 					});
+					//*/
+					Thread.sleep(500);
 				}
 			}
 			catch (Exception e)
 			{
-				
+				System.out.println("WTF?");
+				e.printStackTrace();
 			}
 		}
 		// TODO Auto-generated method stub
