@@ -115,7 +115,7 @@ public class TransitSystem implements Runnable
 		}
 	}
 	
-	/*
+	//*
 	public TransitSystem(int tickRate)
 	{
 		this.tickRate = tickRate;
