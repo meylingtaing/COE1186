@@ -1,0 +1,112 @@
+On Track Trainwreck
+Meyling Taing
+
+Defect: Remove Train not working
+Tracking No: 24325
+Tester: Meyling Taing
+Date: 12/11/13
+Resolution: N/A
+Date Resolved: N/A
+Resolver: N/A
+Verifier: N/A
+Date Verified: N/A
+
+Defect: Train won't stop accelerating
+Tracking No: 23151
+Tester: Brandon Bock
+Date: 11/22/13
+Resolution: Fixed Train Controller and Train Model to have correct formulas
+Date Resolved: 11/23/13
+Resolver: Keith Payne/Brandon Bock
+Verifier: Meyling Taing
+Date Verified: 11/23/13
+
+Defect: Train detection not showing up on track display
+Tracking No: 3681
+Tester: Meyling Taing
+Date: 11/22/13
+Resolution: Used Platform.Runlater to get JavaFx threading to work
+Date Resolved: 11/22/13
+Resolver: Meyling Taing
+Verifier: Nick Schnur
+Date Verified: 11/22/13
+
+Defect: Poplar and Castle Shannon routing causes infinite loop
+Tracking No: 55555
+Tester: Keith Payne
+Date: 12/6/13
+Resolution: Added a line in Route that fixed train directions
+Date Resolved: 12/12/13
+Resolver: Meyling Taing
+Verifier: Keith Payne
+Date Verified: 12/12/13
+
+Defect: Train with ID 0 not working with Track Controller
+Tracking No: 98413
+Tester: Nick Schnur
+Date: 12/12/13
+Resolution: Had train IDs start at 1
+Date Resolved: 12/12/13
+Resolver: Meyling Taing
+Verifier: Nick Schnur
+Date Verified: 12/12/13
+
+Defect: Train won't move past yard
+Tracking No: 468
+Tester: Nick Schnur
+Date: 11/21/13
+Resolution: Had track controller check if train is on yard and always move past it
+Date Resolved: 11/22/13
+Resolver: Nick Schnur
+Verifier: Meyling Taing
+Date Verified: 11/22/13
+
+Defect: Initial loading of track from config file not working
+Tracking No: 897
+Tester: Keith Payne
+Date: 12/12/13
+Resolution: Removed lines from track controller to remove a null pointer
+Date Resolved: 12/12/13
+Resolver: Nick Schnur
+Verifier: Sarah Bunke
+Date Verified: 12/12/13
+
+Defect: Track Controller main loop stuff throwing exceptions
+Tracking No: 235
+Tester: Meyling Taing
+Date: 12/12/13
+Resolution: Changed static reference to non static reference
+Date Resolved: 12/12/13
+Resolver: Meyling Taing
+Verifier: Nick Schnur
+Date Verified: 12/12/13
+
+Defect: Setpoint propagating  CTC -> Track Controller -> Train Controller not working
+Tracking No: 289
+Tester: Meyling Taing
+Date: 11/22/13
+Resolution: Fixed train controller and train model code
+Date Resolved: 12/12/13
+Resolver: Keith Payne/Brandon Bock
+Verifier: Nick Schnur
+Date Verified: 12/12/13
+
+Defect: Program doesn't quit properly
+Tracking No: 999
+Tester: Meyling Taing
+Date: 11/22/13
+Resolution: N/A
+Date Resolved: N/A
+Resolver: N/A
+Verifier: N/A
+Date Verified: N/A
+
+Defect: Setpoint/authority suggestion not sending first time from CTC
+Tracking No: 2363
+Tester: Brandon Bock
+Date: 12/12/13
+Resolution: Start simulation before suggesting setpoint/authority
+Date Resolved: 12/12/13
+Resolver: Keith Payne
+Verifier: Meyling Taing
+Date Verified: 12/12/13

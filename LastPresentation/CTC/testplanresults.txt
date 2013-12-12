@@ -1,0 +1,153 @@
+On Track Trainwreck
+Meyling Taing
+
+CTC Test Plan Results
+
+==========
+1 	Log in
+==========
+
+1a	Test Valid Login -- Automatic Test
+	- User logs in with valid username (root) and password (password). This
+	  user was set up to have all permissions, except admin.
+
+	1. Call testLogin() in CTCTest
+
+	Expected Results:
+		- user is not null
+		- user has correct name: root
+		- user has dispatcher permissions
+		- user has maintenance permissions
+		- user has track creator permissions
+		- user does not have admin permissions
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - pass
+
+1b	Test Fake User -- Automatic Test
+	- User logs in with username that is not in the database
+
+	1. Call testLoginNoUser() in CTCTest
+
+	Expected Results:
+		- user is null
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - pass
+
+1c	Test Wrong Password -- Automatic Test
+	- User logs in with valid username, but invalid password
+
+	1. Call testLoginWrongPw() in CTCTest
+
+	Expected Results:
+		- user is null
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - pass
+
+1d	Test Blank Login -- Automatic Test
+	- User logs in with blank username and password
+
+	1. Call testLoginBlank() in CTCTest
+
+	Expected Results:
+		- user is null -> changed to user is not null
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 11/25/13 - fail
+			- Blank user was added with all permissions to make it easier to 
+			  test. Test was rewritten to assert not null.
+		Meyling Taing - 12/11/13 - pass
+
+=============
+2 	Add Track
+=============
+
+2a	Test Redline and Greenline -- Automatic Test
+	- The csv files for redline and greenline are used to add a track to the
+	  system
+
+	1. Call testRealLines() in CTCTest
+
+	Expected Results:
+		- Add track function returns true for both red and green lines
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - pass
+
+2b Test Bad Tracks -- Automatic Test
+	- Tries to add files that don't exist and improperly formatted files
+
+	1. Call testBadTrackFiles() in CTCTest
+
+	Expected Results
+		- Add track function returns false when the file cannot be found
+		- Add track function returns false when file is formatted improperly
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - pass
+
+=============
+3	Add Train
+=============
+
+3a	Test Add/Remove Trains -- Automatic Test
+	- Adds two trains ("Train A" and "") to the system and then removes them
+
+	1. Call testAddRemoveTrain in CTCTest
+
+	ExpectedResults:
+		- Add train function returns true when Train A is added
+		- Add train function returns true when "" is added
+		- Two trains exist in ctc's database of trains after adding both trains
+		- Two trains exist in the transit system after adding both trains
+		- No trains remain in ctc or system after removing both of them
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/11/13 - fail
+			- Remove train fails because of null pointer from Track Controller.
+			  Bug was logged.
+
+==========
+4	Routes
+==========
+
+4a Test Greenline Routing -- Automatic Test
+	- Routes a train to every single possible station in no particular order
+
+	1. Run RouteTest
+
+	ExpectedResults:
+		- All stations can be routed to, and no single routing takes longer
+		  than 500ms. This is to check for infinite loops.
+
+	Tester, Date Tested, and Actual Results:
+		Keith Payne - 12/6/13 - fail
+			- Poplar and Castle Shannon both resulted in infinite loops. A bug
+			  was logged.
+		Meyling Taing - 12/11/13 - pass
+
+=======
+5 	Gui
+=======
+
+5a Test Starting Program -- Manual Test
+	- Makes sure the GUI works
+
+	1. Start program
+	2. Click on CTC
+	3. Log in with user:root, password:password
+	4. Check that greenline is loaded and one train is loaded
+	5. Click on Add track
+	6. Type in redline, redline.csv
+	7. Click submit
+	8. Check that redline shows up
+	9. Click on Add train, and add a train
+	10. Click on the train name and make sure information is shown
+	11. Click on suggest setpoint/authority
+	12. Click on simulate in Main GUI
+	13. Make sure train is showing up in CTC
+
+	Tester, Date Tested, and Actual Results:
+		Meyling Taing - 12/12/13 - pass

@@ -1,0 +1,3 @@
+Installation Guide
+Locate folder where TransitSystem.jar is located.
+Double click jar file.
