@@ -54,7 +54,7 @@ public class EngineModel
 		deltaT = time;
 		trainNum = id;
 		//lastPower = 0;
-		deltaT = 0.2;//###################################TAKE THIS OUT#################
+		//deltaT = 0.2;//###################################TAKE THIS OUT#################
 	}
 	
 	/**
@@ -167,7 +167,7 @@ public class EngineModel
 	 */	
 	public double calculateSetpoint(double power, double mass)
 	{	
-		double speedLimit = MAX_SPEED;
+		//double speedLimit = MAX_SPEED;
 		
 		//Gets the current block slope and speed limit
 		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
@@ -175,7 +175,7 @@ public class EngineModel
 			if (MainController.transitSystem.trainPositions.get(trainNum) != null)
 			{
 				currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();//43.496
-				speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
+				//speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
 			}
 		}
 		
@@ -236,12 +236,12 @@ public class EngineModel
 		{
 			currentVelocity = 0;
 		}
-		else if (currentVelocity > speedLimit)
+		/*else if (currentVelocity > speedLimit)
 		{
 			/*currentVelocity = speedLimit;
 			System.out.println("Speed Limit: " + speedLimit);
-			System.out.println("Current Speed: " + currentVelocity);*/
-		}
+			System.out.println("Current Speed: " + currentVelocity);
+		}*/
 		else if (currentVelocity > MAX_SPEED)
 		{
 			currentVelocity = MAX_SPEED;

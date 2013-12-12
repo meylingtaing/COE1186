@@ -51,11 +51,9 @@ public class TrainModel
 		TrainView tv = new TrainView();
 		tv.createGUI();
 	}
-	
-	
-	
+		
 	/**
-	 * This the advanced train constructor
+	 * This the main train constructor
 	 */
 	public TrainModel(double tick, /*ctc.Route trip,*/ double t, String engineer, int id)
 	{
