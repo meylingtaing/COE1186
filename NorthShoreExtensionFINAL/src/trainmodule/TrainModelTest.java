@@ -287,7 +287,7 @@ public class TrainModelTest
 		assertTrue(train1.getPassengerMass() != train2.getPassengerMass());
 		
 		//Tests for heavier trains accelerating at different rates than light trains
-		for (int i = 1; i < 300; i++)
+		for (int i = 1; i < 5000; i++)
 		{
 			train1.setSetpoint(i);
 			train2.setSetpoint(i);
