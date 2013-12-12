@@ -103,6 +103,9 @@ public class TrackControllerAuthorityTest {
 				System.out.println("");
 				System.out.println("Authority: "+train.authority+" Train: "+train.train.getModel().getTrainID());
 				System.out.println("");
+				TrainController t1 = MainController.transitSystem.trains.get(train.train.getModel().getTrainID());
+				t1.setAuthorityFixed(train.authority);
+				System.out.println("Authority Set: "+t1.getAuthorityFixed());
 			}
 		}
 	}

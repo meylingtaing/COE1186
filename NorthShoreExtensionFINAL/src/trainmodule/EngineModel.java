@@ -63,7 +63,7 @@ public class EngineModel
 	public double pullBrake(double load, double mass)
 	{	
 		//Gets the current block slope
-		if (!MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
 		}
@@ -103,7 +103,7 @@ public class EngineModel
 		}
 		
 		//Signals the distance traveled by the train
-		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}
@@ -117,7 +117,7 @@ public class EngineModel
 	public double pullEmergencyBrake(double mass)
 	{		
 		//Gets the current block slope
-		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();
 		}
@@ -142,7 +142,7 @@ public class EngineModel
 		}
 		
 		//Signals the distance traveled by the train
-		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}
@@ -158,7 +158,7 @@ public class EngineModel
 		double speedLimit = MAX_SPEED;
 		
 		//Gets the current block slope and speed limit
-		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			currentGradient = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getGrade();//43.496
 			speedLimit = MainController.transitSystem.trainPositions.get(trainNum).getCurrBlock().getSpeedLimit() * 0.277778;
@@ -233,7 +233,7 @@ public class EngineModel
 		}		
 		
 		//Signals the distance traveled by the train
-		if (TrainModel.demo == false && !MainController.transitSystem.trainPositions.isEmpty())
+		if (MainController.transitSystem != null && MainController.transitSystem.simulated == true && !MainController.transitSystem.trainPositions.isEmpty())
 		{
 			MainController.transitSystem.trainPositions.get(trainNum).moveTrain(currentVelocity * deltaT);
 		}		

@@ -1,6 +1,8 @@
 package trackModel;
 
 
+
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -44,6 +46,9 @@ public class ChildQueryController {
 	private Label gradeInfofield;
 
 	@FXML
+    private Label isClosedField;
+	
+	@FXML
 	private Label lengthInfoField;
 
 	@FXML
@@ -54,12 +59,18 @@ public class ChildQueryController {
 
 	@FXML
 	private Label siwtchInfoField;
+	
+	@FXML
+    private Label stationName;
 
 	@FXML
     private Label trackDNELabel;
 	
 	@FXML
 	private TextField trackLineField;
+	
+	 @FXML
+	    private Label trainDetecedField;
 
 	@FXML
 	private Label undergroundInfoField;
@@ -80,7 +91,7 @@ public class ChildQueryController {
 			trackDNELabel.setVisible(false);
 			blockNum = Integer.parseInt(blockNumString);
 			TrackObject currTrack = Track.trackArray.get(trackLine);
-			try{
+			//try{
 				Block desiredBlock = currTrack.getBlock(blockNum);
 				blockIDRangeErrorLabel.setVisible(false);
 				BlockNumberInfoField.setText(Integer.toString(blockNum));
@@ -92,15 +103,18 @@ public class ChildQueryController {
 				undergroundInfoField.setText(Boolean.toString(desiredBlock.isUnderground()));
 				lengthInfoField.setText(Double.toString(desiredBlock.getLength()));
 				sectionInfoField.setText(desiredBlock.getSection());
+				trainDetecedField.setText(Boolean.toString(desiredBlock.isTrainDetected()));
+				stationName.setText(desiredBlock.getStationName());
+				isClosedField.setText(Boolean.toString(desiredBlock.isClosed()));
 
 
 				BlockInfoPane.setVisible(true);
-			}catch(NullPointerException e){
+			/*}catch(NullPointerException e){
 				BlockInfoPane.setVisible(false);
 				blockIDRangeErrorLabel.setVisible(true);
 				
 			}
-			
+			*/
 			
 		}
 
@@ -123,7 +137,8 @@ public class ChildQueryController {
         assert trackLineField != null : "fx:id=\"trackLineField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert undergroundInfoField != null : "fx:id=\"undergroundInfoField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
         assert blockIDRangeErrorLabel != null : "fx:id=\"blockIDRangeErrorLabel\" was not injected: check your FXML file 'QueryBlock.fxml'.";
-
-    }
-
+        assert trainDetecedField != null : "fx:id=\"trainDetecedField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
+        assert stationName != null : "fx:id=\"stationName\" was not injected: check your FXML file 'QueryBlock.fxml'.";
+        assert isClosedField != null : "fx:id=\"isClosedField\" was not injected: check your FXML file 'QueryBlock.fxml'.";
+	}
 }
