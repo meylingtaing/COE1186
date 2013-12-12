@@ -45,7 +45,7 @@ public class TrackController {
 	 * 
 	 * */
 	
-	public TrackController(String s,ArrayList<Block> b,ArrayList<Switch> switches, TransitSystem ts)
+	public TrackController(String s,ArrayList<Block> b,ArrayList<Switch> switches, TransitSystem ts, TrackObject to)
 	{
 		ID = s;
 		blocks = b;
@@ -54,7 +54,8 @@ public class TrackController {
 		trainsWithAuthoritySuggestion = new ArrayList<TrainWithAuthority>();
 		trainsUnderControl = new ArrayList<TrainController>();
 		switchesUnderControl = switches;
-		trackModel = MainController.transitSystem.ctcGetTrack("greenline");
+
+		trackModel = to;
 		//trainsInSection = trainsOnTrack;
 		//trainModule = tm;
 		//getSwitchesInSections();

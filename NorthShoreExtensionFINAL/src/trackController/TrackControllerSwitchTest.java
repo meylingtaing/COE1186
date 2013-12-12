@@ -28,7 +28,7 @@ public class TrackControllerSwitchTest {
 		trainSys = main.transitSystem;
 		TrackControllerInitalizer ini = new TrackControllerInitalizer(main.transitSystem.ctcGetTrack("greenline"),trainSys);
 		plcs = ini.initialize();
-		TrackObject trackModel = main.transitSystem.ctcGetTrack("greenline");
+		//TrackObject trackModel = main.transitSystem.ctcGetTrack("greenline");
 		
 		//assertNotNull("TrackControllers Intialized", plcs);
 		
@@ -36,6 +36,7 @@ public class TrackControllerSwitchTest {
 		TrainController trainController = new TrainController();
 		trainSys.ctcAddTrain(trainController);
 		
+		TrackObject trackModel = main.transitSystem.ctcGetTrack("greenline");
 		Route trainRoute = new Route(trainController.getModel().getTrainID(),trackModel);
 		trainRoute.addStation("MT LEBANON");
 		

@@ -74,7 +74,7 @@ public class TrackControllerInitalizer {
 		Switch OQN = new Switch(directionAPLC1,directionBPLC1,container);
 		container.setBlockSwitch(OQN);
 		switchesUnderPLC1Control.add(OQN);
-		TrackController plc1 = new TrackController("PLC 1",plc1Blocks,switchesUnderPLC1Control,trainsitSys);
+		TrackController plc1 = new TrackController("PLC 1",plc1Blocks,switchesUnderPLC1Control,trainsitSys,model);
 		plc1.setEndAuthorityBlocks(endAuthoritys1);
 		plc1.setStartAuthorityBlocks(startAuthoritys1);
 		plc1.setStartingBlock(model.getBlock(74));
@@ -162,7 +162,7 @@ public class TrackControllerInitalizer {
 		Switch NRM = new Switch(directionAPLC2,directionBPLC2,container);
 		container.setBlockSwitch(NRM);
 		switchesUnderPLC2Control.add(NRM);
-		TrackController plc2 = new TrackController("PLC 2",plc2Blocks,switchesUnderPLC2Control,trainsitSys);
+		TrackController plc2 = new TrackController("PLC 2",plc2Blocks,switchesUnderPLC2Control,trainsitSys,model);
 		plc2.setEndAuthorityBlocks(endAuthoritys2);
 		plc2.setStartAuthorityBlocks(startAuthoritys2);
 		plc2.setStartingBlock(model.getBlock(63));
@@ -255,7 +255,7 @@ public class TrackControllerInitalizer {
 		container.setBlockSwitch(JYK);
 		switchesUnderPLC3Control.add(IJY);
 		switchesUnderPLC3Control.add(JYK);
-		TrackController plc3 = new TrackController("PLC 3",plc3Blocks,switchesUnderPLC3Control,trainsitSys);
+		TrackController plc3 = new TrackController("PLC 3",plc3Blocks,switchesUnderPLC3Control,trainsitSys,model);
 		plc3.setEndAuthorityBlocks(endAuthoritys3);
 		plc3.setStartAuthorityBlocks(startAuthoritys3);
 		plc3.setStartingBlock(model.getBlock(36));
@@ -348,7 +348,7 @@ public class TrackControllerInitalizer {
 		Switch ZFG = new Switch(directionAPLC4,directionBPLC4,container);
 		container.setBlockSwitch(ZFG);
 		switchesUnderPLC4Control.add(ZFG);
-		TrackController plc4 = new TrackController("PLC 4",plc4Blocks,switchesUnderPLC4Control,trainsitSys);
+		TrackController plc4 = new TrackController("PLC 4",plc4Blocks,switchesUnderPLC4Control,trainsitSys, model);
 		plc4.setEndAuthorityBlocks(endAuthoritys4);
 		plc4.setStartAuthorityBlocks(startAuthoritys4);
 		plc4.setStartingBlock(model.getBlock(117));
@@ -403,7 +403,7 @@ public class TrackControllerInitalizer {
 		Switch DCA = new Switch(directionAPLC5,directionBPLC5,container);
 		container.setBlockSwitch(DCA);
 		switchesUnderPLC5Control.add(DCA);
-		TrackController plc5 = new TrackController("PLC 5",plc5Blocks,switchesUnderPLC5Control,trainsitSys);
+		TrackController plc5 = new TrackController("PLC 5",plc5Blocks,switchesUnderPLC5Control,trainsitSys, model);
 		plc5.setEndAuthorityBlocks(endAuthoritys5);
 		plc5.setStartAuthorityBlocks(startAuthoritys5);
 		plc5.setStartingBlock(model.getBlock(147));
