@@ -471,7 +471,7 @@ public class TransitSystem implements Runnable
 			}
 			catch (Exception e)
 			{
-				System.out.println("WTF?");
+				//System.out.println("WTF?");
 				e.printStackTrace();
 			}
 		}
