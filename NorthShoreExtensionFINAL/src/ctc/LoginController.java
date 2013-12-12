@@ -79,6 +79,7 @@ public class LoginController
 			catch (Exception e) 
 			{
 				System.err.println("Can't open the CTC office!");
+				//e.printStackTrace();
 			} 
 			
 		}

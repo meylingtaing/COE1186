@@ -23,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -35,8 +36,10 @@ public class CTCController
 	removeTrackButton, maintenanceButton, editRoutesButton, addTrainButton,
 	removeTrainButton, routeTrainButton, suggestSetptButton, scheduleTrainButton;
 	@FXML protected Pane displayBox;
-	@FXML protected VBox trackLegendBox, trainLegendBox;
+	@FXML protected VBox trackLegendBox, trainLegendBox, infoBox;
 	protected Label selectedLegend;
+	
+	@FXML protected Text selectedName;
 	
 	private String trackGui = "CTCTrackView.fxml";
 	private String mainGui = "CTCView.fxml";
@@ -75,6 +78,7 @@ public class CTCController
 			ctcOffice.ctcController = this;
 			displayTrack();
 			displayLegend();
+			displayInfo();
 		}
 	}
 	
@@ -182,6 +186,9 @@ public class CTCController
 		}
 	}
 	
+	/**
+	 * Display the legend
+	 */
 	protected void displayLegend()
 	{
 		// Clear legend contents
@@ -222,6 +229,8 @@ public class CTCController
 						selectedTrack = trackLegend.getText();
 						selectedTrain = null;
 					}
+					
+					displayInfo();
 				}
 			});
 		}
@@ -261,8 +270,48 @@ public class CTCController
 						selectedTrain = trainLegend.getText();
 						selectedTrack = null;
 					}
+					displayInfo();
 				}
+				
 			});
+		}
+	}
+	
+	/**
+	 * Display the information about selected item
+	 */
+	public void displayInfo()
+	{
+		if (ctcOffice != null && ctcOffice.ctcStage != null)
+		{
+			infoBox.getChildren().clear();
+			if (selectedTrain != null)
+			{
+				System.out.println("Selected train: " + selectedTrain);
+				String[] parts = selectedTrain.split(" ");
+				// Train id
+				int trainId = ctcOffice.trains.get(parts[1]);
+				
+				selectedName.setText("Train " + trainId + ": " + parts[1]);
+				
+				// Add current location
+				int currBlock = ctcOffice.transitSystem.trainPositions.get(trainId).getCurrBlock().getBlockId();
+				Text location = new Text("Position: Block " + currBlock);
+				
+				// Add everything and display
+				infoBox.getChildren().add(location);
+				selectedName.setVisible(true);
+			}
+			else if (selectedTrack != null)
+			{
+				selectedName.setText("Track: " + selectedTrack);
+				selectedName.setVisible(true);
+			}
+			else
+			{
+				selectedName.setVisible(false);
+			}
+			ctcOffice.ctcStage.sizeToScene();
 		}
 	}
 	

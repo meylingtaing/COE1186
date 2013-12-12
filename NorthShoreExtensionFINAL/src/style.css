@@ -53,3 +53,13 @@
 	-fx-fill: #0000FF;
 	-fx-stroke: #0000FF;
 }
+
+.infoLabel
+{
+	-fx-font-size: 20px;
+}
+
+.infoText
+{
+	-fx-font-size: 14px;
+}

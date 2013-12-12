@@ -3,6 +3,7 @@ import trainmodule.TrainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class MainController {
@@ -10,6 +11,8 @@ public class MainController {
 	public static boolean simulatedMain = false;
 	protected Thread myThread = new Thread(transitSystem);
 	//public static boolean threadSuspended = true;
+	
+	@FXML private TextField speedInput;
 	
 	public void initialize()
 	{
@@ -32,6 +35,18 @@ public class MainController {
 	
 	@FXML private void simulate(ActionEvent event)
 	{
+		// Change speed
+		try 
+		{
+			Double tickRate = Double.parseDouble(speedInput.getText());
+			transitSystem.tickRate = tickRate;
+		}
+		catch (Exception e) 
+		{
+			// Default is to run at wall clock speed
+			transitSystem.tickRate = 1.0;
+		}
+		
 		Button buttonClicked = (Button) event.getSource();
 		if (buttonClicked.getText().equals("Simulate"))
 		{
@@ -52,7 +67,8 @@ public class MainController {
 		
 		if (transitSystem.simulated)
 		{
-			synchronized(transitSystem) {
+			synchronized(transitSystem) 
+			{
 				transitSystem.notify();
 			}
 		}

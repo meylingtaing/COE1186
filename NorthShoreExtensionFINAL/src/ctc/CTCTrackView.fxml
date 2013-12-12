@@ -3,6 +3,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.net.*?>
 
@@ -25,7 +26,8 @@
 			</VBox>
 		</right>
 	</BorderPane>
-	<VBox fx:id="infoContainer" spacing="10" />
+	<Text fx:id="selectedName" styleClass="infoLabel" visible="false" />
+	<VBox fx:id="infoBox" styleClass="infoText" spacing="10" />
 	<HBox fx:id="buttonContainer" spacing="10">
 		<padding><Insets right="10" left="10"/></padding>
 		<Button fx:id="addTrackButton" text="Add track" onAction="#displayPopup" />

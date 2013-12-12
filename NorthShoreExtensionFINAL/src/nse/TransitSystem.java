@@ -46,7 +46,7 @@ public class TransitSystem implements Runnable
 	
 	//When this is set the CTC must resend the suggested items to the new PLC
 	private int suggestionHandoff = 0;
-	private int tickRate;
+	protected double tickRate;
 	public boolean simulated = false;
 	//public MainController mainController;
 	
@@ -438,7 +438,7 @@ public class TransitSystem implements Runnable
 				{
 					//System.out.println(train.getModel().getTrainID());
 					//Thread.sleep(500);
-					train.cruiseControl(.2);
+					train.cruiseControl(tickRate);
 					System.out.println("Train " + train.model.getTrainID() + " position: ");
 					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
 					System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
@@ -459,7 +459,11 @@ public class TransitSystem implements Runnable
 					//*
 					Platform.runLater(new Runnable() {
 					    public void run() {
-					        ctc.ctcController.displayTrack();
+					    	if (ctc.ctcController != null)
+					    	{
+						        ctc.ctcController.displayTrack();
+						        ctc.ctcController.displayInfo();
+					    	}
 					    }
 					});
 					//*/
