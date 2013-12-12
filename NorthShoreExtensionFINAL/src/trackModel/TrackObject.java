@@ -16,6 +16,8 @@ public class TrackObject implements Iterable<Block> {
 	
 	private String line;
 	private Hashtable<Integer, Block> blockDB;
+	private boolean circuitDown;
+	private boolean powerDown;
 	
 	/**
 	 * Constructor method for TrackObject.java
@@ -23,6 +25,8 @@ public class TrackObject implements Iterable<Block> {
 	 */
 	public TrackObject(){
 		blockDB= new Hashtable<Integer, Block>();
+		circuitDown = false;
+		powerDown = false;
 	}
 	
 	/**
@@ -34,6 +38,24 @@ public class TrackObject implements Iterable<Block> {
 		blockDB.put(id, b);
 		
 	}
+
+	public boolean getPowerDown(){
+		return powerDown;
+	}
+	
+	public boolean getCircuitDown(){
+		return circuitDown;
+	}
+	
+	public void setPowerDown(boolean b)
+	{
+		powerDown=b;
+	}
+	
+	public void setCircuitDown(boolean b)
+	{
+		circuitDown=b;
+	}	
 	
 	public void setLine(String lineName){
 		line = lineName;

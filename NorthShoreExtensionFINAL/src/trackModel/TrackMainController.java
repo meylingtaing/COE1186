@@ -101,6 +101,8 @@ public class TrackMainController {
 
 	    private int internalBrokenRailID; //holds current broken block
 	    private String internalBrokenRailLine; //line of current broken block
+	    private String internalCircuitDownLine;
+	    private String internalPowerDownLine;
 
 	    /**
 	     * GUI function that is called when user clicks break rail button, breaks up window to enter
@@ -135,14 +137,25 @@ public class TrackMainController {
 	    @FXML
 	    void BreakTrackCircuitFunction(MouseEvent event) {
 	    	if(breakTrackCircuitButton.getText().equals("Broken Circuit Fixed")){
+	    		TrackObject t = Track.trackArray.get(internalCircuitDownLine);
+	    		t.setCircuitDown(false);
+	    		
 	    		BrokenCircuitBlock.setVisible(true);
 	        	BrokenCircuitRed.setVisible(false);
 	        	breakTrackCircuitButton.setText("Break Track Circuit"); 		
 	    	}
 	    	else{
-	    		BrokenCircuitBlock.setVisible(false);
-	        	BrokenCircuitRed.setVisible(true);
-	        	breakTrackCircuitButton.setText("Broken Circuit Fixed");	
+	    		try{
+	    			internalCircuitDownLine = trackLineList.getSelectionModel().getSelectedItem();
+	    			TrackObject t = Track.trackArray.get(internalCircuitDownLine);
+	    			t.setCircuitDown(true);
+	    			
+	    			BrokenCircuitBlock.setVisible(false);
+	    			BrokenCircuitRed.setVisible(true);
+	    			breakTrackCircuitButton.setText("Broken Circuit Fixed");	
+	    		}catch (Exception e){
+	    			
+	    		}
 	    	}
 	    }
 	    
@@ -208,14 +221,27 @@ public class TrackMainController {
 	    @FXML
 	    void CutPowerFunction(MouseEvent event) {
 	    	if(CutPowerButton.getText().equals("Power Restored")){
+	    		TrackObject t = Track.trackArray.get(internalPowerDownLine);
+	    		t.setPowerDown(false);
+	    		internalPowerDownLine=null;
+	    				
 	    		powerFailureBlock.setVisible(true);
 	        	BrokenPowerRed.setVisible(false);
 	        	CutPowerButton.setText("Cut Power");
 	    	}
 	    	else{
-	    		powerFailureBlock.setVisible(false);
-	        	BrokenPowerRed.setVisible(true);
-	        	CutPowerButton.setText("Power Restored");
+	    		try{
+	    			internalPowerDownLine = trackLineList.getSelectionModel().getSelectedItem();
+	    			TrackObject t = Track.trackArray.get(internalPowerDownLine);
+	    			t.setPowerDown(true);
+	    			
+	    			powerFailureBlock.setVisible(false);
+	    			BrokenPowerRed.setVisible(true);
+	    			CutPowerButton.setText("Power Restored");
+	    		}catch (Exception e){
+	    			
+	    		}
+	    		
 	    	}
 	    	
 	    }
