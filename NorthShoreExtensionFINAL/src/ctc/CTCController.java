@@ -167,10 +167,22 @@ public class CTCController
 				}
 				
 				// Display train if detected
-				if (block.isTrainDetected())
+				
+				switch (block.getSignalState())
 				{
-					strokeStyle = "-fx-stroke: #CC33FF; -fx-stroke-width: 3px;";
+				case 4:
+					strokeStyle = "-fx-stroke: #FF0000; -fx-stroke-width: 3px;";
+					break;
+				case 3:
+					strokeStyle = "-fx-stroke: yellow; -fx-stroke-width: 2px;";
+					break;
+				case 2:
+					strokeStyle = "-fx-stroke: green; -fx-stroke-width: 1px;";
+					break;
 				}
+				
+					
+				
 				
 				// Determine if block is closed for maintenance
 				if (block.isClosed())
@@ -201,6 +213,7 @@ public class CTCController
 					displayBox.getChildren().add(crossText);
 					
 				}
+				
 				
 				// Display line
 				line.setStyle(strokeStyle);

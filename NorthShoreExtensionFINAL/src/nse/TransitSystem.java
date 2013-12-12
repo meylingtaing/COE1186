@@ -435,12 +435,12 @@ public class TransitSystem implements Runnable
                 }
 				
 				Thread.sleep(1000);
-				for (int i = 0; i < tickRate; i++)
+				for (int i = 0; i < tickRate*5; i++)
 				{
 					for (TrackController p : greenLinePlcs)
 					{
 						p.handoff();
-						p.checkSwitchStatus();
+						//p.checkSwitchStatus();
 						p.calculateFixedBlockAuthority();
 						p.calculateSignalStates();
 					}
