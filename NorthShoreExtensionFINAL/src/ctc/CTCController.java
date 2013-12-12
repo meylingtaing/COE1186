@@ -298,31 +298,35 @@ public class CTCController
 				selectedName.setText("Train " + trainId + ": " + parts[1]);
 				
 				// Add current location
-				int currBlock = ctcOffice.transitSystem.trainPositions.get(trainId).getCurrBlock().getBlockId();
-				Text location = new Text("Position: Block " + currBlock);
-				
-				// Add schedule
-				Route route = ctcOffice.routes.get(parts[1]);
-				Hashtable<Integer, Double> schedule = route.getSchedule();
-				StringBuilder scheduleStr = new StringBuilder();
-				
-				for (Block block : route.getBlockList())
+				if (ctcOffice.transitSystem.trainPositions.get(trainId) != null)
 				{
-					if (block.isStation())
+					int currBlock = ctcOffice.transitSystem.trainPositions.get(trainId).getCurrBlock().getBlockId();
+					Text location = new Text("Position: Block " + currBlock);
+				
+				
+					// Add schedule
+					Route route = ctcOffice.routes.get(parts[1]);
+					Hashtable<Integer, Double> schedule = route.getSchedule();
+					StringBuilder scheduleStr = new StringBuilder();
+					
+					for (Block block : route.getBlockList())
 					{
-						double dwell = schedule.get(block.getBlockId());
-						scheduleStr.append(block.getBlockId() + " " + block.getStationName() + ": " + dwell + "mins\n");
+						if (block.isStation())
+						{
+							double dwell = schedule.get(block.getBlockId());
+							scheduleStr.append(block.getBlockId() + " " + block.getStationName() + ": " + dwell + "mins\n");
+						}
 					}
+					
+					TextArea scheduleText = new TextArea(scheduleStr.toString());
+					scheduleText.setPrefRowCount(5);
+					scheduleText.setEditable(false);
+					
+					// Add everything and display
+					infoBox.getChildren().add(location);
+					infoBox.getChildren().add(new Text("Schedule with Dwell Times"));
+					infoBox.getChildren().add(scheduleText);
 				}
-				
-				TextArea scheduleText = new TextArea(scheduleStr.toString());
-				scheduleText.setPrefRowCount(5);
-				scheduleText.setEditable(false);
-				
-				// Add everything and display
-				infoBox.getChildren().add(location);
-				infoBox.getChildren().add(new Text("Schedule with Dwell Times"));
-				infoBox.getChildren().add(scheduleText);
 				selectedName.setVisible(true);
 			}
 			else if (selectedTrack != null)

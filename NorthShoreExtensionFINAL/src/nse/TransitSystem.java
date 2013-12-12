@@ -222,6 +222,7 @@ public class TransitSystem implements Runnable
 		if(trackName.compareToIgnoreCase("greenline") == 0)
 		{
 			TrackControllerInitalizer greenPlcIni = new  TrackControllerInitalizer(track , MainController.transitSystem);
+			System.out.println("In add track: " + MainController.transitSystem);
 			greenLinePlcs = greenPlcIni.initialize();
 		}
 	}
@@ -434,15 +435,25 @@ public class TransitSystem implements Runnable
                 }
 				
 				Thread.sleep(1000);
+				for (TrackController p : greenLinePlcs)
+				{
+					p.handoff();
+					p.checkSwitchStatus();
+					p.calculateFixedBlockAuthority();
+					p.calculateSignalStates();
+				}
 				for (TrainController train : trains.values())
 				{
 					//System.out.println(train.getModel().getTrainID());
 					//Thread.sleep(500);
-					train.cruiseControl(tickRate);
-					System.out.println("Train " + train.model.getTrainID() + " position: ");
-					System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
-					System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
-					
+					if (trainPositions.get(train.model.getTrainID()) != null)
+					{
+						train.cruiseControl(tickRate);
+						System.out.println("Train " + train.model.getTrainID() + " position: ");
+						System.out.print("Block: " + trainPositions.get(train.model.getTrainID()).getCurrBlock().getBlockID() + " ");
+						System.out.println("\tDistance traveled: " + trainPositions.get(train.model.getTrainID()).getDistanceTraveled());
+					}
+				
 					//simulated = false;
 					//synchronized(CTC.ctcController) {
 					//	CTC.ctcController.displayTrains();
