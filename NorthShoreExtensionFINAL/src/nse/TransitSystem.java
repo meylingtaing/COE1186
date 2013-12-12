@@ -385,6 +385,19 @@ public class TransitSystem implements Runnable
 		trainPositions.put(trainID, new TrainPosition(track));
 	}
 	
+	/**
+	 * Sets the dwell time for a certain station in a route
+	 * @param trainId
+	 * @param blockId
+	 * @param dwellTime
+	 */
+	public void ctcSetDwellTime(int trainId, int blockId, double dwellTime) 
+	{
+		// Get route
+		Route route = routeList.get(trainId);
+		route.setDwellTime(blockId, dwellTime);
+	}
+	
 	@Override
 	public void run() 
 	{

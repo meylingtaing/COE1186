@@ -36,7 +36,7 @@ public class CTCController
 	// GUI related fields
 	@FXML protected Button editTracksButton, navigateMainButton, addTrackButton,
 	removeTrackButton, maintenanceButton, editRoutesButton, addTrainButton,
-	removeTrainButton, routeTrainButton, suggestSetptButton;
+	removeTrainButton, routeTrainButton, suggestSetptButton, scheduleTrainButton;
 	@FXML protected Pane displayBox;
 	@FXML protected VBox trackLegendBox, trainLegendBox;
 	private String trackGui = "CTCTrackView.fxml";
@@ -49,6 +49,7 @@ public class CTCController
 	private String removeTrainForm = "removeTrainForm.fxml";
 	private String routeTrainForm = "routeTrainForm.fxml";
 	private String setpointForm = "suggestSetptForm.fxml";
+	private String scheduleForm = "scheduleTrainForm.fxml";
 	private int shrinkDisplay = 9;
 	
 	/**
@@ -294,6 +295,11 @@ public class CTCController
 		{
 			fxmlFile = setpointForm;
 			title = "Suggest Setpoint and Authority";
+		}
+		else if (clickedButton == scheduleTrainButton)
+		{
+			fxmlFile = scheduleForm;
+			title = "Schedule Train";
 		}
 		
 		try 

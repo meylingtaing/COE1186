@@ -3,6 +3,7 @@
  */
 package ctc;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -15,8 +16,10 @@ public class Route
 	private TrackObject track;
 	private LinkedList<Block> blockList;
 	private boolean lastBlockForward;		// Direction of last block
+	private Hashtable<Integer, Integer> dwellTimes; // Block ID, dwell in secs
 	
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
+	private int defaultDwellTime = 60;
 	
 	/**
 	 * Route is initialized with the train and the track
@@ -29,6 +32,7 @@ public class Route
 		this.track = track;
 		
 		this.blockList = new LinkedList<Block>();
+		this.dwellTimes = new Hashtable<Integer, Integer>();
 		
 		// Add first block
 		blockList.add(track.getBlock(0));
@@ -77,6 +81,9 @@ public class Route
 		{
 			if (DEBUG)
 				System.out.println(lastBlock.getBlockID() + " " + lastBlockForward);
+			
+			if (lastBlock.isStation())
+				dwellTimes.put(lastBlock.getBlockID(), defaultDwellTime);
 			
 			int[] possibleNextBlocks;
 			Double[] coordinates = lastBlock.getCoordinates();
@@ -152,7 +159,25 @@ public class Route
 			lastBlock = nextBlock;
 		}
 		
+		dwellTimes.put(lastBlock.getBlockID(), defaultDwellTime);
+		
 		return blockList.getLast().getBlockID();
+	}
+	
+	/**
+	 * Update the station dwell time
+	 */
+	public void setDwellTime(int blockId, double min)
+	{
+		setDwellTime(blockId, (int)min*60);
+	}
+	
+	/**
+	 * Update the station dwell time in seconds
+	 */
+	public void setDwellTime(int blockId, int dwellTime)
+	{
+		dwellTimes.put(blockId, dwellTime);
 	}
 	
 	/**
@@ -178,5 +203,13 @@ public class Route
 	public LinkedList<Block> getBlockList()
 	{
 		return blockList;
+	}
+	
+	/**
+	 * Get train
+	 */
+	public int getTrain()
+	{
+		return trainId;
 	}
 }
