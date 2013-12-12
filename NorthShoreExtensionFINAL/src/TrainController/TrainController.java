@@ -6,15 +6,21 @@ import ctc.Route;
 
 public class TrainController implements Runnable {
 	
+	public int id;
 	public trainmodule.TrainModel model;
 	public PIDController pidc;
 	public ctc.Route route;
 	public GPS gps;
 	public Double powerSetpoint;
 	public Double speedSetpoint;
+	public Double speedSetpointSelf; // TODO:	implement logic to manage
+	public Double speedSetpointMBO;  //			various speed setpoints
+	public Double speedSetpointCTC;
 	public Double speed;
 	public Double authoritySetpointMoving;
 	public int authoritySetpointFixed;
+	public trackModel.Block currentBlock;
+	public trackModel.Block nextBlock;
 	public Boolean doorsOpen;
 	public Boolean lightsOn;
 	public int passengerCount;
@@ -79,12 +85,16 @@ public class TrainController implements Runnable {
 	}
 
 	public TrainController(int id) {
-		model = new trainmodule.TrainModel(0.2, /*null,*/ 70.2, "???", id);
+		this.id = id;
+		model = new trainmodule.TrainModel(1 / loopsPS, /*null,*/ 70.2, "???", id);
 		pidc = new PIDController(37103.9);
 		//route = new ctc.Route();
 		gps = new GPS();
 		powerSetpoint = 0.0;
 		speedSetpoint = 0.0;
+		speedSetpointSelf = 0.0;
+		speedSetpointMBO = 0.0;
+		speedSetpointCTC = 0.0;
 		speed = 0.0;
 		authoritySetpointMoving = 0.0;
 		authoritySetpointFixed = 0;
@@ -93,8 +103,6 @@ public class TrainController implements Runnable {
 		passengerCount = 0;
 		position = new Vector();
 		temperatureSetpoint = 68;
-		
-		// TODO: TrainController: Add ID
 	}
 	
 	public void openDoors() {
@@ -151,24 +159,17 @@ public class TrainController implements Runnable {
 	
 	public void cruiseControl(Double delta) {
 		
+		// Updates train model with delta T
+		model.SetDeltaT(delta);
+		
+		// Sets power and updates it based on the current speedd
 		speed = model.setSetpoint(powerSetpoint);
 		powerSetpoint = pidc.getPower(speedSetpoint, speed, delta);
-		System.out.println("Power Setpoint: " + powerSetpoint);
+		System.out.println("Power Setpoint: " + powerSetpoint + "\tSpeed: " + speed);
+		
+		currentBlock = nse.MainController.transitSystem.trainPositions.get(this.id).getCurrBlock();
+		//nextBlock = nse.MainController.transitSystem.trainPositions.get(this.id).getCurrBlock().getNextBlockId();
 
-//		if(speed < speedSetpoint) {
-//			powerSetpoint += .5;
-//			speed = model.setSetpoint(powerSetpoint);
-//		} else if (speed > speedSetpoint) {
-//			powerSetpoint -= .5;
-//			speed = model.setSetpoint(powerSetpoint);
-//		} else {
-//			speed = model.setSetpoint(powerSetpoint);
-//		}
-//		if(guic != null) {
-//			if(guic.text_currentSpeed != null)
-//				guic.text_currentSpeed.setText(Double.toString(speed));
-//				guic.setPowerText(powerSetpoint.intValue());
-//		}
 	}
 	
 	public void maintainAuthority(double delta) {
