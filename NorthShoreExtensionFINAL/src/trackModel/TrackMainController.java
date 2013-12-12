@@ -152,8 +152,6 @@ public class TrackMainController {
 	    		b=Track.trackArray.get(line).getBlock(id);
 	    		b.setClosed(true);
 	    		internalBrokenRailID=id;
-	    		
-	    		
 	    		return 1;
 
 			} catch (Exception ex) {
@@ -187,15 +185,17 @@ public class TrackMainController {
 	    	int trackToDeleteLine= trackLineList.getSelectionModel().getSelectedIndex();
 	    	String lineName = trackLineList.getSelectionModel().getSelectedItem();
 	    	
-	    	internalDeleteTrack(lineName, trackToDeleteLine);
-	    	TrackMainController.trackLineList.setItems(Track.trackListData);
-	    	if(Track.trackListData.isEmpty()){
-	    		DeleteTrackButton.setDisable(true);
-	    		queryBlockIDButton.setDisable(true);
+	    	if(lineName!= null){
+	    		internalDeleteTrack(lineName, trackToDeleteLine);
+	    		TrackMainController.trackLineList.setItems(Track.trackListData);
+	    		if(Track.trackListData.isEmpty()){
+	    			DeleteTrackButton.setDisable(true);
+	    			queryBlockIDButton.setDisable(true);
 	    		
-	    		CutPowerButton.setDisable(true);
-	    		breakTrackCircuitButton.setDisable(true);
-	    		breakRailButton.setDisable(true);
+	    			CutPowerButton.setDisable(true);
+	    			breakTrackCircuitButton.setDisable(true);
+	    			breakRailButton.setDisable(true);
+	    		}
 	    	}
 	    	
 	    }

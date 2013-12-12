@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class TestTrackWhole{
 	ChildQueryController cqcTester;
 	TrackMainController tmcTester;
 	
-	@Before 
+	@Before
 	public void initialize(){
 		String[] args = new String[0];
 		tracktester = new Track();
@@ -28,10 +29,10 @@ public class TestTrackWhole{
 	//testing bad input for new track file
 	@Test
 	public void testBadInputTrack() {
-		
+		tearDown();
+		Track.trackArray.clear();
 		ntcTester.InternalImport("BadFileName.csv");
 		assertNull(Track.trackArray.get("Green"));		
-		//tearDown();
 	}
 	
 	//testing correct input for new track file
@@ -53,10 +54,12 @@ public class TestTrackWhole{
 	//test breaking block by id
 	@Test
 	public void testBreakById(){
+		testInputTrack();
 		int bId=10;
 		String line = "Green";
 		tmcTester.internalBreakWithId(bId, line);
 		assertTrue(Track.trackArray.get(line).getBlock(bId).isClosed());
+		tearDown();
 	}
 	
 	//testing deleting an existing track
@@ -70,12 +73,14 @@ public class TestTrackWhole{
 		assertNull(Track.trackArray.get(line));
 	}
 	
-	/*
 	@After
 	public void tearDown(){
 		tracktester=null;
 		ntcTester=null;
+		cqcTester = null;
+		tmcTester = null;
+		
 		initialize();
 	}
-*/
+
 }
